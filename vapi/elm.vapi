@@ -68,6 +68,11 @@ public class Win : Elm.Object
     public void shaped_set( bool shaped );
     public void alpha_set( bool alpha );
     public void override_set( bool override_ );
+    public void fullscreen_set( bool fullscreen );
+    public void maximized_set( bool maximized );
+    public void iconified_set( bool iconified );
+    public void layer_set( int layer );
+    public void rotation_set( int rotation );
     public void keyboard_mode_set( WinKeyboardMode mode );
     public void keyboard_win_set( bool is_keyboard );
     public void inwin_style_set( string style );
