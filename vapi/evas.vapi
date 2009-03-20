@@ -49,6 +49,9 @@ namespace Evas
         public void size_hint_padding_set( Coord l, Coord r, Coord t, Coord b );
         public void size_hint_weight_set( double x, double y );
 
+        public void name_set( string name );
+        public string name_get ( );
+
         public void smart_callback_add( string event, SmartCallback func );
     }
 }
