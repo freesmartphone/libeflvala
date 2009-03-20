@@ -50,7 +50,7 @@ namespace Evas
         public void size_hint_weight_set( double x, double y );
 
         public void name_set( string name );
-        public string name_get ( );
+        public weak string name_get ( );
 
         public void smart_callback_add( string event, SmartCallback func );
     }
