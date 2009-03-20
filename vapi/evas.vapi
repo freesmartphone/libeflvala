@@ -42,6 +42,7 @@ namespace Evas
         public void hide();
         public void resize( Coord w, Coord h );
         public void show();
+        public bool visible_get();
 
         public void size_hint_align_set( double x, double y );
         public void size_hint_min_set( Coord w, Coord h );
