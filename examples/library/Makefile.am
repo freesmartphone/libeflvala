@@ -6,6 +6,7 @@ AUTOMAKE_OPTIONS = subdir-objects
 
 INCLUDES = \
 	$(DEPS_CFLAGS) \
+	$(THREAD_CFLAGS) \
 	-include $(CONFIG_HEADER) \
 	$(NULL)
 
@@ -31,11 +32,13 @@ mainloops_SOURCES = \
 	            --pkg ecore \
 	            --pkg elm \
 	            --save-temps \
+	            --thread \
 	            --basedir $(top_srcdir) $^
 	touch $@
 
 mainloops_LDADD = \
 	$(DEPS_LIBS) \
+	$(THREAD_LIBS) \
 	-lutil \
 	$(NULL)
 
