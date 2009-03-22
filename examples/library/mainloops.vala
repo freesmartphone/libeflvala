@@ -1,7 +1,10 @@
 public class CommunicationThread : GLib.Object
 {
+    bool quitflag;
+
     public static CommunicationThread self;
     public static MainLoop loop;
+
 
     public CommunicationThread()
     {
@@ -12,7 +15,18 @@ public class CommunicationThread : GLib.Object
     public bool watcher()
     {
         debug( "G mainloop still running" );
-        return true;
+        if ( !quitflag )
+            return true;
+        else
+        {
+            loop.quit();
+            return false;
+        }
+    }
+
+    public void shutdown()
+    {
+        quitflag = true;
     }
 
     public static void* run()
@@ -30,6 +44,7 @@ public class CommunicationThread : GLib.Object
 public class UserInterfaceThread : GLib.Object
 {
     public static UserInterfaceThread self;
+    public CommunicationThread commthread;
     public Ecore.Timer timer;
     public Elm.Win win;
 
@@ -46,6 +61,18 @@ public class UserInterfaceThread : GLib.Object
         win.resize( 320, 320 );
         win.smart_callback_add( "delete-request", Elm.exit );
         win.show();
+
+        var layout = new Elm.Layout( win );
+        layout.file_set( "/usr/local/share/elementary/objects/test.edj", "layout" );
+        layout.size_hint_weight_set( 1.0, 1.0 );
+        layout.show();
+        win.resize_object_add( layout );
+
+    }
+
+    public void setCommThread( CommunicationThread commthread )
+    {
+        this.commthread = commthread;
     }
 
     ~UserInterfaceThread()
@@ -65,6 +92,7 @@ public class UserInterfaceThread : GLib.Object
         debug( "INTO E mainloop" );
         Elm.run();
         debug( "OUT OF E mainloop" );
+        self.commthread.shutdown();
         return null;
     }
 
@@ -72,18 +100,22 @@ public class UserInterfaceThread : GLib.Object
 
 static int main( string[] args )
 {
-    if (!Thread.supported()) {
-        stderr.printf("Cannot run without threads.\n");
+    if ( !Thread.supported() ) {
+        error( "Cannot run without threads.\n" );
         return 0;
     }
 
     var commt = new CommunicationThread();
     var uit = new UserInterfaceThread( args );
+    uit.setCommThread( commt );
+
+    unowned Thread t1;
+    unowned Thread t2;
 
     try
     {
-        Thread.create( commt.run, false );
-        Thread.create( uit.run, false );
+        t1 = Thread.create( commt.run, true );
+        t2 = Thread.create( uit.run, true );
     }
     catch ( ThreadError ex )
     {
@@ -91,11 +123,11 @@ static int main( string[] args )
         return -1;
     }
 
-    while ( true )
-    {
-        Thread.usleep( 1000 * 500 );
-        message( "main thread still running..." );
-    }
+    t1.join();
+    t2.join();
+
+    debug( "all threads exited OK." );
+
     return 0;
 }
 
