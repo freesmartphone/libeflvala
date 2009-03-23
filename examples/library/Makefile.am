@@ -26,6 +26,7 @@ mainloops_SOURCES = \
 
 .vala.stamp: $(mainloops_VALASOURCES)
 	$(VALAC) -c --vapidir $(top_srcdir)/vapi \
+	            --pkg posix \
 	            --pkg dbus-glib-1 \
 	            --pkg eina \
 	            --pkg evas \

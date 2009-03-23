@@ -26,6 +26,118 @@
 // be notified of new commands in the Queue without polling.
 // I'll resort to the same technique I used in the ELAN project.
 
+public class Command : GLib.Object
+{
+}
+
+public class QueueWithNotifier<T> : GLib.Object
+{
+    private Queue<T> q;
+    private static int counter = 0;
+    private int readfd = -1;
+    private int writefd = -1;
+
+    public QueueWithNotifier()
+    {
+        int[] fds = { 0, 0 };
+        var ok = Posix.pipe( fds );
+        assert( ok != -1 );
+        debug( "fds = %d, %d", fds[0], fds[1] );
+        readfd = fds[0];
+        writefd = fds[1];
+    }
+
+    ~QueueWithNotifier()
+    {
+        if ( readfd != -1 )
+            Posix.close( readfd );
+        if ( writefd != -1 )
+            Posix.close( writefd );
+    }
+
+    public T read()
+    {
+        char[] dot = { '.' };
+        var number = Posix.read( readfd, dot, 1 );
+        assert ( number == 1 );
+        // generate T
+        return new Command();
+    }
+
+    public int getReadFd()
+    {
+        return readfd;
+    }
+
+    public int getWriteFd()
+    {
+        return writefd;
+    }
+}
+
+public class BidirectionalThreadQueue : GLib.Object
+{
+    public enum Identifier
+    {
+        COMMUNICATION_THREAD,
+        GUI_THREAD;
+    }
+    private static QueueWithNotifier<Command> toGuiQ;
+    private static QueueWithNotifier<Command> toCommQ;
+
+    private Identifier owner;
+
+    public BidirectionalThreadQueue( Identifier id )
+    {
+        owner = id;
+        switch ( id )
+        {
+            case Identifier.COMMUNICATION_THREAD:
+                assert ( toGuiQ == null );
+                toGuiQ = new QueueWithNotifier<Command>();
+                break;
+            case Identifier.GUI_THREAD:
+                assert ( toCommQ == null );
+                toCommQ = new QueueWithNotifier<Command>();
+                break;
+            default:
+                assert_not_reached();
+        }
+    }
+
+    public void getFds( out int readfd, out int writefd )
+    {
+        switch ( owner )
+        {
+            case Identifier.COMMUNICATION_THREAD:
+                readfd = toCommQ.getReadFd();
+                writefd = toGuiQ.getWriteFd();
+                break;
+            case Identifier.GUI_THREAD:
+                readfd = toGuiQ.getReadFd();
+                writefd = toCommQ.getWriteFd();
+                break;
+            default:
+                assert_not_reached();
+        }
+    }
+
+    public Command? read()
+    {
+        switch ( owner )
+        {
+            case Identifier.COMMUNICATION_THREAD:
+                return toCommQ.read();
+                break;
+            case Identifier.GUI_THREAD:
+                return toGuiQ.read();
+                break;
+            default:
+                assert_not_reached();
+        }
+    }
+}
+
 public class CommunicationThread : GLib.Object
 {
     bool quitflag;
@@ -33,10 +145,21 @@ public class CommunicationThread : GLib.Object
     public static CommunicationThread self;
     public static MainLoop loop;
 
+    public BidirectionalThreadQueue q;
+    private IOChannel ioc;
+
     public CommunicationThread()
     {
         assert ( self == null );
         self = this;
+        q = new BidirectionalThreadQueue( BidirectionalThreadQueue.Identifier.COMMUNICATION_THREAD );
+    }
+
+    public bool canReadFromQ( IOChannel source, IOCondition c )
+    {
+        debug( "G thread can read from Q" );
+        var command = q.read();
+        return true;
     }
 
     public bool watcher()
@@ -61,6 +184,11 @@ public class CommunicationThread : GLib.Object
         assert ( self != null );
         loop = new MainLoop( null, false );
         Timeout.add_seconds( 1, self.watcher );
+        int readfd;
+        int writefd;
+        self.q.getFds( out readfd, out writefd );
+        self.ioc = new GLib.IOChannel.unix_new( readfd );
+        self.ioc.add_watch( IOCondition.IN, self.canReadFromQ );
         debug( "INTO G mainloop" );
         loop.run();
         debug( "OUT OF G mainloop" );
@@ -75,10 +203,16 @@ public class UserInterfaceThread : GLib.Object
     public Ecore.Timer timer;
     public Elm.Win win;
 
+    public BidirectionalThreadQueue q;
+
+    int writefd = -1;
+
     public UserInterfaceThread( string[] args )
     {
         assert ( self == null );
         self = this;
+
+        q = new BidirectionalThreadQueue( BidirectionalThreadQueue.Identifier.GUI_THREAD );
 
         Elm.init( args );
 
@@ -110,12 +244,18 @@ public class UserInterfaceThread : GLib.Object
     public bool watcher()
     {
         debug( "E mainloop still running" );
+        Posix.write( writefd, ".", 1 );
         return true;
     }
 
     public static void* run()
     {
         self.timer = new Ecore.Timer( 1, self.watcher );
+
+        int readfd;
+        self.q.getFds( out readfd, out self.writefd );
+        //add fd handler...
+
         debug( "INTO E mainloop" );
         Elm.run();
         debug( "OUT OF E mainloop" );
