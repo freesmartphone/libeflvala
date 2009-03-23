@@ -27,11 +27,46 @@ namespace Ecore
     public delegate bool Callback();
 
     //=======================================================================
+    [CCode (instance_pos = 1)]
+    public delegate bool FdHandler( void* data );
+
+    //=======================================================================
+    [CCode (instance_pos = 1)]
+    public delegate bool BufHandler( void* data );
+
+    //=======================================================================
     namespace MainLoop
     {
         void iterate();
         void begin();
         void quit();
+
+        [CCode (cname = "ecore_main_fd_handler_add")]
+        FdHandler fd_handler_add( int fd, FdHandlerFlags flags, FdHandler fd_func, BufHandler buf_func );
+    }
+
+    //=======================================================================
+    [CCode (cprefix = "ECORE_FD_")]
+    public enum FdHandlerFlags
+    {
+        READ,
+        WRITE,
+        ERROR,
+    }
+
+    //=======================================================================
+    [CCode (cprefix = "ECORE_EXE_")]
+    public enum ExeFlags
+    {
+        PIPE_READ,
+        PIPE_WRITE,
+        PIPE_ERROR,
+        PIPE_READ_LINE_BUFFERED,
+        PIPE_ERROR_LINE_BUFFERED,
+        PIPE_AUTO,
+        RESPAWN,
+        USE_SH,
+        NOT_LEADER,
     }
 
     //=======================================================================
