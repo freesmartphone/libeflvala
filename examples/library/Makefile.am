@@ -26,12 +26,14 @@ mainloops_SOURCES = \
 
 .vala.stamp: $(mainloops_VALASOURCES)
 	$(VALAC) -c --vapidir $(top_srcdir)/vapi \
-	            --pkg posix \
+	            --vapidir ../../eflvala \
 	            --pkg dbus-glib-1 \
+	            --pkg eflvala-1.0 \
 	            --pkg eina \
 	            --pkg evas \
 	            --pkg ecore \
 	            --pkg elm \
+	            --pkg posix \
 	            --save-temps \
 	            --thread \
 	            --basedir $(top_srcdir) $^
@@ -40,7 +42,7 @@ mainloops_SOURCES = \
 mainloops_LDADD = \
 	$(DEPS_LIBS) \
 	$(THREAD_LIBS) \
-	-lutil \
+	../../eflvala/libeflvala.la \
 	$(NULL)
 
 EXTRA_DIST += \

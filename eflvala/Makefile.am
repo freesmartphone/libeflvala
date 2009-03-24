@@ -22,7 +22,6 @@ eflvalaincludedir = $(includedir)/eflvala-1.0/eflvala
 eflvalainclude_HEADERS = \
 	$(libeflvala_la_VALASOURCES:.vala=.h) \
 	$(NULL)
-                
 
 BUILT_SOURCES = .vala.stamp
 
@@ -31,6 +30,8 @@ lib_LTLIBRARIES = \
 	$(NULL)
 
 libeflvala_la_VALASOURCES = \
+	application.vala \
+	notificationqueue.vala \
 	objects.vala \
 	$(NULL)
 
@@ -46,6 +47,7 @@ libeflvala_la_SOURCES = \
 		--pkg evas \
 		--pkg ecore \
 		--pkg elm \
+		--pkg posix \
 		--library=eflvala-1.0 \
 		--save-temps \
 		--basedir $(top_srcdir) $^
