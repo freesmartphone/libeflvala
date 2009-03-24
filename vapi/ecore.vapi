@@ -27,12 +27,12 @@ namespace Ecore
     public delegate bool Callback();
 
     //=======================================================================
-    [CCode (instance_pos = 1)]
-    public delegate bool FdHandler( void* data );
+    [CCode (instance_pos = 0)]
+    public delegate bool FdHandlerFunc( FdHandler fdhandler );
 
     //=======================================================================
-    [CCode (instance_pos = 1)]
-    public delegate bool BufHandler( void* data );
+    [CCode (instance_pos = 0)]
+    public delegate bool BufHandlerFunc( void* data );
 
     //=======================================================================
     namespace MainLoop
@@ -41,8 +41,17 @@ namespace Ecore
         void begin();
         void quit();
 
+/*        [CCode (cname = "ecore_main_fd_handler_add")]
+        FdHandler fd_handler_add( int fd, FdHandlerFlags flags, FdHandler fd_func, BufHandler buf_func );*/
+    }
+
+    //=======================================================================
+    [Compact]
+    [CCode (cname = "Ecore_Fd_Handler", free_function = "ecore_main_fd_handler_del")]
+    public class FdHandler
+    {
         [CCode (cname = "ecore_main_fd_handler_add")]
-        FdHandler fd_handler_add( int fd, FdHandlerFlags flags, FdHandler fd_func, BufHandler buf_func );
+        FdHandler( int fd, FdHandlerFlags flags, FdHandlerFunc fd_func, BufHandlerFunc? buf_func );
     }
 
     //=======================================================================
