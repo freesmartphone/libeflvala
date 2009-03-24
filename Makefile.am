@@ -1,12 +1,15 @@
 include $(top_srcdir)/Makefile.decl
+NULL =
 
-if MAKE_EXAMPLES
-  EXAMPLE_SUBDIR = examples
+SUBDIRS = vapi tests
+
+if MAKE_LIBRARY
+  SUBDIRS += eflvala
 endif
 
-SUBDIRS = vapi eflvala tests $(EXAMPLE_SUBDIR)
-
-NULL =
+if MAKE_EXAMPLES
+  SUBDIRS += examples
+endif
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = eflvala-1.0.pc
