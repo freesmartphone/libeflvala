@@ -45,6 +45,18 @@ AC_ARG_WITH(edje-cc,
 ])
 AC_SUBST(edje_cc)
 
+
+# shall we compile the examples (default=yes)?
+AC_ARG_ENABLE(examples,      [  --disable-examples      compile the optional example apps (enabled by default)])
+AM_CONDITIONAL(MAKE_EXAMPLES, test "$enable_examples" != no)
+AC_MSG_CHECKING([whether to compile the example apps])
+if test "$enable_examples" != no; then
+  AC_MSG_RESULT(yes)
+else
+  AC_MSG_RESULT(no)
+fi
+
+
 AC_CONFIG_FILES([
   Makefile
   data/Makefile

@@ -1,6 +1,10 @@
 include $(top_srcdir)/Makefile.decl
 
-SUBDIRS = vapi eflvala tests examples
+if MAKE_EXAMPLES
+  EXAMPLE_SUBDIR = examples
+endif
+
+SUBDIRS = vapi eflvala tests $(EXAMPLE_SUBDIR)
 
 NULL =
 
