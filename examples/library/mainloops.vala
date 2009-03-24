@@ -64,6 +64,13 @@ public class QueueWithNotifier<T> : GLib.Object
         return new Command();
     }
 
+    public void write( T message )
+    {
+        char[] dot = { '.' };
+        var number = Posix.write( writefd, dot, 1 );
+        assert ( number == 1 );
+    }
+
     public int getReadFd()
     {
         return readfd;
@@ -136,6 +143,22 @@ public class BidirectionalThreadQueue : GLib.Object
                 assert_not_reached();
         }
     }
+
+    public void write( Command command )
+    {
+        switch ( owner )
+        {
+            case Identifier.COMMUNICATION_THREAD:
+                toGuiQ.write( command );
+                break;
+            case Identifier.GUI_THREAD:
+                toCommQ.write( command );
+                break;
+            default:
+                assert_not_reached();
+        }
+    }
+
 }
 
 public class CommunicationThread : GLib.Object
@@ -159,6 +182,7 @@ public class CommunicationThread : GLib.Object
     {
         debug( "G thread can read from Q" );
         var command = q.read();
+        q.write( new Command() );
         return true;
     }
 
@@ -202,6 +226,8 @@ public class UserInterfaceThread : GLib.Object
     public CommunicationThread commthread;
     public Ecore.Timer timer;
     public Elm.Win win;
+
+    public Ecore.FdHandler fdhandler;
 
     public BidirectionalThreadQueue q;
 
@@ -248,13 +274,21 @@ public class UserInterfaceThread : GLib.Object
         return true;
     }
 
+    public bool canReadFromQ( Ecore.FdHandler fdhandler )
+    {
+        debug( "E thread can read from Q" );
+        var command = q.read();
+        return true;
+    }
+
     public static void* run()
     {
         self.timer = new Ecore.Timer( 1, self.watcher );
 
         int readfd;
         self.q.getFds( out readfd, out self.writefd );
-        //add fd handler...
+
+        self.fdhandler = new Ecore.FdHandler( readfd, Ecore.FdHandlerFlags.READ, self.canReadFromQ, null );
 
         debug( "INTO E mainloop" );
         Elm.run();
