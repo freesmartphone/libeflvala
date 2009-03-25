@@ -179,6 +179,9 @@ static int main( string[] args )
     {
         t1 = Thread.create( commt.run, true );
         t2 = Thread.create( uit.run, true );
+
+        var t3 = new EflVala.Thread();
+        t3.run();
     }
     catch ( ThreadError ex )
     {

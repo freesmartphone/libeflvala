@@ -33,6 +33,7 @@ libeflvala_la_VALASOURCES = \
 	application.vala \
 	notificationqueue.vala \
 	objects.vala \
+	thread.vala \
 	$(NULL)
 
 libeflvala_la_SOURCES = \
