@@ -17,8 +17,3 @@ adding dependencies (evas) as we go. Later on,
 adding edje and ecore for applications that do not
 want to use elementary.
 
-Problems
-========
-Elementary.h needs to be patched, since Vala does not
-support anonymous structs and delegates.
-
