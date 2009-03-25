@@ -48,7 +48,7 @@ AC_SUBST(edje_cc)
 
 # shall we compile the library? [default=yes]
 AC_ARG_ENABLE(library,      [  --disable-library	skip building the eflvala library [[default=no]]])
-AM_CONDITIONAL(MAKE_LIBRARY, test "$enable_library" != no)
+AM_CONDITIONAL(MAKE_LIBRARY, test x$enable_library != xno)
 AC_MSG_CHECKING([whether to compile the eflvala library])
 if test "$enable_library" != no; then
   AC_MSG_RESULT(yes)
@@ -58,7 +58,7 @@ fi
     
 # shall we compile the examples? [default=yes]
 AC_ARG_ENABLE(examples,      [  --disable-examples	skip building the examples [[default=no]]])
-AM_CONDITIONAL(MAKE_EXAMPLES, test "$enable_examples" != no)
+AM_CONDITIONAL(MAKE_EXAMPLES, test x$enable_examples != xno)
 AC_MSG_CHECKING([whether to compile the example apps])
 if test "$enable_examples" != no; then
   AC_MSG_RESULT(yes)

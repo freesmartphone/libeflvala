@@ -42,6 +42,7 @@ public class CommunicationThread : GLib.Object
     {
         debug( "G thread can read from Q" );
         var command = q.read();
+        debug( "G thread got command '%s", command.command );
         q.write( new EflVala.Command( "G --> E") );
         q.write( new EflVala.Command( "G --> E") );
         return true;
@@ -92,8 +93,6 @@ public class UserInterfaceThread : GLib.Object
 
     public EflVala.BidirectionalThreadQueue q;
 
-    int writefd = -1;
-
     public UserInterfaceThread( string[] args )
     {
         assert ( self == null );
@@ -131,7 +130,7 @@ public class UserInterfaceThread : GLib.Object
     public bool watcher()
     {
         debug( "E mainloop still running" );
-        Posix.write( writefd, ".", 1 );
+        q.write( new EflVala.Command( "E --> G" ) );
         return true;
     }
 
@@ -147,8 +146,9 @@ public class UserInterfaceThread : GLib.Object
     {
         self.timer = new Ecore.Timer( 1, self.watcher );
 
+        int writefd;
         int readfd;
-        self.q.getFds( out readfd, out self.writefd );
+        self.q.getFds( out readfd, out writefd );
 
         self.fdhandler = new Ecore.FdHandler( readfd, Ecore.FdHandlerFlags.READ, self.canReadFromQ, null );
 

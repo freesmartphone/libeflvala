@@ -33,7 +33,6 @@ mainloops_SOURCES = \
 	            --pkg evas \
 	            --pkg ecore \
 	            --pkg elm \
-	            --pkg posix \
 	            --save-temps \
 	            --thread \
 	            --basedir $(top_srcdir) $^
