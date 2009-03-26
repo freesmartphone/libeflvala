@@ -425,7 +425,7 @@ public class Genlist : Elm.Object
 
 //=======================================================================
 [Compact]
-[CCode (cname = "Elm_Genlist_Item", free_function = "")]
+[CCode (cname = "Elm_Genlist_Item", free_function = "") /* Caution! Genlist items are owned by the list. */ ]
 public class GenlistItem
 {
    public GenlistItem next_get();
@@ -626,23 +626,29 @@ public struct GenlistItemClass
 
 //=======================================================================
 [Compact]
-[CCode (cname = "Elm_Hoversel_Item")]
-public struct HoverselItem
+[CCode (cname = "Elm_Hoversel_Item", free_function = "elm_hoversel_item_del")]
+public class HoverselItem
 {
 }
 
 //=======================================================================
 [Compact]
-[CCode (cname = "Elm_Toolbar_Item")]
-public struct ToolbarItem
+[CCode (cname = "Elm_Toolbar_Item", free_function = "elm_toolbar_item_del")]
+public class ToolbarItem
 {
+    public void select();
 }
 
 //=======================================================================
 [Compact]
-[CCode (cname = "Elm_List_Item")]
-public struct ListItem
+[CCode (cname = "Elm_List_Item", free_function = "elm_list_item_del")]
+public class ListItem
 {
+    public void selected_set( bool selected );
+    public void show();
+    public void* data_get();
+    public Elm.Object icon_get();
+    public Elm.Object end_get();
 }
 
 }
