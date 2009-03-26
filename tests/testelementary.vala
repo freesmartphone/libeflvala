@@ -17,9 +17,6 @@
  *
  */
 
-using Evas;
-using Elm;
-
 class Delegates : GLib.Object
 {
     public static void onDeleteStatic( Evas.Object o, void* event_info )
@@ -30,7 +27,7 @@ class Delegates : GLib.Object
     public void onDeleteMember( Evas.Object o, void* event_info )
     {
         debug( "member callback" );
-        exit();
+        Elm.exit();
     }
 
     public void onButtonClicked( Evas.Object b, void* event_info )
@@ -40,13 +37,23 @@ class Delegates : GLib.Object
     }
 }
 
+public void test_objects()
+{
+    Elm.init( new string[] { "elementary_test" } );
+    var win = new Elm.Win( null, "window", Elm.WinType.BASIC );
+    var bg = new Elm.Bg( win );
+    debug( "bg=%p, win=%p, parent(bg)=%p, parent(win)=%p", bg, win, bg.smart_parent_get(), win.smart_parent_get() );
+    assert ( bg.smart_parent_get() == win );
+    Elm.shutdown();
+}
+
 public void test_mainloop()
 {
     string[] args = { "yo", "kurt" };
     debug( "main()" );
-    init( args );
-    run();
-    shutdown();
+    Elm.init( args );
+    Elm.run();
+    Elm.shutdown();
 }
 
 //===========================================================================
@@ -54,6 +61,7 @@ void main (string[] args)
 {
     Test.init(ref args);
 
-    Test.add_func("/MainLoop/All", test_mainloop);
+    Test.add_func( "/Objects", test_objects );
+    Test.add_func( "/MainLoop/All", test_mainloop );
     Test.run ();
 }

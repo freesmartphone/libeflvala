@@ -17,16 +17,13 @@
  *
  */
 
-using Evas;
-using Elm;
-
-Win win;
-Box box;
-Button[] buttons;
+Elm.Win win;
+Elm.Box box;
+Elm.Button[] buttons;
 
 public void add_test( T.Abstract t, int index )
 {
-    buttons[index] = new Button( win );
+    buttons[index] = new Elm.Button( win );
     buttons[index].label_set( t.name() );
     buttons[index].smart_callback_add( "clicked", t.run );
     buttons[index].show();
@@ -38,13 +35,13 @@ public void add_test( T.Abstract t, int index )
 public int main( string[] args )
 {
     debug( "main()" );
-    init( args );
+    Elm.init( args );
 
-    win = new Win( null, "myWindow", WinType.BASIC );
+    win = new Elm.Win( null, "myWindow", Elm.WinType.BASIC );
     win.title_set( "Elementary meets Vala" );
     win.autodel_set( true );
     win.resize( 320, 320 );
-    win.smart_callback_add( "delete-request", exit );
+    win.smart_callback_add( "delete-request", Elm.exit );
 
 /*
     var bg = new Bg( win );
@@ -53,14 +50,14 @@ public int main( string[] args )
     win.resize_object_add( bg );
 */
 
-    var layout = new Layout( win );
+    var layout = new Elm.Layout( win );
     layout.file_set( "/usr/local/share/elementary/objects/test.edj", "layout" );
     layout.size_hint_weight_set( 1.0, 1.0 );
     layout.show();
     win.resize_object_add( layout );
 
-    buttons = new Button[10];
-    box = new Box( win );
+    buttons = new Elm.Button[10];
+    box = new Elm.Box( win );
     box.size_hint_weight_set( 1.0, 1.0 );
     win.resize_object_add( box );
 
@@ -73,7 +70,7 @@ public int main( string[] args )
 
     box.show();
     win.show();
-    run();
-    shutdown();
+    Elm.run();
+    Elm.shutdown();
     return 0;
 }

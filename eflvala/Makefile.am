@@ -44,6 +44,7 @@ libeflvala_la_SOURCES = \
 
 .vala.stamp: $(libeflvala_la_VALASOURCES)
 	$(VALAC) -c --vapidir $(top_srcdir)/vapi \
+		--pkg dbus-glib-1 \
 		--pkg eina \
 		--pkg evas \
 		--pkg ecore \
@@ -51,6 +52,7 @@ libeflvala_la_SOURCES = \
 		--pkg posix \
 		--library=eflvala-1.0 \
 		--save-temps \
+		--thread \
 		--basedir $(top_srcdir) $^
 	touch $@
 

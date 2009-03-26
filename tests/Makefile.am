@@ -26,6 +26,19 @@ testeina_LDADD = $(progs_ldadd)
 EXTRA_DIST += $(testeina_VALASOURCES)
 
 #
+# evas
+#
+TEST_PROGS += testevas
+testevas_VALASOURCES = testevas.vala
+testevas_SOURCES = testevas.c testevas.h
+$(testevas_SOURCES): $(testevas_VALASOURCES)
+	$(VALAC) -C --basedir $(top_srcdir) --vapidir $(top_srcdir)/vapi \
+		--pkg eina --pkg evas --pkg glib-2.0 $^
+	touch $@
+testevas_LDADD = $(progs_ldadd)
+EXTRA_DIST += $(testevas_VALASOURCES)
+
+#
 # ecore
 #
 TEST_PROGS += testecore

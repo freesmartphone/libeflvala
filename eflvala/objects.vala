@@ -46,8 +46,8 @@ public class EflVala.BidirectionalThreadQueue : GLib.Object
         COMMUNICATION_THREAD,
         GUI_THREAD;
     }
-    private static QueueWithNotifier<Command> toGuiQ;
-    private static QueueWithNotifier<Command> toCommQ;
+    private static EflVala.QueueWithNotifier<Command> toGuiQ;
+    private static EflVala.QueueWithNotifier<Command> toCommQ;
 
     private Identifier owner;
 
@@ -58,11 +58,11 @@ public class EflVala.BidirectionalThreadQueue : GLib.Object
         {
             case Identifier.COMMUNICATION_THREAD:
                 assert ( toGuiQ == null );
-                toGuiQ = new QueueWithNotifier<Command>();
+                toGuiQ = new EflVala.QueueWithNotifier<Command>();
                 break;
             case Identifier.GUI_THREAD:
                 assert ( toCommQ == null );
-                toCommQ = new QueueWithNotifier<Command>();
+                toCommQ = new EflVala.QueueWithNotifier<Command>();
                 break;
             default:
                 assert_not_reached();
@@ -80,6 +80,21 @@ public class EflVala.BidirectionalThreadQueue : GLib.Object
             case Identifier.GUI_THREAD:
                 readfd = toGuiQ.getReadFd();
                 writefd = toCommQ.getWriteFd();
+                break;
+            default:
+                assert_not_reached();
+        }
+    }
+
+    public int getReadFd()
+    {
+        switch ( owner )
+        {
+            case Identifier.COMMUNICATION_THREAD:
+                return toCommQ.getReadFd();
+                break;
+            case Identifier.GUI_THREAD:
+                return toGuiQ.getReadFd();
                 break;
             default:
                 assert_not_reached();

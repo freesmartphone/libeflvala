@@ -21,14 +21,14 @@
 public class EflVala.QueueWithNotifier<T> : GLib.Object
 //=======================================================================
 {
-    private Queue<T> q;
+    private GLib.Queue<T> q;
     private static int counter = 0;
     private int readfd = -1;
     private int writefd = -1;
 
     public QueueWithNotifier()
     {
-        q = new Queue<T>();
+        q = new GLib.Queue<T>();
         int[] fds = { 0, 0 };
         var ok = Posix.pipe( fds );
         if ( ok == -1 )

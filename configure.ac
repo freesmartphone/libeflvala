@@ -15,12 +15,18 @@ AC_SUBST(CFLAGS)
 AC_SUBST(CPPFLAGS)
 AC_SUBST(LDFLAGS)
 
+EINA_REQUIRED=0.0.0
 EVAS_REQUIRED=0.0.0
 ECORE_REQUIRED=0.0.0
 ELM_REQUIRED=0.0.0
 GLIB_REQUIRED=2.18.0
+DBUS_REQUIRED=1.1.1
+DBUS_GLIB_REQUIRED=0.74
 
 PKG_CHECK_MODULES(DEPS,
+  dbus-1 >= $DBUS_REQUIRED
+  dbus-glib-1 >= $DBUS_GLIB_REQUIRED
+  eina-0 >= $EINA_REQUIRED
   evas >= $EVAS_REQUIRED
   ecore >= $ECORE_REQUIRED
   elementary >= $ELM_REQUIRED
@@ -55,7 +61,7 @@ if test "$enable_library" != no; then
 else
   AC_MSG_RESULT(no)
 fi
-    
+
 # shall we compile the examples? [default=yes]
 AC_ARG_ENABLE(examples,      [  --disable-examples	skip building the examples [[default=no]]])
 AM_CONDITIONAL(MAKE_EXAMPLES, test x$enable_examples != xno)

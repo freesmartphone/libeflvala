@@ -17,11 +17,63 @@
  *
  **/
 
+static EflVala.Application theApp;
+
 //=======================================================================
 public class EflVala.Application : GLib.Object
 //=======================================================================
 {
-    // owns and creates the two threads
-    // sets up the communication infrastructure
-    // contains methods to register for communication events
+    private EflVala.EThread _ethread;
+    private EflVala.GThread _gthread;
+
+    //
+    // public
+    //
+
+    public Application( string[] args )
+    {
+        debug( "Application()" );
+        Elm.init( args ); //FIXME: might be better done elsewhere (i.e. from within the E thread?)
+        assert ( theApp == null );
+        theApp = this;
+        _createThreads();
+    }
+
+    public int run()
+    {
+        _ethread.run();
+        _gthread.run();
+        _ethread.join();
+        _gthread.join();
+        return 0;
+    }
+
+    public void quit()
+    {
+        _ethread.quit();
+        _gthread.quit();
+    }
+
+    public virtual void setupFrontend()
+    {
+    }
+
+    public virtual void setupBackend()
+    {
+    }
+
+    //
+    // private
+    //
+
+    private void _createThreads()
+    {
+        if ( !GLib.Thread.supported() )
+        {
+            error( "Cannot run without threads!" );
+        }
+
+        _ethread = new EflVala.EThread();
+        _gthread = new EflVala.GThread();
+    }
 }
