@@ -344,7 +344,7 @@ public class Hoversel : Elm.Object
     public void label_set( string label );
     public void icon_set( Elm.Object icon );
     public void hover_end();
-    public HoverselItem item_add( string label, string icon_file, IconType icon_type, Evas.SmartCallback func );
+    public HoverselItem item_add( string label, string? icon_file, IconType icon_type, Evas.SmartCallback func );
 }
 
 
