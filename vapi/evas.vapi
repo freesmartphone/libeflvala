@@ -19,6 +19,9 @@
 [CCode (cprefix = "Evas_", lower_case_cprefix = "evas_", cheader_filename = "Evas.h")]
 namespace Evas
 {
+    public void init();
+    public void shutdown();
+
     //=======================================================================
     [SimpleType]
     [BooleanType]
