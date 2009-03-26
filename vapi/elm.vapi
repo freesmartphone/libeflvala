@@ -629,6 +629,14 @@ public struct GenlistItemClass
 [CCode (cname = "Elm_Hoversel_Item")]
 public struct HoverselItem
 {
+    public Object* obj;
+    public weak string label;
+    public weak string icon_file;
+    public IconType icon_type;
+    //XXX: check how to do next correct. func signature is    
+    //void (*func) (void *data, Evas_Object *obj, void *event_info);
+    public void* func;
+    public void* data;
 }
 
 //=======================================================================
