@@ -626,7 +626,7 @@ public struct GenlistItemClass
 
 //=======================================================================
 [Compact]
-[CCode (cname = "Elm_Hoversel_Item", free_function = "elm_hoversel_item_del")]
+[CCode (cname = "Elm_Hoversel_Item", free_function = "")]
 public class HoverselItem
 {
 }

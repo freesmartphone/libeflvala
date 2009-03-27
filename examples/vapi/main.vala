@@ -63,8 +63,10 @@ public int main( string[] args )
 
     var test1 = new T.Background();
     add_test( test1, 1 );
-    var test2 = new T.Genlist();
+    var test2 = new T.Hoversel();
     add_test( test2, 2 );
+    var test3 = new T.Genlist();
+    add_test( test3, 3 );
 
     box.homogenous_set( true );
 

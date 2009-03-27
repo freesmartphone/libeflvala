@@ -18,6 +18,7 @@ elementary_vapi_VALASOURCES = \
 	main.vala \
 	background.vala \
 	genlist.vala \
+	hoversel.vala \
 	$(NULL)
 
 elementary_vapi_SOURCES = \

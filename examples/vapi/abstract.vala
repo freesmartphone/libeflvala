@@ -26,6 +26,7 @@ public abstract class T.Abstract
         debug( "open window" );
         win = new Elm.Win( null, "window", Elm.WinType.BASIC );
         win.smart_callback_add( "delete-request", close );
+        win.autodel_set( true );
         win.resize( 320, 320 );
         win.show();
     }
