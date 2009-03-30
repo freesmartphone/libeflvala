@@ -82,6 +82,7 @@ AC_CONFIG_FILES([
   vapi/Makefile
   tests/Makefile
   examples/Makefile
+  examples/eina/Makefile
   examples/vapi/Makefile
   examples/library/Makefile
   eflvala-1.0.pc])

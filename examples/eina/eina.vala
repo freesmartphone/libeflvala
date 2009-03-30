@@ -27,7 +27,6 @@ public static int main( string[] args)
     Eina.init();
     eina_list_example();
     eina_file_example();
-    //SISEGV?
     eina_error_example();
     Eina.shutdown();
     return 0;
@@ -75,7 +74,7 @@ public static void eina_file_example(  )
 {
     string path = GLib.Environment.get_variable( "PWD" );
 
-    debug( "Dir \tName" );
+    stdout.printf("Dir \tName\n");
     File.dir_list( path, true, dir_print, null );
 }
 public void dir_print( string? name, string? path, void* data )
@@ -94,6 +93,6 @@ public static void eina_error_example()
     var e3 = Eina.Error( "Chooo Choo" );
     e1.set();
     
-    Eina.Error.print( Eina.ErrorLevel.INFO, GLib.Log.FILE, GLib.Log.METHOD, GLib.Log.LINE, "e1: %i %s", e1, e1.to_string() );
+    Eina.Error.print( Eina.ErrorLevel.INFO, GLib.Log.FILE, GLib.Log.METHOD, GLib.Log.LINE, "e1: %i %s\n", e1, e1.to_string() );
     Eina.Error.shutdown();
 }
