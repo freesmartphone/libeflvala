@@ -82,6 +82,20 @@ public class Win : Elm.Object
 
 
 //=======================================================================
+namespace Quicklaunch
+{
+    public static delegate void Postfork_Func ( void* data );
+    public void init( [CCode(array_length_pos = 0.9)] string[] args );
+    public void sub_init( [CCode (array_length_pos = 0.9)] string[] args );
+    public void sub_shutdown();
+    public void shutdown();
+    public void seed();
+    public bool prepare(  [CCode (array_length_pos = 0.9)] string[] args );
+    public bool fork(  [CCode (array_length_pos = 0.9)] string[] args, string cwd, Postfork_Func postfork_func, void *postfork_data );
+    public void cleanup();
+    public int fallback([CCode (array_length_pos = 0.9)] string[] args);        
+}
+//=======================================================================
 [CCode (cname = "Evas_Object", free_function = "evas_object_del")]
 public class Bg : Elm.Object
 {
