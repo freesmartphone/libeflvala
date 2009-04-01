@@ -326,14 +326,26 @@ namespace Eina
 
         public Hash(KeyLength key_length_cb, KeyCmp key_cmp_cb, KeyHash key_hash_cb, FreeCb free_cb, int buckets_pwer_size);
         public Hash.string_dj2b(FreeCb data_free_cb);
-        public Hash.string_superfast(FreeCb data_free_cb);
-        public Hash.string_small(FreeCb data_free_cb);
-        public Hash.int32(FreeCb data_free_cb);
-        public Hash.int64(FreeCb data_free_cb);
-        public Hash.pointer(FreeCb data_free_cb);
+    
+        [CCode (cname="eina_hash_string_superfast_new")]
+        public static Hash? string_superfast(FreeCb? data_free_cb);
+
+        [CCode (cname="eina_hash_string_small_new")]
+        public static Hash? string_small(FreeCb? data_free_cb);
+
+        [CCode (cname="eina_hash_int32_new")]
+        public static Hash? int32(FreeCb? data_free_cb);
+
+        [CCode (cname="eina_hash_int64_new")]
+        public static Hash? int64(FreeCb? data_free_cb);
+        
+        [CCode (cname="eina_hash_pointer_new")]
+        public static Hash? pointer(FreeCb data_free_cb);
+
         public bool add(K key, V data);
         public bool direct_add(K key, V data);
         public bool del(K key, V data);
+        public V? find(K key);
         public V? modify(K key, V data);
         public int population();
         public bool add_by_hash(K key, int key_length, int key_hash, V data);
