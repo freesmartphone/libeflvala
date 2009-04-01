@@ -85,6 +85,8 @@ AC_CONFIG_FILES([
   examples/eina/Makefile
   examples/vapi/Makefile
   examples/library/Makefile
+  examples/library/mainloops/Makefile
+  examples/library/viewstates/Makefile
   eflvala-1.0.pc])
 
 AC_OUTPUT
