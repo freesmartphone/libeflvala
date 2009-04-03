@@ -20,7 +20,22 @@
 static EflVala.Application theApp;
 
 //=======================================================================
-public class EflVala.Application : GLib.Object
+public abstract interface EflVala.IApplication : GLib.Object
+//=======================================================================
+{
+    public abstract int run();
+    public abstract void setupFrontend();
+    public abstract void setupBackend();
+    public abstract void quit();
+
+    public abstract void handleCommandFromFrontend( EflVala.Command command );
+    public abstract void handleCommandFromBackend( EflVala.Command command );
+    public abstract void sendCommandToFrontend( EflVala.Command command );
+    public abstract void sendCommandToBackend( EflVala.Command command );
+}
+
+//=======================================================================
+public class EflVala.Application : EflVala.IApplication, GLib.Object
 //=======================================================================
 {
     private EflVala.EThread _ethread;
@@ -59,6 +74,30 @@ public class EflVala.Application : GLib.Object
     }
 
     public virtual void setupBackend()
+    {
+    }
+
+    public virtual void sendCommandToFrontend( EflVala.Command command )
+    {
+        _gthread.send( command );
+    }
+
+    public virtual void sendCommandToBackend( EflVala.Command command )
+    {
+        _ethread.send( command );
+    }
+
+    /**
+     * called within the context of the frontend (E) thread
+     **/
+    public virtual void handleCommandFromBackend( EflVala.Command command )
+    {
+    }
+
+    /**
+     * called within the context of the backend (G) thread
+     **/
+    public virtual void handleCommandFromFrontend( EflVala.Command command )
     {
     }
 

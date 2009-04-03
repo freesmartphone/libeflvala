@@ -23,6 +23,8 @@ class DemoApplication : EflVala.Application
 {
     Elm.Win win;
     Elm.Layout layout;
+    Elm.Box box;
+    Elm.Button button;
 
     public DemoApplication( string[] args )
     {
@@ -44,6 +46,33 @@ class DemoApplication : EflVala.Application
         layout.size_hint_weight_set( 1.0, 1.0 );
         layout.show();
         win.resize_object_add( layout );
+
+        box = new Elm.Box( win );
+        box.show();
+        //win.resize_object_add( box );
+
+        button = new Elm.Button( win );
+        button.smart_callback_add( "clicked", on_button_press );
+        button.label_set( "This is a button" );
+        button.show();
+        box.pack_end( button );
+    }
+
+    public void on_button_press()
+    {
+        debug( "Send PING to backend!" );
+        sendCommandToBackend( new EflVala.Command( "PING" ) );
+    }
+
+    public override void handleCommandFromBackend( EflVala.Command command )
+    {
+        button.label_set( "PONG from backend! ");
+    }
+
+    public override void handleCommandFromFrontend( EflVala.Command command )
+    {
+        if ( command.command == "PING" )
+            sendCommandToFrontend( new EflVala.Command( "PONG" ) );
     }
 }
 

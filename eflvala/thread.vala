@@ -24,6 +24,7 @@ public class EflVala.Thread : GLib.Object
 //=======================================================================
 {
     private unowned GLib.Thread _thread;
+    protected EflVala.BidirectionalThreadQueue q;
 
     public Thread()
     {
@@ -60,6 +61,11 @@ public class EflVala.Thread : GLib.Object
         return false;
     }
 
+    public virtual void send( EflVala.Command cmd )
+    {
+        q.write( cmd );
+    }
+
     //
     // internal
     //
@@ -77,7 +83,6 @@ public class EflVala.GThread : EflVala.Thread
 {
     private GLib.MainLoop mainloop;
     private GLib.IOChannel iochannel;
-    private EflVala.BidirectionalThreadQueue q;
 
     public GThread()
     {
@@ -110,6 +115,7 @@ public class EflVala.GThread : EflVala.Thread
     public override bool command( EflVala.Command cmd )
     {
         debug( "G Thread got command: '%s'", cmd.command );
+        theApp.handleCommandFromFrontend( cmd );
         return true;
     }
 
@@ -132,7 +138,6 @@ public class EflVala.GThread : EflVala.Thread
 public class EflVala.EThread : EflVala.Thread
 //=======================================================================
 {
-    private EflVala.BidirectionalThreadQueue q;
     private Ecore.Timer timer;
     private Ecore.FdHandler fdhandler;
 
@@ -171,6 +176,7 @@ public class EflVala.EThread : EflVala.Thread
     public override bool command( EflVala.Command cmd )
     {
         debug( "E Thread got command: '%s'", cmd.command );
+        theApp.handleCommandFromBackend( cmd );
         return true;
     }
 
