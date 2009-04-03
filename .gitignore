@@ -25,6 +25,3 @@ stamp-h1
 *.o
 *.vala.stamp
 
-mainloops
-elementary-vapi
-
