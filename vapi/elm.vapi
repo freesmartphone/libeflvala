@@ -448,6 +448,8 @@ public class GenlistItem
    public bool selected_get();
    public void disabled_set( bool disabled );
    public bool disabled_get();
+   public void subitems_clear();
+   public void expanded_set( bool disabled );
    public void show();
    public void del();
    public void* data_get();
