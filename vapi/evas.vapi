@@ -82,8 +82,13 @@ namespace Evas
 		public void   size_set ( int w, int h );
 		public void   filled_set (bool setting );
 		public void   file_set ( string file, string key );
-		public void   data_set ( void *data );
-        public void   alpha_set( bool has_alpha );
+		public void   data_set ( void* data );
+		//public void   data_convert (Evas_Colorspace to_cspace);
+		//public void*   data_get ( in Evas_Object* obj, bool for_writing);
+		public void   data_copy_set ( void* data );
+		public void   data_update_add ( int x, int y, int w, int h );
+		public void   alpha_set ( bool has_alpha );
+		public bool   alpha_get ( );
 	}
 }
 
