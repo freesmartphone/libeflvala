@@ -80,6 +80,7 @@ namespace Evas
         [CCode (cname = "evas_object_image_add")]
         public Image( Canvas* e );
 		public void   size_set ( int w, int h );
+		public void   size_get ( out int w, out int h);
 		public void   filled_set (bool setting );
 		public void   file_set ( string file, string key );
 		public void   data_set ( void* data );
