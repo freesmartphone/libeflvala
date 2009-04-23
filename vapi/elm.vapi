@@ -24,6 +24,42 @@ public void shutdown();
 public void run();
 public void exit();
 
+public double scale_get();
+public void scale_set( double scale );
+public Evas.Coord finger_size_get();
+public void finger_size_set( Evas.Coord size );
+
+
+//=======================================================================
+namespace Theme
+{
+    public void overlay_add( string item );
+    public void extension_add( string item );
+}
+
+
+//=======================================================================
+namespace Coords
+{
+    public void finger_size_adjust( int times_w, out Evas.Coord w, int times_h, out Evas.Coord h );
+}
+
+
+//=======================================================================
+namespace Quicklaunch
+{
+    public static delegate void Postfork_Func ( void* data );
+    public void init( [CCode(array_length_pos = 0.9)] string[] args );
+    public void sub_init( [CCode (array_length_pos = 0.9)] string[] args );
+    public void sub_shutdown();
+    public void shutdown();
+    public void seed();
+    public bool prepare( [CCode (array_length_pos = 0.9)] string[] args );
+    public bool fork( [CCode (array_length_pos = 0.9)] string[] args, string cwd, Postfork_Func postfork_func, void *postfork_data );
+    public void cleanup();
+    public int fallback( [CCode (array_length_pos = 0.9)] string[] args );
+}
+
 
 //=======================================================================
 [CCode (cname = "Evas_Object", free_function = "evas_object_del")]
@@ -31,24 +67,9 @@ public abstract class Object : Evas.Object
 {
     public void scale_set( double scale );
     public double scale_get();
+    public void style_set( string style );
+    public string style_get();
     public void focus();
-}
-
-
-//=======================================================================
-[CCode (cname = "Evas_Object", free_function = "evas_object_del")]
-public class Coords : Elm.Object
-{
-    public static void finger_size_adjust( int times_w, out Evas.Coord w, int times_h, out Evas.Coord h );
-}
-
-
-//=======================================================================
-[CCode (cname = "Evas_Object", free_function = "evas_object_del")]
-public class Theme : Elm.Object
-{
-    public static void overlay_add( string item );
-    public static void extension_add( string item );
 }
 
 
@@ -81,20 +102,6 @@ public class Win : Elm.Object
 }
 
 
-//=======================================================================
-namespace Quicklaunch
-{
-    public static delegate void Postfork_Func ( void* data );
-    public void init( [CCode(array_length_pos = 0.9)] string[] args );
-    public void sub_init( [CCode (array_length_pos = 0.9)] string[] args );
-    public void sub_shutdown();
-    public void shutdown();
-    public void seed();
-    public bool prepare(  [CCode (array_length_pos = 0.9)] string[] args );
-    public bool fork(  [CCode (array_length_pos = 0.9)] string[] args, string cwd, Postfork_Func postfork_func, void *postfork_data );
-    public void cleanup();
-    public int fallback([CCode (array_length_pos = 0.9)] string[] args);        
-}
 //=======================================================================
 [CCode (cname = "Evas_Object", free_function = "evas_object_del")]
 public class Bg : Elm.Object
