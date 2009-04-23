@@ -437,12 +437,18 @@ public class Genlist : Elm.Object
     public GenlistItem item_insert_before( GenlistItemClass itc, void *data, GenlistItem before, GenlistItemFlags flags, Evas.SmartCallback callback );
     public GenlistItem item_insert_after( GenlistItemClass itc, void *data, GenlistItem after, GenlistItemFlags flags, Evas.SmartCallback callback );
     public void clear();
+    public void multi_select_set( bool multi );
+    public void horizontal_mode_set( ListMode mode );
+    public void always_select_mode_set( bool always_select );
+    public void no_select_mode_set( bool no_select );
 
     public GenlistItem selected_item_get();
     public Eina.List<GenlistItem> selected_items_get();
     public GenlistItem first_item_get();
     public GenlistItem last_item_get();
+
 }
+
 
 //=======================================================================
 [Compact]
@@ -451,17 +457,24 @@ public class GenlistItem
 {
    public GenlistItem next_get();
    public GenlistItem prev_get();
+   public Genlist genlist_get();
+   public void subitems_clear();
+
    public void selected_set( bool selected );
    public bool selected_get();
+
+   public void expanded_set( bool expanded );
+   public bool expanded_get();
+
    public void disabled_set( bool disabled );
    public bool disabled_get();
-   public void subitems_clear();
-   public void expanded_set( bool disabled );
+
    public void show();
    public void del();
    public void* data_get();
    public void update();
 }
+
 
 //=======================================================================
 [CCode (cname = "Evas_Object", free_function = "evas_object_del")]
