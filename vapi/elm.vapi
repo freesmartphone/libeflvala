@@ -504,6 +504,37 @@ public class Pager : Elm.Object
 
 
 //=======================================================================
+[CCode (cname = "Evas_Object", free_function = "evas_object_del")]
+public class Image : Elm.Object
+{
+    [CCode (cname = "elm_image_add")]
+    public Image( Elm.Object? parent );
+
+    public void file_set( string file, string? group=null );
+    public void smooth_set( bool smooth );
+    public void scale_set( bool scale_up, bool scale_down );
+    public void fill_outside_set( bool fill_outside );
+    public void prescale_set( int size );
+    public void orient_set( ImageOrient orient );
+}
+
+
+//=======================================================================
+[CCode (cprefix = "ELM_IMAGE_")]
+public enum ImageOrient
+{
+    ORIENT_NONE,
+    ROTATE_90_CW,
+    ROTATE_180_CW,
+    ROTATE_90_CCW,
+    FLIP_HORIZONTAL,
+    FLIP_VERTICAL,
+    FLIP_TRANSPOSE,
+    FLIP_TRANSVERSE
+}
+
+
+//=======================================================================
 [CCode (cprefix = "ELM_WIN_")]
 public enum WinType
 {
