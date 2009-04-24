@@ -21,16 +21,40 @@ namespace Evas
 {
     public void init();
     public void shutdown();
-    public void free( ref Canvas* e);
 
-	//=======================================================================
-	[Compact]
-	[CCode (cname = "Evas")]
-	public struct Canvas
-	{
-		/* An Evas canvas handle */
-	}
+    public int render_method_lookup( string name );
 
+    //=======================================================================
+    [Compact]
+    [CCode (cname = "Evas", free_function = "evas_free")]
+    public class Canvas
+    {
+        [CCode (cname = "evas_new" )]
+        public Canvas();
+
+        public void output_method_set( int render_method );
+        public int output_method_get();
+
+        // FIXME: add engine info struct + functions
+
+        public void output_size_set( int w, int h );
+        public void output_size_get( out int w, out int h );
+        public void output_viewport_set( Coord x, Coord y, Coord w, Coord h );
+        public void output_viewport_get( out Coord x, out Coord y, out Coord w, out Coord h );
+
+        public Coord coord_screen_x_to_world( int x );
+        public Coord coord_screen_y_to_world( int y );
+        public int coord_world_x_to_screen( Coord x );
+        public int coord_world_y_to_screen( Coord y );
+
+        public void pointer_output_xy_get( out int x, out int y );
+        public void pointer_canvas_xy_get( out Coord x, out Coord y );
+        public int  pointer_button_down_mask_get();
+        public bool pointer_inside_get();
+
+        public void data_attach_set( void *data );
+        public void* data_attach_get();
+    }
 
     //=======================================================================
     [SimpleType]
@@ -56,7 +80,9 @@ namespace Evas
         public void resize( Coord w, Coord h );
         public void show();
         public bool visible_get();
-        public weak Canvas* evas_get( );
+
+        public weak Canvas evas_get();
+
         public void size_hint_align_set( double x, double y );
         public void size_hint_min_set( Coord w, Coord h );
         public void size_hint_max_set( Coord w, Coord h );
@@ -64,32 +90,34 @@ namespace Evas
         public void size_hint_weight_set( double x, double y );
 
         public void name_set( string name );
-        public weak string name_get ( );
+        public weak string name_get();
 
         public void smart_callback_add( string event, SmartCallback func );
     }
 
     //=======================================================================
     [Compact]
-    [CCode (cheader_filename = "Evas.h",
-			cname = "Evas_Object",
-			cprefix = "evas_object_image_",
-			free_function = "evas_object_del")]
+    [CCode (cheader_filename = "Evas.h", cname = "Evas_Object", cprefix = "evas_object_image_", free_function = "evas_object_del")]
     public class Image : Object
     {
         [CCode (cname = "evas_object_image_add")]
-        public Image( Canvas* e );
-		public void   size_set ( int w, int h );
-		public void   size_get ( out int w, out int h);
-		public void   filled_set (bool setting );
-		public void   file_set ( string file, string key );
-		public void   data_set ( void* data );
-		//public void   data_convert (Evas_Colorspace to_cspace);
-		//public void*   data_get ( in Evas_Object* obj, bool for_writing);
-		public void   data_copy_set ( void* data );
-		public void   data_update_add ( int x, int y, int w, int h );
-		public void   alpha_set ( bool has_alpha );
-		public bool   alpha_get ( );
-	}
+        public Image( Canvas e );
+        public void size_set( int w, int h );
+        public void size_get( out int w, out int h);
+
+        public void filled_set(bool setting );
+        public void file_set( string file, string key );
+
+        public void data_set( void* data );
+
+        //public void   data_convert( Evas_Colorspace to_cspace );
+        //public void*   data_get( in Evas_Object* obj, bool for_writing );
+
+        public void data_copy_set( void* data );
+        public void data_update_add( int x, int y, int w, int h );
+
+        public void alpha_set( bool has_alpha );
+        public bool alpha_get();
+    }
 }
 
