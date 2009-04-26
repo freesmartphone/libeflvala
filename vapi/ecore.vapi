@@ -112,6 +112,7 @@ namespace Ecore
     {
         [CCode (cname = "ecore_timer_add")]
         Timer( double in_, Callback callback );
+        public double interval_get();
         public void interval_set(double in_);
         public void freeze();
         public void thaw();
