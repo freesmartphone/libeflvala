@@ -23,7 +23,6 @@ elementary_vapi_VALASOURCES = \
 
 elementary_vapi_SOURCES = \
 	$(elementary_vapi_VALASOURCES:.vala=.c) \
-	$(elementary_vapi_VALASOURCES:.vala=.h) \
 	\
 	$(NULL)
 

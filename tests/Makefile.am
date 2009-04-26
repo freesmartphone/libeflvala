@@ -9,7 +9,6 @@ AM_CPPFLAGS = \
 
 noinst_PROGRAMS = $(TEST_PROGS)
 
-#../fsoframework/libfsoframework.la
 progs_ldadd = $(DEPS_LIBS)
 
 #
@@ -17,7 +16,7 @@ progs_ldadd = $(DEPS_LIBS)
 #
 TEST_PROGS += testeina
 testeina_VALASOURCES = testeina.vala
-testeina_SOURCES = testeina.c testeina.h
+testeina_SOURCES = testeina.c
 $(testeina_SOURCES): $(testeina_VALASOURCES)
 	$(VALAC) -C --basedir $(top_srcdir) --vapidir $(top_srcdir)/vapi \
 		--pkg eina --pkg glib-2.0 $^
@@ -30,7 +29,7 @@ EXTRA_DIST += $(testeina_VALASOURCES)
 #
 TEST_PROGS += testevas
 testevas_VALASOURCES = testevas.vala
-testevas_SOURCES = testevas.c testevas.h
+testevas_SOURCES = testevas.c
 $(testevas_SOURCES): $(testevas_VALASOURCES)
 	$(VALAC) -C --basedir $(top_srcdir) --vapidir $(top_srcdir)/vapi \
 		--pkg eina --pkg evas --pkg glib-2.0 $^
@@ -43,7 +42,7 @@ EXTRA_DIST += $(testevas_VALASOURCES)
 #
 TEST_PROGS += testecore
 testecore_VALASOURCES = testecore.vala
-testecore_SOURCES = testecore.c testecore.h
+testecore_SOURCES = testecore.c
 $(testecore_SOURCES): $(testecore_VALASOURCES)
 	$(VALAC) -C --basedir $(top_srcdir) --vapidir $(top_srcdir)/vapi \
 		--pkg eina --pkg ecore --pkg glib-2.0 $^
@@ -56,7 +55,7 @@ EXTRA_DIST += $(testecore_VALASOURCES)
 #
 TEST_PROGS += testelementary
 testelementary_VALASOURCES = testelementary.vala
-testelementary_SOURCES = testelementary.c testelementary.h
+testelementary_SOURCES = testelementary.c
 $(testelementary_SOURCES): $(testelementary_VALASOURCES)
 	$(VALAC) -C --basedir $(top_srcdir) --vapidir $(top_srcdir)/vapi \
 		--pkg eina --pkg evas --pkg elm --pkg glib-2.0 $^

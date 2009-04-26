@@ -19,7 +19,6 @@ eina_VALASOURCES = \
 
 eina_SOURCES = \
 	$(eina_VALASOURCES:.vala=.c) \
-	$(eina_VALASOURCES:.vala=.h) \
 	$(NULL)
 
 .vala.stamp: $(eina_VALASOURCES)

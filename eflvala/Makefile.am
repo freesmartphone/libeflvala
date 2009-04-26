@@ -18,10 +18,8 @@ INCLUDES = \
 	-include $(CONFIG_HEADER) \
 	$(NULL)
 
-eflvalaincludedir = $(includedir)/eflvala-1.0/eflvala
-eflvalainclude_HEADERS = \
-	$(libeflvala_la_VALASOURCES:.vala=.h) \
-	$(NULL)
+eflvalaincludedir = $(includedir)/eflvala-1.0
+eflvalainclude_HEADERS = eflvala.h
 
 BUILT_SOURCES = .vala.stamp
 
@@ -44,14 +42,15 @@ libeflvala_la_SOURCES = \
 	$(NULL)
 
 .vala.stamp: $(libeflvala_la_VALASOURCES)
-	$(VALAC) -c --vapidir $(top_srcdir)/vapi \
+	$(VALAC) -C --vapidir $(top_srcdir)/vapi \
 		--pkg dbus-glib-1 \
 		--pkg eina \
 		--pkg evas \
 		--pkg ecore \
 		--pkg elm \
 		--pkg posix \
-		--library=eflvala-1.0 \
+		--header eflvala.h \
+		--library eflvala-1.0 \
 		--save-temps \
 		--thread \
 		--basedir $(top_srcdir) $^

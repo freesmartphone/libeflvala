@@ -4,7 +4,8 @@ NULL =
 
 AUTOMAKE_OPTIONS = subdir-objects
 
-INCLUDES = \
+AM_CPPFLAGS = \
+	-I$(top_srcdir)/eflvala \
 	$(DEPS_CFLAGS) \
 	$(THREAD_CFLAGS) \
 	-include $(CONFIG_HEADER) \
@@ -20,12 +21,11 @@ mainloops_VALASOURCES = \
 
 mainloops_SOURCES = \
 	$(mainloops_VALASOURCES:.vala=.c) \
-	$(mainloops_VALASOURCES:.vala=.h) \
 	\
 	$(NULL)
 
 .vala.stamp: $(mainloops_VALASOURCES)
-	$(VALAC) -c --vapidir $(top_srcdir)/vapi \
+	$(VALAC) -C --vapidir $(top_srcdir)/vapi \
 	            --vapidir ../../../eflvala \
 	            --pkg dbus-glib-1 \
 	            --pkg eflvala-1.0 \

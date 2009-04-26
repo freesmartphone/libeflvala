@@ -6,16 +6,17 @@ vapidir = $(datadir)/vala/vapi
 
 dist_vapi_DATA = \
   eina.vapi \
+  eina.deps \
   evas.vapi \
+  evas.deps \
   ecore.vapi \
+  ecore.deps \
   elm.vapi \
+  elm.deps \
   $(NULL)
 
 EXTRA_DIST += \
-  eina.vapi \
-  evas.vapi \
-  ecore.vapi \
-  elm.vapi \
+  $(dist_vapi_DATA) \
   $(NULL)
 
 MAINTAINERCLEANFILES = Makefile.in
