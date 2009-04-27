@@ -94,8 +94,11 @@ public class Win : Elm.Object
     public void iconified_set( bool iconified );
     public void layer_set( int layer );
     public void rotation_set( int rotation );
+
     public void keyboard_mode_set( WinKeyboardMode mode );
     public void keyboard_win_set( bool is_keyboard );
+
+    public Elm.Win inwin_add();
     public void inwin_style_set( string style );
     public void inwin_activate();
     public void inwin_content_set( Elm.Object content );
