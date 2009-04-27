@@ -395,6 +395,7 @@ public class List : Elm.Object
     public void go();
     public void multi_select_set( bool multi );
     public void horizontal_mode_set( ListMode mode );
+    public void always_select_mode_set( bool always_select );
 }
 
 
