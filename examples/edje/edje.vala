@@ -44,7 +44,6 @@ public static int main( string[] args)
 
     buttons.signal_callback_add( "angstrom|system|suspend", "*", on_suspend );
 
-
     message( "-> mainloop" );
     Ecore.MainLoop.begin();
     message( "<- mainloop" );

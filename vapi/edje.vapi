@@ -55,6 +55,24 @@ namespace Edje
     public void message_signal_process();
 
     //=======================================================================
+    [CCode (cprefix = "EDJE_MESSAGE_")]
+    public enum MessageType
+    {
+        NONE,
+        SIGNAL, /* DONT USE THIS */
+        STRING,
+        INT,
+        FLOAT,
+        STRING_SET,
+        INT_SET,
+        FLOAT_SET,
+        STRING_INT,
+        STRING_FLOAT,
+        STRING_INT_SET,
+        STRING_FLOAT_SET
+    }
+
+    //=======================================================================
     [CCode (cprefix = "EDJE_ASPECT_CONTROL_")]
     public enum AspectControl
     {
@@ -79,6 +97,9 @@ namespace Edje
 
     [CCode (instance_pos = 0)]
     public delegate void TextChangedCallback( Object obj, string part );
+
+    [CCode (instance_pos = 0)]
+    public delegate void MessageHandlerCallback( Object obj, MessageType type, int id, void* msg );
 
     //=======================================================================
     [Compact]
@@ -172,8 +193,8 @@ namespace Edje
         public bool part_table_col_row_size_get( string part, out int cols, out int rows );
         public bool part_table_clear( string part, bool clear );
 
-        //public void message_send           ( Edje_Message_Type type, int id, void *msg);
-        //public void message_handler_set    ( void (*func) (void *data, Evas_Object *obj, Edje_Message_Type type, int id, void *msg), void *data);
+        public void message_send( MessageType type, int id, void* msg );
+        public void message_handler_set( MessageHandlerCallback callback );
 
         public void message_signal_process();
     }
