@@ -33,6 +33,7 @@ public static int main( string[] args)
     background.file_set( "/tmp/angstrom-bootmanager.edj", "background" );
     background.resize( 320, 480 );
     background.layer_set( 0 );
+    background.part_text_set( "version", "Hello World" );
     background.show();
 
     var buttons = new Edje.Object( evas );
@@ -43,10 +44,6 @@ public static int main( string[] args)
 
     buttons.signal_callback_add( "angstrom|system|suspend", "*", on_suspend );
 
-    /* get pointer to object in part */
-    assert( background.part_exists( "version" ) );
-    var text = (Evas.Text) background.part_object_get( "version" ); // as Evas.Text;
-    text.text_set( "Hello Edje World!" );
 
     message( "-> mainloop" );
     Ecore.MainLoop.begin();

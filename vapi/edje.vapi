@@ -74,6 +74,12 @@ namespace Edje
         ITEM
     }
 
+    [CCode (instance_pos = 0)]
+    public delegate void SignalCallback( Object obj, string emission, string source );
+
+    [CCode (instance_pos = 0)]
+    public delegate void TextChangedCallback( Object obj, string part );
+
     //=======================================================================
     [Compact]
     [CCode (cname = "Evas_Object", clower_case_prefix = "edje_object_", free_function = "evas_object_free")]
@@ -92,23 +98,23 @@ namespace Edje
         public int load_error_get();
         public string edje_load_error_str( int error );
 
-        [CCode (instance_pos = 0)]
-        public delegate void SignalCallback( Object obj, string emission, string source );
-
         public void signal_callback_add( string emission, string source, SignalCallback callback );
         public void* signal_callback_del( string emission, string source, SignalCallback callback );
-
         public void signal_emit( string emission, string source );
-        public void play_set( int play); //FIXME: bool?
-        public int play_get();
-        public void animation_set( int on ); //FIXME: bool?
-        public int animation_get();
+
+        public void play_set( bool play);
+        public bool play_get();
+        public void animation_set( bool on );
+        public bool animation_get();
 
         public int freeze();
         public int thaw();
+
         public void color_class_set( string color_class, int r, int g, int b, int a, int r2, int g2, int b2, int a2, int r3, int g3, int b3, int a3 );
         public void color_class_del( string color_class );
+
         public void text_class_set( string text_class, string font, Evas.FontSize size );
+
         public void size_min_get( out Evas.Coord minw, out Evas.Coord minh );
         public void size_max_get( out Evas.Coord maxw, out Evas.Coord maxh );
         public void calc_force();
@@ -117,8 +123,10 @@ namespace Edje
 
         public bool part_exists( string part );
         public Evas.Object? part_object_get( string part );
+
         public void part_geometry_get( string part, Evas.Coord x, Evas.Coord y, Evas.Coord w, Evas.Coord h );
-//        public void text_change_cb_set( void (*func) (void *data, Evas_Object *obj, string part), void *data );
+
+        public void text_change_cb_set( TextChangedCallback callback );
         public void part_text_set( string part, string text );
         public string part_text_get( string part );
         public void part_text_unescaped_set( string part, string text_to_escape );
@@ -138,6 +146,7 @@ namespace Edje
         public void part_swallow( string part, Evas.Object obj_swallow );
         public void part_unswallow( Evas.Object obj_swallow );
         public Evas.Object part_swallow_get( string part);
+
         public string part_state_get( string part, out double val_ret );
         public int part_drag_dir_get( string part );
         public void part_drag_value_set( string part, double dx, double dy );

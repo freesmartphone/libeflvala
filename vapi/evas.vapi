@@ -35,8 +35,6 @@ namespace Evas
         public void output_method_set( int render_method );
         public int output_method_get();
 
-        // FIXME: add engine info struct + functions
-
         public void output_size_set( int w, int h );
         public void output_size_get( out int w, out int h );
         public void output_viewport_set( Coord x, Coord y, Coord w, Coord h );
@@ -49,7 +47,7 @@ namespace Evas
 
         public void pointer_output_xy_get( out int x, out int y );
         public void pointer_canvas_xy_get( out Coord x, out Coord y );
-        public int  pointer_button_down_mask_get();
+        public int pointer_button_down_mask_get();
         public bool pointer_inside_get();
 
         public void data_attach_set( void *data );
@@ -121,6 +119,7 @@ namespace Evas
     {
         [CCode (cname = "evas_object_image_add")]
         public Image( Canvas e );
+
         public void size_set( int w, int h );
         public void size_get( out int w, out int h);
 

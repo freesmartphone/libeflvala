@@ -40,9 +40,6 @@ namespace Ecore
         void iterate();
         void begin();
         void quit();
-
-/*        [CCode (cname = "ecore_main_fd_handler_add")]
-        FdHandler fd_handler_add( int fd, FdHandlerFlags flags, FdHandler fd_func, BufHandler buf_func );*/
     }
 
     //=======================================================================
