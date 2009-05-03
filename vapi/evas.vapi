@@ -67,6 +67,11 @@ namespace Evas
     public struct Coord {}
 
     //=======================================================================
+    [SimpleType]
+    [IntegerType (rank=6)]
+    public struct FontSize {}
+
+    //=======================================================================
     [CCode (instance_pos = 0)]
     public delegate void SmartCallback( Evas.Object obj, void* event_info );
 

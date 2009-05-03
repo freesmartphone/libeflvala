@@ -1,4 +1,4 @@
-AC_INIT([libeflvala], [0.0.1.0], [mlauer@vanille-media.de], [libeflvala])
+AC_INIT([libeflvala], [0.0.2.0], [mlauer@vanille-media.de], [libeflvala])
 AC_CONFIG_SRCDIR([Makefile.am])
 AC_CONFIG_HEADERS(config.h)
 AM_INIT_AUTOMAKE([dist-bzip2])
@@ -87,6 +87,7 @@ AC_CONFIG_FILES([
   tests/Makefile
   examples/Makefile
   examples/eina/Makefile
+  examples/edje/Makefile
   examples/elementary/Makefile
   examples/library/Makefile
   examples/library/mainloops/Makefile
