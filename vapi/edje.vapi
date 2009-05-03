@@ -92,8 +92,11 @@ namespace Edje
         public int load_error_get();
         public string edje_load_error_str( int error );
 
-        //public void signal_callback_add ( string emission, string source, void (*func) (void *data, Evas_Object *obj, string emission, string source), void *data);
-        //public void *signal_callback_del ( string emission, string source, void (*func) (void *data, Evas_Object *obj, string emission, string source));
+        [CCode (instance_pos = 0)]
+        public delegate void SignalCallback( Object obj, string emission, string source );
+
+        public void signal_callback_add( string emission, string source, SignalCallback callback );
+        public void* signal_callback_del( string emission, string source, SignalCallback callback );
 
         public void signal_emit( string emission, string source );
         public void play_set( int play); //FIXME: bool?

@@ -41,17 +41,27 @@ public static int main( string[] args)
     buttons.layer_set( 1 );
     buttons.show();
 
+    buttons.signal_callback_add( "angstrom|system|suspend", "*", on_suspend );
+
     /* get pointer to object in part */
     assert( background.part_exists( "version" ) );
     var text = (Evas.Text) background.part_object_get( "version" ); // as Evas.Text;
     text.text_set( "Hello Edje World!" );
 
-    /* main loop */
+    message( "-> mainloop" );
     Ecore.MainLoop.begin();
+    message( "<- mainloop" );
 
     /* shutdown */
+
+    /* FIXME: Something SIGSEGVs here...
     Edje.shutdown();
-    EcoreEvas.init();
+    EcoreEvas.shutdown();
+    */
     return 0;
 }
 
+public static void on_suspend( Edje.Object obj, string emission, string source )
+{
+    Ecore.MainLoop.quit();
+}
