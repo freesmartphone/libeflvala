@@ -45,7 +45,7 @@ testecore_VALASOURCES = testecore.vala
 testecore_SOURCES = testecore.c
 $(testecore_SOURCES): $(testecore_VALASOURCES)
 	$(VALAC) -C --basedir $(top_srcdir) --vapidir $(top_srcdir)/vapi \
-		--pkg eina --pkg ecore --pkg glib-2.0 $^
+		--pkg eina --pkg evas --pkg ecore --pkg glib-2.0 $^
 	touch $@
 testecore_LDADD = $(progs_ldadd)
 EXTRA_DIST += $(testecore_VALASOURCES)

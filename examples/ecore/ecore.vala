@@ -16,18 +16,30 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  *
  **/
-using Edje;
-
 public static int main( string[] args)
 {
-    Edje.init();
-    doit();
-    Edje.shutdown();
+    /* init */
+    Ecore.Evas.init();
+
+    /* check available engines */
+
+    Eina.List<string> engines = Ecore.Evas.engines_get();
+    for ( int i = 0; i < engines.count(); ++i )
+    {
+        message( "ecore.evas got engine '%s'", engines.nth( i ) );
+    }
+
+    /* create a window */
+    var ee = new Ecore.Evas.Canvas( "software_x11", 0, 0, 320, 480, null );
+    ee.title_set( "Ecore Test Window" );
+    ee.show();
+
+    /* main loop */
+    Ecore.MainLoop.begin();
+
+
+    /* shutdown */
+    Ecore.Evas.shutdown();
     return 0;
 }
 
-//=================================================================
-public static void doit()
-{
-    debug( "yo" );
-}

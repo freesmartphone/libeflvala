@@ -87,6 +87,7 @@ AC_CONFIG_FILES([
   tests/Makefile
   examples/Makefile
   examples/eina/Makefile
+  examples/ecore/Makefile
   examples/edje/Makefile
   examples/elementary/Makefile
   examples/library/Makefile
