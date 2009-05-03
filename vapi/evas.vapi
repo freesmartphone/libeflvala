@@ -97,7 +97,21 @@ namespace Evas
         public void name_set( string name );
         public weak string name_get();
 
+        public void layer_set( int layer );
+
         public void smart_callback_add( string event, SmartCallback func );
+    }
+
+    //=======================================================================
+    [Compact]
+    [CCode (cheader_filename = "Evas.h", cname = "Evas_Object", cprefix = "evas_object_text_", free_function = "evas_object_del")]
+    public class Text : Object
+    {
+        [CCode (cname = "evas_object_text_add")]
+        public Text( Canvas e );
+
+        public void text_set( string text );
+        public weak string text_get();
     }
 
     //=======================================================================

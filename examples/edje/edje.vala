@@ -16,18 +16,42 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  *
  **/
-using Edje;
-
 public static int main( string[] args)
 {
+    /* init */
+    EcoreEvas.init();
     Edje.init();
-    doit();
+
+    /* create a window */
+    var ee = new EcoreEvas.Window( "software_x11", 0, 0, 320, 480, null );
+    ee.title_set( "Edje Example Application" );
+    ee.show();
+    var evas = ee.evas_get();
+
+    /* create an edje */
+    var background = new Edje.Object( evas );
+    background.file_set( "/tmp/angstrom-bootmanager.edj", "background" );
+    background.resize( 320, 480 );
+    background.layer_set( 0 );
+    background.show();
+
+    var buttons = new Edje.Object( evas );
+    buttons.file_set( "/tmp/angstrom-bootmanager.edj", "buttons" );
+    buttons.resize( 320, 480 );
+    buttons.layer_set( 1 );
+    buttons.show();
+
+    /* get pointer to object in part */
+    assert( background.part_exists( "version" ) );
+    var text = (Evas.Text) background.part_object_get( "version" ); // as Evas.Text;
+    text.text_set( "Hello Edje World!" );
+
+    /* main loop */
+    Ecore.MainLoop.begin();
+
+    /* shutdown */
     Edje.shutdown();
+    EcoreEvas.init();
     return 0;
 }
 
-//=================================================================
-public static void doit()
-{
-    debug( "yo" );
-}

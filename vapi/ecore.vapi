@@ -121,64 +121,68 @@ namespace Ecore
         public static double precision_get();
         public static void precision_set(double precision);
     }
+}
 
-    [CCode (cprefix = "Ecore_Evas_", lower_case_cprefix = "ecore_evas_", cheader_filename = "Ecore_Evas.h")]
-    namespace Evas
+//=======================================================================
+[CCode (cprefix = "Ecore_Evas_", lower_case_cprefix = "ecore_evas_", cheader_filename = "Ecore_Evas.h")]
+namespace EcoreEvas
+{
+
+    public void init();
+    public void shutdown();
+    public bool engine_type_supported_get( EngineType engine );
+    public Eina.List<string> engines_get();
+    public void engines_free( Eina.List<string> engines );
+
+    //=======================================================================
+    [CCode (cprefix = "ECORE_EVAS_ENGINE_")]
+    public enum EngineType
     {
+        SOFTWARE_BUFFER,
+        SOFTWARE_X11,
+        XRENDER_X11,
+        OPENGL_X11,
+        SOFTWARE_XCB,
+        XRENDER_XCB,
+        SOFTWARE_GDI,
+        SOFTWARE_DDRAW,
+        DIRECT3D,
+        OPENGL_GLEW,
+        QUARTZ,
+        SOFTWARE_SDL,
+        DIRECTFB,
+        SOFTWARE_FB,
+        SOFTWARE_16_X11,
+        SOFTWARE_16_DDRAW,
+        SOFTWARE_16_WINCE
+    }
 
-        public void init();
-        public void shutdown();
-        public bool engine_type_supported_get( EngineType engine );
-        public Eina.List<string> engines_get();
-        public void engines_free( Eina.List<string> engines );
+    //=======================================================================
+    [CCode (cprefix = "ECORE_EVAS_AVOID_DAMAGE_")]
+    public enum AvoidDamageType
+    {
+        NONE,
+        EXPOSE,
+        BUILT_IN
+    }
 
-        [CCode (cprefix = "ECORE_EVAS_ENGINE_")]
-        public enum EngineType
-        {
-            SOFTWARE_BUFFER,
-            SOFTWARE_X11,
-            XRENDER_X11,
-            OPENGL_X11,
-            SOFTWARE_XCB,
-            XRENDER_XCB,
-            SOFTWARE_GDI,
-            SOFTWARE_DDRAW,
-            DIRECT3D,
-            OPENGL_GLEW,
-            QUARTZ,
-            SOFTWARE_SDL,
-            DIRECTFB,
-            SOFTWARE_FB,
-            SOFTWARE_16_X11,
-            SOFTWARE_16_DDRAW,
-            SOFTWARE_16_WINCE
-        }
+    //=======================================================================
+    [Compact]
+    [CCode (cname = "Ecore_Evas", cprefix = "ecore_evas_", free_function = "ecore_evas_free")]
+    public class Window
+    {
+        [CCode (cname = "ecore_evas_new")]
+        public Window( string engine, int x, int y, int w, int h, string? extra_options );
 
-        [CCode (cprefix = "ECORE_EVAS_AVOID_DAMAGE_")]
-        public enum AvoidDamageType
-        {
-            NONE,
-            EXPOSE,
-            BUILT_IN
-        }
+        public string engine_name_get();
 
-        [Compact]
-        [CCode (cname = "Ecore_Evas", cprefix = "ecore_evas_", free_function = "ecore_evas_free")]
-        public class Canvas
-        {
-            [CCode (cname = "ecore_evas_new")]
-            public Canvas( string engine, int x, int y, int w, int h, string? extra_options );
+        [CCode (cname = "ecore_evas_get")]
+        public Evas.Canvas evas_get();
 
-            public string engine_name_get();
+        public void title_set( string t );
+        public weak string title_get();
 
-            [CCode (cname = "ecore_evas_get")]
-            public Evas.Canvas evas_get();
-
-            public void title_set( string t );
-            public string title_get();
-
-            public void show();
-            public void hide();
-        }
+        public void show();
+        public void hide();
     }
 }

@@ -23,6 +23,7 @@ ecore_SOURCES = \
 
 .vala.stamp: $(ecore_VALASOURCES)
 	$(VALAC) -C --vapidir $(top_srcdir)/vapi \
+	            --pkg evas \
 	            --pkg ecore \
 	            --save-temps \
 	            --basedir $(top_srcdir) $<

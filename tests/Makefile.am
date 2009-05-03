@@ -19,7 +19,7 @@ testeina_VALASOURCES = testeina.vala
 testeina_SOURCES = testeina.c
 $(testeina_SOURCES): $(testeina_VALASOURCES)
 	$(VALAC) -C --basedir $(top_srcdir) --vapidir $(top_srcdir)/vapi \
-		--pkg eina --pkg glib-2.0 $^
+		--pkg eina --pkg ecore --pkg glib-2.0 $^
 	touch $@
 testeina_LDADD = $(progs_ldadd)
 EXTRA_DIST += $(testeina_VALASOURCES)
@@ -58,7 +58,7 @@ testelementary_VALASOURCES = testelementary.vala
 testelementary_SOURCES = testelementary.c
 $(testelementary_SOURCES): $(testelementary_VALASOURCES)
 	$(VALAC) -C --basedir $(top_srcdir) --vapidir $(top_srcdir)/vapi \
-		--pkg eina --pkg evas --pkg elm --pkg glib-2.0 $^
+		--pkg eina --pkg evas --pkg ecore --pkg elm --pkg glib-2.0 $^
 	touch $@
 testelementary_LDADD = $(progs_ldadd)
 EXTRA_DIST += $(testelementary_VALASOURCES)

@@ -76,16 +76,16 @@ namespace Edje
 
     //=======================================================================
     [Compact]
-    [CCode (free_function = "evas_object_free")]
-    public class Object
+    [CCode (cname = "Evas_Object", clower_case_prefix = "edje_object_", free_function = "evas_object_free")]
+    public class Object : Evas.Object
     {
         [CCode (cname = "edje_object_add") ]
-        public Object();
+        public Object( Evas.Canvas parent );
 
         public void scale_set( double scale );
         public double scale_get();
 
-        public string data_get( string key);
+        public string data_get( string key );
 
         public int file_set( string file, string group );
         public void file_get( out string file, out string group );
@@ -112,8 +112,8 @@ namespace Edje
         public void size_min_calc( out Evas.Coord minw, out Evas.Coord minh );
         public void size_min_restricted_calc( out Evas.Coord minw, out Evas.Coord minh, Evas.Coord restrictedw, Evas.Coord restrictedh );
 
-        public int part_exists( string part );
-        public Evas.Object part_object_get( string part);
+        public bool part_exists( string part );
+        public Evas.Object? part_object_get( string part );
         public void part_geometry_get( string part, Evas.Coord x, Evas.Coord y, Evas.Coord w, Evas.Coord h );
 //        public void text_change_cb_set( void (*func) (void *data, Evas_Object *obj, string part), void *data );
         public void part_text_set( string part, string text );

@@ -19,27 +19,26 @@
 public static int main( string[] args)
 {
     /* init */
-    Ecore.Evas.init();
+    EcoreEvas.init();
 
     /* check available engines */
 
-    Eina.List<string> engines = Ecore.Evas.engines_get();
+    Eina.List<string> engines = EcoreEvas.engines_get();
     for ( int i = 0; i < engines.count(); ++i )
     {
         message( "ecore.evas got engine '%s'", engines.nth( i ) );
     }
 
     /* create a window */
-    var ee = new Ecore.Evas.Canvas( "software_x11", 0, 0, 320, 480, null );
+    var ee = new EcoreEvas.Window( "software_x11", 0, 0, 320, 480, null );
     ee.title_set( "Ecore Test Window" );
     ee.show();
 
     /* main loop */
     Ecore.MainLoop.begin();
 
-
     /* shutdown */
-    Ecore.Evas.shutdown();
+    EcoreEvas.shutdown();
     return 0;
 }
 
