@@ -53,7 +53,7 @@ namespace Eina
         public void last();
 
         [ReturnsModifiedPointer ()]
-        public void append(G# data);
+        public void append(owned G data);
         [ReturnsModifiedPointer ()]
         public void append_relative(G data, G relative);
         [ReturnsModifiedPointer ()]
@@ -61,22 +61,22 @@ namespace Eina
 
         public uint count();
 
-        public weak G data_find(G# data);
+        public weak G data_find(owned G data);
         // ???
-        public List<G> data_find_list(G# data);
+        public List<G> data_find_list(owned G data);
 
         public weak G nth(uint n);
         public List<G> nth_list(int n);
 
         [ReturnsModifiedPointer ()]
-        public void prepend(G# data);
+        public void prepend(owned G data);
         [ReturnsModifiedPointer ()]
         public void prepend_relative(G data, G relative);
         [ReturnsModifiedPointer ()]
         public void prepend_relative_list(G data, List<G> relative);
 
         [ReturnsModifiedPointer ()]
-        public void remove(G# data);
+        public void remove(owned G data);
         [ReturnsModifiedPointer ()]
         public void remove_list(List<G> data);
 
@@ -121,7 +121,7 @@ namespace Eina
         [ReturnsModifiedPointer ()]
         public void append(G data);
         [ReturnsModifiedPointer ()]
-        public void remove(G# data);
+        public void remove(owned G data);
         [ReturnsModifiedPointer ()]
         public void remove_list(List<G> data);
 
