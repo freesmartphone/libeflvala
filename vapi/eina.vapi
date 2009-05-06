@@ -600,12 +600,14 @@ namespace Eina
     //=======================================================================
     [Compact]
     [CCode (lower_case_cprefix = "stringshare_", ref_function = "eina_stringshare_ref", unref_function = "eina_stringshare_del")]
-    public class String: string
+    public class String : string
     {
         public static int init();
         public static int shutdown();
         [ReturnsModifiedPointer ()]
         void add();
+        [ReturnsModifiedPointer ()]
+        void add_length( uint slen );
         [ReturnsModifiedPointer ()]
         void ref();
         void del();
