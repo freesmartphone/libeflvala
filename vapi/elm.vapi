@@ -250,7 +250,7 @@ public class Layout : Elm.Object
 
     public void file_set( string file, string group );
     public void content_set( string swallow, Elm.Object content );
-    public Elm.Object edje_get();
+    public weak Elm.Object edje_get();
 }
 
 
@@ -390,15 +390,21 @@ public class List : Elm.Object
 {
     [CCode (cname = "elm_list_add")]
     public List( Elm.Object? parent );
-    public ListItem append( string label, Elm.Object icon, Elm.Object end, Evas.SmartCallback func );
-    public ListItem prepend( string label, Elm.Object icon, Elm.Object end, Evas.SmartCallback func );
-    public ListItem insert_before( ListItem before, string label, Elm.Object icon, Elm.Object end, Evas.SmartCallback func );
-    public ListItem insert_after( ListItem after, string label, Elm.Object icon, Elm.Object end, Evas.SmartCallback func );
+    [CCode (cname = "elm_list_item_append")]
+    public ListItem append( string label, Elm.Object? icon, Elm.Object? end, Evas.SmartCallback? func);
+    [CCode (cname = "elm_list_item_prepend")]
+    public ListItem prepend( string label, Elm.Object? icon, Elm.Object? end, Evas.SmartCallback? func );
+    public ListItem insert_before( ListItem before, string label, Elm.Object? icon, Elm.Object? end, Evas.SmartCallback? func );
+    public ListItem insert_after( ListItem after, string label, Elm.Object? icon, Elm.Object? end, Evas.SmartCallback? func );
 
     public void go();
     public void multi_select_set( bool multi );
     public void horizontal_mode_set( ListMode mode );
     public void always_select_mode_set( bool always_select );
+
+    public weak ListItem selected_item_get();
+    public weak Eina.List<ListItem> selected_items_get();
+	
 }
 
 
