@@ -1,4 +1,4 @@
-SUBDIRS = eina ecore edje elementary
+SUBDIRS = eina ecore ecore-signals edje elementary
 
 if MAKE_LIBRARY
   SUBDIRS += library
