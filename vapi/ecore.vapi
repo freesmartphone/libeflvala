@@ -28,11 +28,55 @@ namespace Ecore
 
     //=======================================================================
     [CCode (instance_pos = 0)]
+    public delegate bool EventHandlerFunc( int type, void *event );
+
+    //=======================================================================
+    [CCode (instance_pos = 0)]
     public delegate bool FdHandlerFunc( FdHandler fdhandler );
 
     //=======================================================================
     [CCode (instance_pos = 0)]
     public delegate bool BufHandlerFunc( void* data );
+
+    [CCode (cname="Ecore_Event_Signal_User")]
+    public struct EventSignalUser
+    {
+	public int number;
+    }
+
+    [CCode (cname="Ecore_Event_Signal_Exit")]
+    public struct EventSignalExit
+    {
+	public uint interrupt;
+	public uint quit;
+	public uint terminate;
+    }
+
+    [CCode (cname="Ecore_Event_Signal_Realtime")]
+    public struct EventSignalRealtime
+    {
+	public int num;
+    }
+
+    [CCode (cprefix = "ECORE_EVENT_")]
+    public enum EventType
+    {
+	NONE,
+	SIGNAL_USER,
+	SIGNAL_HUP,
+	SIGNAL_EXIT,
+	SIGNAL_POWER,
+	SIGNAL_REALTIME,
+    }
+
+    //=======================================================================
+    [Compact]
+    [CCode (cname = "Ecore_Event_Handler", free_function = "ecore_event_handler_del")]
+    public class EventHandler
+    {
+        [CCode (cname = "ecore_event_handler_add")]
+        EventHandler( int type, EventHandlerFunc event_func );
+    }
 
     //=======================================================================
     namespace MainLoop

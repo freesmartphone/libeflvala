@@ -11,6 +11,8 @@ dist_vapi_DATA = \
   evas.deps \
   ecore.vapi \
   ecore.deps \
+  edje.vapi \
+  edje.deps \
   elm.vapi \
   elm.deps \
   $(NULL)
