@@ -92,13 +92,13 @@ namespace Edje
         ITEM
     }
 
-    [CCode (instance_pos = 0)]
+    [CCode (cname = "Edje_Signal_Cb", instance_pos = 0)]
     public delegate void SignalCallback( Object obj, string emission, string source );
 
-    [CCode (instance_pos = 0)]
+    [CCode (cname = "Edje_Text_Change_Cb", instance_pos = 0)]
     public delegate void TextChangedCallback( Object obj, string part );
 
-    [CCode (instance_pos = 0)]
+    [CCode (cname = "Edje_Message_Handler_Cb", instance_pos = 0)]
     public delegate void MessageHandlerCallback( Object obj, MessageType type, int id, void* msg );
 
     //=======================================================================
