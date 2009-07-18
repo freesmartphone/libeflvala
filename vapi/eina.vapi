@@ -22,10 +22,10 @@ namespace Eina
     public int init();
     public int shutdown();
 
-    [CCode (cname = "Eina_CompareCb")]
+    [CCode (cname = "Eina_Compare_Cb")]
     public static delegate int CompareCb(void* data1, void* data2);
 
-    [CCode (cname = "Eina_FreeCb", instance_pos = 0)]
+    [CCode (cname = "Eina_Free_Cb", instance_pos = 0)]
     public static delegate void FreeCb(void* data);
 
     [CCode (instance_pos = 0)]
@@ -331,7 +331,7 @@ namespace Eina
     //=======================================================================
     namespace File
     {
-        [CCode (cname = "Eina_File_DirListCb")]
+        [CCode (cname = "Eina_File_Dir_List_Cb")]
         public static delegate void DirListCb(string name, string path, void* data);
         public static bool dir_list(string dir, bool recursive, DirListCb cb, void* data);
         public static Eina.Array split(string path);
