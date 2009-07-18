@@ -92,7 +92,7 @@ namespace Evas
     public struct FontSize {}
 
     //=======================================================================
-    [CCode (instance_pos = 0)]
+    [CCode (cname = "Evas_Smart_Cb", instance_pos = 0)]
     public delegate void SmartCallback( Evas.Object obj, void* event_info );
 
     //=======================================================================
