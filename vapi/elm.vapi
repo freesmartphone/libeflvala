@@ -734,8 +734,12 @@ public class ListItem
     public void selected_set( bool selected );
     public void show();
     public void* data_get();
+    public string label_get();
+    public void label_set( string label );
     public Elm.Object icon_get();
+    public void icon_set( Elm.Object icon );
     public Elm.Object end_get();
+    public void end_set( Elm.Object end );
 }
 
 }
