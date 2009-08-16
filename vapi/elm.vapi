@@ -359,6 +359,25 @@ public class Photo : Elm.Object
     public void size_set( int size );
 }
 
+//=======================================================================
+[CCode (cname = "Evas_Object", free_function = "evas_object_del")]
+public class ProgressBar : Elm.Object
+{
+    [CCode (cname = "elm_progressbar_add")]
+    public ProgressBar( Elm.Object? parent );
+
+    public void label_set( string label );
+    public void icon_set( Elm.Object icon );
+    public void span_size_set( Evas.Coord size );
+    public void horizontal_set( bool horizontal );
+    public void inverted_set( bool inverted );
+    public void pulse_set( bool pulse );
+    public void pulse( bool state);
+    public void unit_format_set( string format );
+    public void value_set( double val );
+    public double value_get();
+}
+
 
 //=======================================================================
 [CCode (cname = "Evas_Object", free_function = "evas_object_del")]
@@ -460,7 +479,6 @@ public class Genlist : Elm.Object
     public Eina.List<GenlistItem> selected_items_get();
     public GenlistItem first_item_get();
     public GenlistItem last_item_get();
-
 }
 
 
@@ -485,7 +503,9 @@ public class GenlistItem
 
    public void show();
    public void del();
+   // FIXME: Caution: Do we really have access to the data field or is it used by Vala?
    public void* data_get();
+   public void data_set( void* data );
    public void update();
 }
 
