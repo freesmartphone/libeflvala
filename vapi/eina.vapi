@@ -248,19 +248,19 @@ namespace Eina
         public static int itoa(int n, string s);
         public static int xtoa(uint n, string s);
         public static int dtoa(double d, string s);
-        //vala doesn't support long long
-        //public static bool atod(string src, int length,out long long m, out long e);
+        //vala doesn't support long long, use int64
+        public static bool atod(string src, int length, out int64 m, out int64 e);
     }
 
     //=======================================================================
     [Compact]
-    [CCode (free_function = "eina_counter_delete")]
+    [CCode (free_function = "eina_counter_free")]
     public class Counter
     {
         public static int init();
         public static int shutdown();
 
-        [CCode (cname = "eina_counter_add")]
+        [CCode (cname = "eina_counter_new")]
         public Counter(string name);
         public void start();
         public void stop();
@@ -408,7 +408,7 @@ namespace Eina
 
     //=======================================================================
     [Compact]
-    [CCode (free_function = "eina_lalloc_delete")]
+    [CCode (free_function = "eina_lalloc_free")]
     public class Lalloc
     {
         public static delegate bool Alloc(void* user_data, int num);
@@ -438,7 +438,7 @@ namespace Eina
 
     //=======================================================================
     [Compact]
-    [CCode (free_function = "eina_mempool_delete")]
+    [CCode (free_function = "eina_mempool_del")]
     public class Mempool<G>
     {
         public Backend backend;
@@ -449,7 +449,7 @@ namespace Eina
         public Eina.Error NOT_MEMPOOL_MODULE;
         public Mempool(string module, string context, string options, ...);
         public G[] realloc(G element, uint size);
-        public G[] alloc(uint size);
+        public G[] malloc(uint size);
         public void free(G element);
         public void gc();
         public void statistics();
@@ -475,7 +475,7 @@ namespace Eina
 
     //=======================================================================
     [Compact]
-    [CCode (free_function = "eina_module_delete")]
+    [CCode (free_function = "eina_module_free")]
     public class Module
     {
         public static int init();
@@ -618,9 +618,10 @@ namespace Eina
     }
 
     //=======================================================================
-    [CCode (free_function = "eina_tiler_del")]
+    [CCode (free_function = "eina_tiler_free")]
     public class Tiler
     {
+        [CCode (cname = "eina_tiler_new")]
         public Tiler(int w, int h);
         public void tile_size_set(int w, int h);
         public bool rect_add(Rectangle rect);
