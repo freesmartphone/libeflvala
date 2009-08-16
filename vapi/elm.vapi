@@ -156,6 +156,7 @@ public class Button : Elm.Object
     public Button( Elm.Object? parent );
 
     public void label_set( string label );
+    public Elm.Object icon_get();
     public void icon_set( Elm.Object icon );
     public void style_set( string style );
 }
@@ -193,6 +194,7 @@ public class Toggle : Elm.Object
     public Toggle( Elm.Object? parent );
 
     public void label_set( string label );
+    public Elm.Object icon_get();
     public void icon_set( Elm.Object icon );
     public void states_labels_set( string onlabel, string offlabel );
     public void state_set( bool state );
@@ -338,6 +340,7 @@ public class Bubble : Elm.Object
     public Bubble( Elm.Object? parent );
 
     public void label_set( string label );
+    public Elm.Object icon_get();
     public void info_set( string info );
     public void content_set( Elm.Object content );
     public void icon_set( Elm.Object icon );
@@ -366,6 +369,7 @@ public class Hoversel : Elm.Object
 
     public void hover_parent_set( Elm.Object parent );
     public void label_set( string label );
+    public Elm.Object icon_get();
     public void icon_set( Elm.Object icon );
     public void hover_end();
     public unowned HoverselItem item_add( string label, string? icon_file, IconType icon_type, Evas.SmartCallback? func );
@@ -404,7 +408,6 @@ public class List : Elm.Object
 
     public weak ListItem selected_item_get();
     public weak Eina.List<ListItem> selected_items_get();
-	
 }
 
 
@@ -425,6 +428,7 @@ public class Slider : Elm.Object
     public Slider( Elm.Object? parent );
 
     public void label_set( string label );
+    public Elm.Object icon_get();
     public void icon_set( Elm.Object icon );
     public void span_size_set( Evas.Coord size );
     public void unit_format_set( string format );
@@ -717,6 +721,8 @@ public class HoverselItem
 [CCode (cname = "Elm_Toolbar_Item", free_function = "elm_toolbar_item_del")]
 public class ToolbarItem
 {
+    public Elm.Object icon_get();
+    public string label_get();
     public void select();
 }
 
