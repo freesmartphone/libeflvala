@@ -41,32 +41,32 @@ namespace Ecore
     [CCode (cname="Ecore_Event_Signal_User")]
     public struct EventSignalUser
     {
-	public int number;
+        public int number;
     }
 
     [CCode (cname="Ecore_Event_Signal_Exit")]
     public struct EventSignalExit
     {
-	public uint interrupt;
-	public uint quit;
-	public uint terminate;
+        public uint interrupt;
+        public uint quit;
+        public uint terminate;
     }
 
     [CCode (cname="Ecore_Event_Signal_Realtime")]
     public struct EventSignalRealtime
     {
-	public int num;
+        public int num;
     }
 
     [CCode (cprefix = "ECORE_EVENT_")]
     public enum EventType
     {
-	NONE,
-	SIGNAL_USER,
-	SIGNAL_HUP,
-	SIGNAL_EXIT,
-	SIGNAL_POWER,
-	SIGNAL_REALTIME,
+        NONE,
+        SIGNAL_USER,
+        SIGNAL_HUP,
+        SIGNAL_EXIT,
+        SIGNAL_POWER,
+        SIGNAL_REALTIME,
     }
 
     //=======================================================================
@@ -75,7 +75,7 @@ namespace Ecore
     public class EventHandler
     {
         [CCode (cname = "ecore_event_handler_add")]
-        EventHandler( int type, EventHandlerFunc event_func );
+        public EventHandler( int type, EventHandlerFunc event_func );
     }
 
     //=======================================================================
@@ -92,7 +92,7 @@ namespace Ecore
     public class FdHandler
     {
         [CCode (cname = "ecore_main_fd_handler_add")]
-        FdHandler( int fd, FdHandlerFlags flags, FdHandlerFunc fd_func, BufHandlerFunc? buf_func );
+        public FdHandler( int fd, FdHandlerFlags flags, FdHandlerFunc fd_func, BufHandlerFunc? buf_func );
     }
 
     //=======================================================================
@@ -125,7 +125,7 @@ namespace Ecore
     public class Idler
     {
         [CCode (cname = "ecore_idler_add")]
-        Idler( Callback callback );
+        public Idler( Callback callback );
     }
 
     //=======================================================================
@@ -134,7 +134,7 @@ namespace Ecore
     public class IdleEnterer
     {
         [CCode (cname = "ecore_idle_enterer_add")]
-        IdleEnterer( Callback callback );
+        public IdleEnterer( Callback callback );
     }
 
     //=======================================================================
@@ -143,7 +143,7 @@ namespace Ecore
     public class IdleExiter
     {
         [CCode (cname = "ecore_idle_exiter_add")]
-        IdleExiter( Callback callback );
+        public IdleExiter( Callback callback );
     }
 
     //=======================================================================
@@ -152,7 +152,7 @@ namespace Ecore
     public class Timer
     {
         [CCode (cname = "ecore_timer_add")]
-        Timer( double in_, Callback callback );
+        public Timer( double in_, Callback callback );
         public double interval_get();
         public void interval_set(double in_);
         public void freeze();
