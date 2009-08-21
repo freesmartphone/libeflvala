@@ -441,6 +441,17 @@ public class Carousel : Elm.Object
 
 //=======================================================================
 [CCode (cname = "Evas_Object", free_function = "evas_object_del")]
+public class Separator : Elm.Object
+{
+    [CCode (cname = "elm_separator_add")]
+    public Separator( Elm.Object? parent );
+    public void horizontal_set( bool horizontal );
+    public bool horizontal_get();
+}
+
+
+//=======================================================================
+[CCode (cname = "Evas_Object", free_function = "evas_object_del")]
 public class Slider : Elm.Object
 {
     [CCode (cname = "elm_slider_add")]
@@ -458,6 +469,7 @@ public class Slider : Elm.Object
     public double value_get();
     public void inverted_set( bool inverted );
 }
+
 
 //=======================================================================
 [CCode (cname = "Evas_Object", free_function = "evas_object_del")]
