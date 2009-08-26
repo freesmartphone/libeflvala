@@ -404,6 +404,8 @@ public class Toolbar : Elm.Object
 
     public void scrollable_set( bool scrollable );
     public ToolbarItem item_add( Elm.Object icon, string label, Evas.SmartCallback func );
+    public int icon_size_get();
+    public void icon_size_set( int icon_size );
 }
 
 
@@ -755,7 +757,10 @@ public class ToolbarItem
 {
     public Elm.Object icon_get();
     public string label_get();
+    public void label_set( string label );
     public void select();
+    public bool disabled_get();
+    public void disabled_set( bool disabled );
 }
 
 //=======================================================================
