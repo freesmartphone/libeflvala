@@ -761,7 +761,10 @@ public class ToolbarItem
     public void select();
     public bool disabled_get();
     public void disabled_set( bool disabled );
+    public bool separator_get();
+    public void separator_set( bool separator );
 }
+
 
 //=======================================================================
 [Compact]
