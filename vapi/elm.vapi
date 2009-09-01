@@ -169,16 +169,17 @@ public class Scroller : Elm.Object
     [CCode (cname = "elm_scroller_add")]
     public Scroller( Elm.Object? parent );
 
-    public void content_set( Elm.Object child );
-    public void content_min_limit( bool w, bool h );
-    public void region_show( Evas.Coord x, Evas.Coord y, Evas.Coord w, Evas.Coord h );
-
-    public void region_get( out Evas.Coord x, out Evas_Coord y, out Evas_Coord w, out Evas_Coord );
-    public void child_size_get( out Evas.Coord w, out Evas_Coord h);
     public void bounce_set( bool h_bounce, bool v_bounce );
+    public void content_set( Elm.Object child );
+    public void child_size_get( out Evas.Coord w, out Evas_Coord h);
+    public void content_min_limit( bool w, bool h );
     public void index_set( bool h_index, bool v_index );
     public void index_clear( bool h_index, bool v_index );
     public void index_add( ScrollerAxis axis, string label, Elm.Object icon, Evas.Coord position, Evas.Coord size );
+    public void region_show( Evas.Coord x, Evas.Coord y, Evas.Coord w, Evas.Coord h );
+    public void region_get( out Evas.Coord x, out Evas_Coord y, out Evas_Coord w, out Evas_Coord );
+    public void page_relative_set( double h_pagerel, double v_pagerel );
+    public void page_size_set( Evas.Coord h_pagesize, Evas.Coord v_pagesize );
 }
 
 
