@@ -175,9 +175,10 @@ public class Scroller : Elm.Object
     public void content_min_limit( bool w, bool h );
     public void index_set( bool h_index, bool v_index );
     public void index_clear( bool h_index, bool v_index );
-    public void index_add( ScrollerAxis axis, string label, Elm.Object icon, Evas.Coord position, Evas.Coord size );
+    public void index_add( ScrollerAxis axis, string label, Elm.Object icon, Evas.Coord position, Evas.Coord size, int level );
     public void region_show( Evas.Coord x, Evas.Coord y, Evas.Coord w, Evas.Coord h );
     public void region_get( out Evas.Coord x, out Evas_Coord y, out Evas_Coord w, out Evas_Coord );
+    public void region_bring_in( Evas.Coord x, Evas.Coord y, Evas.Coord w, Evas.Coord h );
     public void page_relative_set( double h_pagerel, double v_pagerel );
     public void page_size_set( Evas.Coord h_pagesize, Evas.Coord v_pagesize );
 }
@@ -478,6 +479,22 @@ public class Slider : Elm.Object
     public void value_set( double val );
     public double value_get();
     public void inverted_set( bool inverted );
+}
+
+
+//=======================================================================
+[CCode (cname = "Evas_Object", free_function = "evas_object_del")]
+public class Spinner : Elm.Object
+{
+    [CCode (cname = "elm_spinner_add")]
+    public Spinner( Elm.Object? parent );
+    public void label_format_set( string );
+    public string label_format_get();
+    public void min_max_set( double min, double max );
+    public void step_set( double step );
+    public void value_set( double val );
+    public double value_get();
+    public void wrap_set( bool wrap );
 }
 
 
