@@ -171,7 +171,7 @@ public class Scroller : Elm.Object
 
     public void bounce_set( bool h_bounce, bool v_bounce );
     public void content_set( Elm.Object child );
-    public void child_size_get( out Evas.Coord w, out Evas_Coord h);
+    public void child_size_get( out Evas.Coord w, out Evas_Coord h );
     public void content_min_limit( bool w, bool h );
     public void index_set( bool h_index, bool v_index );
     public void index_clear( bool h_index, bool v_index );

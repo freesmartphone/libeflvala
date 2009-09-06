@@ -43,9 +43,6 @@ namespace Eina
     [CCode (free_function = "eina_list_free", default_value = "NULL", copy_function = "eina_list_clone")]
     public class List<G>
     {
-        public static void init();
-        public static void shutdown();
-
         public void* data;
         public List<G> next;
         public List<G> prev;
@@ -198,9 +195,6 @@ namespace Eina
     [CCode (free_function = "eina_array_free")]
     public class Array<G>
     {
-        public static int init();
-        public static int shutdown();
-
         public G* data;
         public uint total;
         public uint count;
@@ -224,8 +218,6 @@ namespace Eina
     [CCode (free_function = "eina_benchmark_free")]
     public class Benchmark
     {
-        public static int init();
-        public static int shutdown();
         public static delegate void Specimens (int request);
         public Benchmark(string name, string run);
         public bool register(string name, Specimens bench_cb, int count_start, int count_end, int count_set);
@@ -235,9 +227,6 @@ namespace Eina
     //=======================================================================
     namespace Convert
     {
-        public static int init();
-        public static int shutdown();
-
         [CCode (cname = "EINA_ERROR_CONVERT_P_NOT_FOUND")]
         public static Eina.Error P_NOT_FOUND;
         [CCode (cname = "EINA_ERROR_CONVERT_0X_NOT_FOUND")]
@@ -257,9 +246,6 @@ namespace Eina
     [CCode (free_function = "eina_counter_free")]
     public class Counter
     {
-        public static int init();
-        public static int shutdown();
-
         [CCode (cname = "eina_counter_new")]
         public Counter(string name);
         public void start();
@@ -288,8 +274,6 @@ namespace Eina
     //=======================================================================
     public struct Error : int
     {
-        public static int init();
-        public static int shutdown();
         [CCode (cname = "eina_error_msg_register")]
         public  Error(string msg);
         public static Error OUT_OF_MEMORY;
@@ -342,8 +326,6 @@ namespace Eina
     [CCode (free_function = "eina_hash_free")]
     public class Hash<K,V>
     {
-        public static int init();
-        public static int shutdown();
         public static int superfast(void* key, int len);
         public static int dj2b(void* key, int len);
         [CCode (cname = "eina_hash_int32")]
@@ -422,10 +404,6 @@ namespace Eina
     [Compact]
     public struct Magic : uint
     {
-        [CCode (cname = "eina_magic_string_init")]
-        public static void init();
-        [CCode (cname = "eina_magic_string_shutdown")]
-        public static void shutdown();
         public string? string_get();
         public void string_set(string magic_name);
         [CCode (cname = "eina_magic_fail")]
@@ -443,8 +421,6 @@ namespace Eina
     {
         public Backend backend;
         public G data;
-        public static int init();
-        public static int shutdown();
         [CCode (cname = "EINA_ERROR_NOT_MEMPOOL_MODULE")]
         public Eina.Error NOT_MEMPOOL_MODULE;
         public Mempool(string module, string context, string options, ...);
@@ -478,11 +454,7 @@ namespace Eina
     [CCode (free_function = "eina_module_free")]
     public class Module
     {
-        public static int init();
-        public static int shutdown();
         public static delegate bool Cb (Module m, void* data);
-        public static delegate bool Init();
-        public static delegate void Shutdown ();
         [CCode (cname = "EINA_ERROR_WRONG_MODULE")]
         public static Eina.Error WRONG_MODULE;
         [CCode (cname = "EINA_ERROR_MODULE_INIT_FAILED")]
@@ -602,8 +574,6 @@ namespace Eina
     [CCode (lower_case_cprefix = "stringshare_", ref_function = "eina_stringshare_ref", unref_function = "eina_stringshare_del")]
     public class String : string
     {
-        public static int init();
-        public static int shutdown();
         [ReturnsModifiedPointer ()]
         void add();
         [ReturnsModifiedPointer ()]

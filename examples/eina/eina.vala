@@ -22,7 +22,7 @@
  */
 using Eina;
 
-public static int main( string[] args)
+public static int main( string[] args )
 {
     Eina.init();
     eina_list_example();
@@ -33,9 +33,8 @@ public static int main( string[] args)
 }
 
 //=================================================================
-public static void eina_list_example(  )
+public static void eina_list_example()
 {
-    Eina.List.init();
     Eina.List<string> a = null;
     Eina.List<string> b = null;
     a.prepend( "Alfred" );
@@ -55,9 +54,9 @@ public static void eina_list_example(  )
     b.sort( c ,sort_str );
     debug( "list sorted:" );
     b.iterator_new().foreach( print_str, null);
-    Eina.List.shutdown();
 }
-public static bool print_str(void* container, void* data, void* fdata  )
+
+public static bool print_str( void* container, void* data, void* fdata )
 {
     string s = ( string )data;
     debug( "\tdata: %s", s  );
@@ -70,7 +69,7 @@ public static int sort_str( void* a, void* b )
     return GLib.strcmp( s1,s2 );
 }
 //=================================================================
-public static void eina_file_example(  )
+public static void eina_file_example()
 {
     string path = GLib.Environment.get_variable( "PWD" );
 
@@ -86,13 +85,11 @@ public void dir_print( string? name, string? path, void* data )
 //=================================================================
 public static void eina_error_example()
 {
-    Eina.Error.init();
     Eina.Error.log_level_set( ErrorLevel.INFO );
     var e1 = Eina.Error( "Foobar" );
     var e2 = Eina.Error( "Moep Meop" );
     var e3 = Eina.Error( "Chooo Choo" );
     e1.set();
-    
+
     Eina.Error.print( Eina.ErrorLevel.INFO, GLib.Log.FILE, GLib.Log.METHOD, GLib.Log.LINE, "e1: %i %s\n", e1, e1.to_string() );
-    Eina.Error.shutdown();
 }
