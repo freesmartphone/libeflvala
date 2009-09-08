@@ -70,6 +70,11 @@ public abstract class Object : Evas.Object
     public void style_set( string style );
     public string style_get();
     public void focus();
+
+    public void scroll_hold_push();
+    public void scroll_hold_pop();
+    public void scroll_freeze_push();
+    public void scroll_freeze_pop();
 }
 
 
@@ -546,6 +551,8 @@ public class GenlistItem
    public void* data_get();
    public void data_set( void* data );
    public void update();
+
+   public Elm.Genlist object_get();
 }
 
 
@@ -609,6 +616,8 @@ public class Image : Elm.Object
     public void fill_outside_set( bool fill_outside );
     public void prescale_set( int size );
     public void orient_set( ImageOrient orient );
+
+    public void object_size_get( out int w, out int h );
 }
 
 
