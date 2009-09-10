@@ -169,28 +169,6 @@ public class Button : Elm.Object
 
 //=======================================================================
 [CCode (cname = "Evas_Object", free_function = "evas_object_del")]
-public class Scroller : Elm.Object
-{
-    [CCode (cname = "elm_scroller_add")]
-    public Scroller( Elm.Object? parent );
-
-    public void bounce_set( bool h_bounce, bool v_bounce );
-    public void content_set( Elm.Object child );
-    public void child_size_get( out Evas.Coord w, out Evas_Coord h );
-    public void content_min_limit( bool w, bool h );
-    public void index_set( bool h_index, bool v_index );
-    public void index_clear( bool h_index, bool v_index );
-    public void index_add( ScrollerAxis axis, string label, Elm.Object icon, Evas.Coord position, Evas.Coord size, int level );
-    public void region_show( Evas.Coord x, Evas.Coord y, Evas.Coord w, Evas.Coord h );
-    public void region_get( out Evas.Coord x, out Evas_Coord y, out Evas_Coord w, out Evas_Coord );
-    public void region_bring_in( Evas.Coord x, Evas.Coord y, Evas.Coord w, Evas.Coord h );
-    public void page_relative_set( double h_pagerel, double v_pagerel );
-    public void page_size_set( Evas.Coord h_pagesize, Evas.Coord v_pagesize );
-}
-
-
-//=======================================================================
-[CCode (cname = "Evas_Object", free_function = "evas_object_del")]
 public class Label : Elm.Object
 {
     [CCode (cname = "elm_label_add")]
@@ -198,6 +176,51 @@ public class Label : Elm.Object
 
     public void label_set( string label );
 }
+
+
+//=======================================================================
+[CCode (cname = "Evas_Object", free_function = "evas_object_del")]
+public class Index : Elm.Object
+{
+    [CCode (cname = "elm_index_add")]
+    public Index( Elm.Object? parent );
+    public void active_set( bool active );
+    public void item_level_set( int level );
+    public int item_level_get();
+    public void* item_selected_get( int level );
+    public void item_append( string letter, void* item );
+    public void item_prepend( string letter, void* item );
+    public void item_append_relative( string letter, void *item, void *relative );
+    public void item_prepend_relative( string letter,void *item, void *relative );
+    public void item_del( void *item );
+    public void item_clear();
+    public void item_go( int level );
+
+}
+
+
+//=======================================================================
+[CCode (cname = "Evas_Object", free_function = "evas_object_del")]
+public class Scroller : Elm.Object
+{
+    [CCode (cname = "elm_scroller_add")]
+    public Scroller( Elm.Object? parent );
+
+    public void bounce_set( bool h_bounce, bool v_bounce );
+    public void content_set( Elm.Object child );
+    public void child_size_get( out Evas.Coord w, out Evas.Coord h );
+    public void content_min_limit( bool w, bool h );
+    public void index_set( bool h_index, bool v_index );
+    public void index_clear( bool h_index, bool v_index );
+    public void index_add( ScrollerAxis axis, string label, Elm.Object icon, Evas.Coord position, Evas.Coord size, int level );
+    public void region_show( Evas.Coord x, Evas.Coord y, Evas.Coord w, Evas.Coord h );
+    public void region_get( out Evas.Coord x, out Evas.Coord y, out Evas.Coord w, out Evas.Coord h );
+    public void region_bring_in( Evas.Coord x, Evas.Coord y, Evas.Coord w, Evas.Coord h );
+    public void page_relative_set( double h_pagerel, double v_pagerel );
+    public void page_size_set( Evas.Coord h_pagesize, Evas.Coord v_pagesize );
+}
+
+
 
 
 //=======================================================================
@@ -493,7 +516,7 @@ public class Spinner : Elm.Object
 {
     [CCode (cname = "elm_spinner_add")]
     public Spinner( Elm.Object? parent );
-    public void label_format_set( string );
+    public void label_format_set( string format );
     public string label_format_get();
     public void min_max_set( double min, double max );
     public void step_set( double step );
@@ -513,6 +536,7 @@ public class Genlist : Elm.Object
     public GenlistItem item_prepend( GenlistItemClass itc, void *data, GenlistItem? parent, GenlistItemFlags flags, Evas.SmartCallback callback );
     public GenlistItem item_insert_before( GenlistItemClass itc, void *data, GenlistItem before, GenlistItemFlags flags, Evas.SmartCallback callback );
     public GenlistItem item_insert_after( GenlistItemClass itc, void *data, GenlistItem after, GenlistItemFlags flags, Evas.SmartCallback callback );
+
     public void clear();
     public void multi_select_set( bool multi );
     public void horizontal_mode_set( ListMode mode );
@@ -538,15 +562,17 @@ public class GenlistItem
 
    public void selected_set( bool selected );
    public bool selected_get();
-
    public void expanded_set( bool expanded );
    public bool expanded_get();
-
    public void disabled_set( bool disabled );
    public bool disabled_get();
 
    public void show();
+   public void bring_in();
+   public void top_show();
+   public void top_bring_in();
    public void del();
+
    // FIXME: Caution: Do we really have access to the data field or is it used by Vala?
    public void* data_get();
    public void data_set( void* data );

@@ -26,7 +26,6 @@ public void test_eina_list()
     int[] res = { 81, 9, 9, 7, 1 };
 
     Eina.init();
-    Eina.List.init();
     Eina.List<int> l = null;
 
     l.append( data[0] );
@@ -61,7 +60,6 @@ public void test_eina_list()
     l = null;
 
     /*
-    Eina.List.shutdown();
     Eina.shutdown();
     */
 }
