@@ -150,6 +150,7 @@ public class Box : Elm.Object
     public void pack_end( Elm.Object subobj );
     public void pack_before( Elm.Object subobj, Elm.Object before );
     public void pack_after( Elm.Object subobj, Elm.Object after );
+    public void clear();
 }
 
 
@@ -626,6 +627,17 @@ public class Pager : Elm.Object
     public void content_promote( Elm.Object content );
     public Elm.Object content_bottom_get();
     public Elm.Object content_top_get();
+}
+
+
+//=======================================================================
+[CCode (cname = "Evas_Object", free_function = "evas_object_del")]
+public class Photocam : Elm.Object
+{
+    [CCode (cname = "elm_photocam_add")]
+    public Photocam( Elm.Object? parent );
+
+    public void file_set( string file );
 }
 
 

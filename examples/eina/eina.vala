@@ -85,11 +85,9 @@ public void dir_print( string? name, string? path, void* data )
 //=================================================================
 public static void eina_error_example()
 {
-    Eina.Error.log_level_set( ErrorLevel.INFO );
     var e1 = Eina.Error( "Foobar" );
     var e2 = Eina.Error( "Moep Meop" );
     var e3 = Eina.Error( "Chooo Choo" );
     e1.set();
 
-    Eina.Error.print( Eina.ErrorLevel.INFO, GLib.Log.FILE, GLib.Log.METHOD, GLib.Log.LINE, "e1: %i %s\n", e1, e1.to_string() );
 }
