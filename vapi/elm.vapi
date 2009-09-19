@@ -803,7 +803,7 @@ public delegate bool GenlistItemStateGetFunc( Elm.Object obj, string part );
 public delegate void GenlistItemDelFunc( Elm.Object obj );
 
 //=======================================================================
-[CCode (cname = "Elm_Genlist_Item_Class_Func")]
+[CCode (cname = "Elm_Genlist_Item_Class_Func", copy_function = "", destroy_function = "")]
 public struct GenlistItemClassFunc
 {
     [CCode (delegate_target = false)]

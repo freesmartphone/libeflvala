@@ -27,7 +27,7 @@ elementary_vapi_SOURCES = \
 	$(NULL)
 
 .vala.stamp: $(elementary_vapi_VALASOURCES)
-	$(VALAC) -c --vapidir $(top_srcdir)/vapi \
+	$(VALAC) -C --vapidir $(top_srcdir)/vapi \
 	            --pkg dbus-glib-1 \
 	            --pkg eina \
 	            --pkg evas \

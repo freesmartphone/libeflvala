@@ -1,15 +1,29 @@
 include $(top_srcdir)/Makefile.decl
 
-NULL = 
+NULL =
 
 AUTOMAKE_OPTIONS = subdir-objects
+
+VALAC_ARGS = \
+	--vapidir $(top_srcdir)/vapi \
+	--pkg dbus-glib-1 \
+	--pkg eina \
+	--pkg evas \
+	--pkg ecore \
+	--pkg elm \
+	--pkg posix \
+	--header eflvala.h \
+	--library eflvala-1.0 \
+	--save-temps \
+	--thread \
+	--basedir $(top_srcdir)
 
 vapidir = $(datadir)/vala/vapi
 
 dist_vapi_DATA = \
 	eflvala-1.0.vapi \
 	$(NULL)
-                
+
 SUBDIRS = \
 	$(NULL)
 
@@ -42,18 +56,7 @@ libeflvala_la_SOURCES = \
 	$(NULL)
 
 .vala.stamp: $(libeflvala_la_VALASOURCES)
-	$(VALAC) -C --vapidir $(top_srcdir)/vapi \
-		--pkg dbus-glib-1 \
-		--pkg eina \
-		--pkg evas \
-		--pkg ecore \
-		--pkg elm \
-		--pkg posix \
-		--header eflvala.h \
-		--library eflvala-1.0 \
-		--save-temps \
-		--thread \
-		--basedir $(top_srcdir) $^
+	$(VALAC) -C $(VALAC_ARGS) $^
 	touch $@
 
 libeflvala_la_LIBADD = \
