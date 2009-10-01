@@ -150,6 +150,8 @@ public class Box : Elm.Object
     public void pack_end( Elm.Object subobj );
     public void pack_before( Elm.Object subobj, Elm.Object before );
     public void pack_after( Elm.Object subobj, Elm.Object after );
+    public void unpack( Elm.Object subobj );
+    public void unpack_all();
     public void clear();
 }
 
@@ -441,6 +443,8 @@ public class Toolbar : Elm.Object
     public Toolbar( Elm.Object? parent );
 
     public void scrollable_set( bool scrollable );
+    public void homogenous_set( bool homogenous );
+
     public ToolbarItem item_add( Elm.Object icon, string label, Evas.SmartCallback func );
     public int icon_size_get();
     public void icon_size_set( int icon_size );
@@ -544,6 +548,7 @@ public class Genlist : Elm.Object
     public void always_select_mode_set( bool always_select );
     public void no_select_mode_set( bool no_select );
 
+    public GenlistItem at_xy_item_get( Evas.Coord x, Evas.Coord y, out int posret );
     public GenlistItem selected_item_get();
     public Eina.List<GenlistItem> selected_items_get();
     public GenlistItem first_item_get();
@@ -617,6 +622,33 @@ public class Radio : Elm.Object
 
 //=======================================================================
 [CCode (cname = "Evas_Object", free_function = "evas_object_del")]
+public class Notify : Elm.Object
+{
+    [CCode (cname = "elm_notify_add")]
+    public Notify( Elm.Object? parent );
+
+    public void content_set( Evas.Object content );
+    public void orient_set( NotifyOrient orient );
+    public void timeout_set( int timeout );
+    public void timer_init();
+}
+
+//=======================================================================
+[CCode (cprefix = "ELM_NOTIFY_ORIENT_")]
+public enum NotifyOrient
+{
+    TOP,
+    BOTTOM,
+    LEFT,
+    RIGHT,
+    TOP_LEFT,
+    TOP_RIGHT,
+    BOTTOM_LEFT,
+    BOTTOM_RIGHT
+}
+
+//=======================================================================
+[CCode (cname = "Evas_Object", free_function = "evas_object_del")]
 public class Pager : Elm.Object
 {
     [CCode (cname = "elm_pager_add")]
@@ -637,9 +669,45 @@ public class Photocam : Elm.Object
     [CCode (cname = "elm_photocam_add")]
     public Photocam( Elm.Object? parent );
 
-    public void file_set( string file );
+    public int file_set( string file );
+    public void image_size_get( out int w, out int h );
+    public void image_region_show( int x, int y, int w, int h );
+    public void image_region_bring_in( int x, int y, int w, int h );
+
+    public void zoom_set( int zoom );
+    public int zoom_get();
+    public void zoom_mode_set( PhotocamZoomMode mode );
+    public PhotocamZoomMode zoom_mode_get();
 }
 
+//=======================================================================
+[CCode (cprefix = "ELM_PHOTOCAM_ZOOM_MODE_")]
+public enum PhotocamZoomMode
+{
+    MANUAL,
+    AUTO_FIT,
+    AUTO_FILL,
+}
+
+//=======================================================================
+[CCode (cname = "Evas_Object", free_function = "evas_object_del")]
+public class Slideshow : Elm.Object
+{
+    [CCode (cname = "elm_slideshow_add")]
+    public Slideshow( Elm.Object? parent );
+
+    public void image_add( string file, string group );
+    public void goto( int pos );
+    public void next();
+    public void previous();
+    public Eina.List transitions_get();
+    public void elm_slideshow_transition_set( string transitions );
+
+    public void timeout_set( int timeout );
+    public int timeout_get();
+    public void loop_set( int loop );
+    public void clear();
+}
 
 //=======================================================================
 [CCode (cname = "Evas_Object", free_function = "evas_object_del")]

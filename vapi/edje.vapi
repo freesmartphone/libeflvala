@@ -45,6 +45,7 @@ namespace Edje
     public void collection_cache_flush();
 
     public void color_class_set( string color_class, int r, int g, int b, int a, int r2, int g2, int b2, int a2, int r3, int g3, int b3, int a3 );
+    public bool color_class_get( string color_class, out int r, out int g, out int b, out int a, out int r2, out int g2, out int b2, out int a2, out int r3, out int g3, out int b3, out int a3 );
     public void color_class_del( string color_class );
     public Eina.List<string> color_class_list();
 
@@ -132,6 +133,7 @@ namespace Edje
         public int thaw();
 
         public void color_class_set( string color_class, int r, int g, int b, int a, int r2, int g2, int b2, int a2, int r3, int g3, int b3, int a3 );
+        public bool color_class_get( string color_class, out int r, out int g, out int b, out int a, out int r2, out int g2, out int b2, out int a2, out int r3, out int g3, out int b3, out int a3 );
         public void color_class_del( string color_class );
 
         public void text_class_set( string text_class, string font, Evas.FontSize size );

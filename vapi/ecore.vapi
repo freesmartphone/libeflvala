@@ -84,6 +84,7 @@ namespace Ecore
         void iterate();
         void begin();
         void quit();
+        bool glib_integrate();
     }
 
     //=======================================================================

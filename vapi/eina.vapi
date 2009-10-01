@@ -239,6 +239,7 @@ namespace Eina
         public static int dtoa(double d, string s);
         //vala doesn't support long long, use int64
         public static bool atod(string src, int length, out int64 m, out int64 e);
+        //FIXME: add fptoa and atofp
     }
 
     //=======================================================================
