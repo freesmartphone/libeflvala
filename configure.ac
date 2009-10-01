@@ -89,6 +89,7 @@ AC_CONFIG_FILES([
   examples/eina/Makefile
   examples/ecore/Makefile
   examples/ecore-signals/Makefile
+  examples/ecore-glib/Makefile
   examples/edje/Makefile
   examples/elementary/Makefile
   examples/library/Makefile
