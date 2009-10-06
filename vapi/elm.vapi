@@ -432,6 +432,7 @@ public class Hoversel : Elm.Object
     public void icon_set( Elm.Object icon );
     public void hover_end();
     public unowned HoverselItem item_add( string label, string? icon_file, IconType icon_type, Evas.SmartCallback? func );
+    public Eina.List items_get();
 }
 
 
@@ -446,6 +447,7 @@ public class Toolbar : Elm.Object
     public void homogenous_set( bool homogenous );
 
     public ToolbarItem item_add( Elm.Object icon, string label, Evas.SmartCallback func );
+    public void unselect_all();
     public int icon_size_get();
     public void icon_size_set( int icon_size );
 }
