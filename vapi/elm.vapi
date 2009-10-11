@@ -699,7 +699,7 @@ public class Slideshow : Elm.Object
     [CCode (cname = "elm_slideshow_add")]
     public Slideshow( Elm.Object? parent );
 
-    public void image_add( string file, string group );
+    public void item_add( Evas.Object item );
     public void goto( int pos );
     public void next();
     public void previous();
