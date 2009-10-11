@@ -178,6 +178,7 @@ public class Label : Elm.Object
     public Label( Elm.Object? parent );
 
     public void label_set( string label );
+    public void line_wrap_set( bool wrap );
 }
 
 
