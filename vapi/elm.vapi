@@ -91,14 +91,23 @@ public class Win : Elm.Object
     public void autodel_set( bool autodel );
     public void activate();
     public void borderless_set( bool borderless );
+    public bool borderless_get();
     public void shaped_set( bool shaped );
+    public bool shaped_get();
     public void alpha_set( bool alpha );
+    public bool alpha_get();
     public void override_set( bool override_ );
+    public bool override_get();
     public void fullscreen_set( bool fullscreen );
+    public bool fullscreen_get();
     public void maximized_set( bool maximized );
+    public bool maximized_get();
     public void iconified_set( bool iconified );
+    public bool iconified_get();
     public void layer_set( int layer );
+    public int layer_get();
     public void rotation_set( int rotation );
+    public int rotation_get();
 
     public void keyboard_mode_set( WinKeyboardMode mode );
     public void keyboard_win_set( bool is_keyboard );
@@ -622,6 +631,17 @@ public class Radio : Elm.Object
     public void value_pointer_set( out int valuep );
 }
 
+//=======================================================================
+[CCode (cname = "Evas_Object", free_function = "evas_object_del")]
+public class Menu : Elm.Object
+{
+    [CCode (cname = "elm_menu_add")]
+    public Menu( Elm.Object? parent );
+
+    public void move( Evas.Coord x, Evas.Coord y );
+    public void parent_set( Elm.Object parent );
+    //public MenuItem item_add( Elm.Object icon, string label, callback );
+}
 
 //=======================================================================
 [CCode (cname = "Evas_Object", free_function = "evas_object_del")]
@@ -699,12 +719,16 @@ public class Slideshow : Elm.Object
     [CCode (cname = "elm_slideshow_add")]
     public Slideshow( Elm.Object? parent );
 
-    public void item_add( Evas.Object item );
+    public SlideshowItem item_add( SlideshowItemClass itc, void* data );
+    public SlideshowItem item_current_get();
+
     public void goto( int pos );
+    public void show();
     public void next();
     public void previous();
+
     public Eina.List transitions_get();
-    public void elm_slideshow_transition_set( string transitions );
+    public void transition_set( string transitions );
 
     public void timeout_set( int timeout );
     public int timeout_get();
@@ -904,6 +928,50 @@ public class HoverselItem
 
 //=======================================================================
 [Compact]
+[CCode (cname = "Elm_List_Item", free_function = "elm_list_item_del")]
+public class ListItem
+{
+    public void selected_set( bool selected );
+    public void show();
+    public void* data_get();
+    public string label_get();
+    public void label_set( string label );
+    public Elm.Object icon_get();
+    public void icon_set( Elm.Object icon );
+    public Elm.Object end_get();
+    public void end_set( Elm.Object end );
+}
+
+//=======================================================================
+[Compact]
+[CCode (cname = "Elm_Slideshow_Item", free_function = "elm_slideshow_item_del")]
+public class SlideshowItem
+{
+    public Slideshow object_get();
+}
+
+public delegate Evas.Object? SlideshowItemGetFunc( Elm.Object obj );
+public delegate void SlideshowItemDelFunc( Elm.Object obj );
+
+//=======================================================================
+[CCode (cname = "Elm_Slideshow_Item_Class_Func", copy_function = "", destroy_function = "")]
+public struct SlideshowItemClassFunc
+{
+    [CCode (delegate_target = false)]
+    public SlideshowItemGetFunc get;
+    [CCode (delegate_target = false)]
+    public SlideshowItemDelFunc del;
+}
+
+//=======================================================================
+[CCode (cname = "Elm_Slideshow_Item_Class", destroy_function = "")]
+public struct SlideshowItemClass
+{
+    public SlideshowItemClassFunc func;
+}
+
+//=======================================================================
+[Compact]
 [CCode (cname = "Elm_Toolbar_Item", free_function = "elm_toolbar_item_del")]
 public class ToolbarItem
 {
@@ -918,21 +986,6 @@ public class ToolbarItem
 }
 
 
-//=======================================================================
-[Compact]
-[CCode (cname = "Elm_List_Item", free_function = "elm_list_item_del")]
-public class ListItem
-{
-    public void selected_set( bool selected );
-    public void show();
-    public void* data_get();
-    public string label_get();
-    public void label_set( string label );
-    public Elm.Object icon_get();
-    public void icon_set( Elm.Object icon );
-    public Elm.Object end_get();
-    public void end_set( Elm.Object end );
-}
 
 }
 
