@@ -697,10 +697,13 @@ public class Photocam : Elm.Object
     public void image_region_show( int x, int y, int w, int h );
     public void image_region_bring_in( int x, int y, int w, int h );
 
-    public void zoom_set( int zoom );
-    public int zoom_get();
+    public void zoom_set( double zoom );
+    public double zoom_get();
     public void zoom_mode_set( PhotocamZoomMode mode );
     public PhotocamZoomMode zoom_mode_get();
+    
+    public void paused_set( bool paused );
+    public bool paused_get();
 }
 
 //=======================================================================
