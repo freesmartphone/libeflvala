@@ -682,6 +682,8 @@ public class Pager : Elm.Object
     public void content_promote( Elm.Object content );
     public Elm.Object content_bottom_get();
     public Elm.Object content_top_get();
+
+    public void style_set( string style );
 }
 
 
