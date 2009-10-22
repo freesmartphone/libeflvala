@@ -592,6 +592,8 @@ public class GenlistItem
    public void bring_in();
    public void top_show();
    public void top_bring_in();
+   public void middle_show();
+   public void middle_bring_in();
    public void del();
 
    // FIXME: Caution: Do we really have access to the data field or is it used by Vala?
