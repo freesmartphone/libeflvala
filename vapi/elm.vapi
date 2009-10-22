@@ -70,6 +70,9 @@ public abstract class Object : Evas.Object
     public void style_set( string style );
     public string style_get();
     public void focus();
+    
+    public void focus_allow_set( bool enable );
+    public bool focus_allow_get();
 
     public void scroll_hold_push();
     public void scroll_hold_pop();
