@@ -230,6 +230,7 @@ public class Scroller : Elm.Object
     public void index_clear( bool h_index, bool v_index );
     public void index_add( ScrollerAxis axis, string label, Elm.Object icon, Evas.Coord position, Evas.Coord size, int level );
     public void region_show( Evas.Coord x, Evas.Coord y, Evas.Coord w, Evas.Coord h );
+    public void policy_set(ScrollerPolicy h_policy, ScrollerPolicy v_policy);
     public void region_get( out Evas.Coord x, out Evas.Coord y, out Evas.Coord w, out Evas.Coord h );
     public void region_bring_in( Evas.Coord x, Evas.Coord y, Evas.Coord w, Evas.Coord h );
     public void page_relative_set( double h_pagerel, double v_pagerel );
@@ -824,6 +825,12 @@ public enum ScrollerAxis
     VERTICAL,
 }
 
+public enum ScrollerPolicy
+{
+    AUTO,
+    ON,
+    OFF
+}
 
 //=======================================================================
 [CCode (cprefix = "ELM_TEXT_FORMAT_")]
