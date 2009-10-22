@@ -104,7 +104,7 @@ namespace Edje
 
     //=======================================================================
     [Compact]
-    [CCode (cname = "Evas_Object", clower_case_prefix = "edje_object_", free_function = "evas_object_free")]
+    [CCode (cname = "Evas_Object", clower_case_prefix = "edje_object_", free_function = "evas_object_del")]
     public class Object : Evas.Object
     {
         [CCode (cname = "edje_object_add") ]

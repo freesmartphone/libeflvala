@@ -102,7 +102,7 @@ namespace Evas
 
     //=======================================================================
     [Compact]
-    [CCode (cheader_filename = "Evas.h")]
+    [CCode (cheader_filename = "Evas.h", free_function="evas_object_del")]
     public abstract class Object
     {
         public void del();
