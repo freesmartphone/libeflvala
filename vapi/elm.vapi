@@ -335,7 +335,7 @@ public class Entry : Elm.Object
     public void single_line_set( bool single_line );
     public void password_set( bool password );
     public void entry_set( string entry );
-    public string entry_get();
+    public unowned string entry_get();
     public string selection_get();
     public void entry_insert( string entry );
     public void line_wrap_set( bool wrap );
@@ -951,7 +951,7 @@ public class ListItem
     public void selected_set( bool selected );
     public void show();
     public void* data_get();
-    public string label_get();
+    public unowned string label_get();
     public void label_set( string label );
     public Elm.Object icon_get();
     public void icon_set( Elm.Object icon );
