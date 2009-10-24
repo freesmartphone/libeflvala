@@ -69,8 +69,10 @@ public abstract class Object : Evas.Object
     public double scale_get();
     public void style_set( string style );
     public string style_get();
+    public void disabled_set( bool disabled );
+    public bool disabled_get();
+
     public void focus();
-    
     public void focus_allow_set( bool enable );
     public bool focus_allow_get();
 
@@ -146,6 +148,7 @@ public class Icon : Elm.Object
     public void no_scale_set( bool no_scale );
     public void scale_set( bool scale_up, bool scale_down );
     public void fill_outside_set( bool fill_outside );
+    public void prescale_set( int size );
 }
 
 
@@ -222,22 +225,17 @@ public class Scroller : Elm.Object
     [CCode (cname = "elm_scroller_add")]
     public Scroller( Elm.Object? parent );
 
-    public void bounce_set( bool h_bounce, bool v_bounce );
     public void content_set( Elm.Object child );
-    public void child_size_get( out Evas.Coord w, out Evas.Coord h );
     public void content_min_limit( bool w, bool h );
-    public void index_set( bool h_index, bool v_index );
-    public void index_clear( bool h_index, bool v_index );
-    public void index_add( ScrollerAxis axis, string label, Elm.Object icon, Evas.Coord position, Evas.Coord size, int level );
     public void region_show( Evas.Coord x, Evas.Coord y, Evas.Coord w, Evas.Coord h );
-    public void policy_set(ScrollerPolicy h_policy, ScrollerPolicy v_policy);
     public void region_get( out Evas.Coord x, out Evas.Coord y, out Evas.Coord w, out Evas.Coord h );
-    public void region_bring_in( Evas.Coord x, Evas.Coord y, Evas.Coord w, Evas.Coord h );
+    public void policy_set(ScrollerPolicy h_policy, ScrollerPolicy v_policy);
+    public void child_size_get( out Evas.Coord w, out Evas.Coord h );
+    public void bounce_set( bool h_bounce, bool v_bounce );
     public void page_relative_set( double h_pagerel, double v_pagerel );
     public void page_size_set( Evas.Coord h_pagesize, Evas.Coord v_pagesize );
+    public void region_bring_in( Evas.Coord x, Evas.Coord y, Evas.Coord w, Evas.Coord h );
 }
-
-
 
 
 //=======================================================================
@@ -265,8 +263,8 @@ public class Frame : Elm.Object
     public Frame( Elm.Object? parent );
 
     public void label_set( string label );
+    public string label_get();
     public void content_set( Elm.Object content );
-    public void style_set( string style );
 }
 
 
@@ -709,7 +707,7 @@ public class Photocam : Elm.Object
     public double zoom_get();
     public void zoom_mode_set( PhotocamZoomMode mode );
     public PhotocamZoomMode zoom_mode_get();
-    
+
     public void paused_set( bool paused );
     public bool paused_get();
 }
@@ -756,12 +754,12 @@ public class Image : Elm.Object
 
     public void file_set( string file, string? group=null );
     public void smooth_set( bool smooth );
+    public void no_scale_set( bool no_scale );
+    public void object_size_get( out int w, out int h );
     public void scale_set( bool scale_up, bool scale_down );
     public void fill_outside_set( bool fill_outside );
     public void prescale_set( int size );
     public void orient_set( ImageOrient orient );
-
-    public void object_size_get( out int w, out int h );
 }
 
 

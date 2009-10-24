@@ -102,6 +102,23 @@ namespace Evas
 
     //=======================================================================
     [Compact]
+    [CCode (cheader_filename = "Evas.h", cname = "Evas_Map", cprefix = "evas_map_", free_function = "evas_map_free")]
+    public class Map
+    {
+        [CCode (cname = "evas_map_new")]
+        public Map( ulong count );
+
+        public void util_rotate( double degrees, Evas.Coord cx, Evas.Coord cy );
+        public void util_zoom( double zoomx, double zoomy, Evas.Coord cx, Evas.Coord cy );
+
+        public void point_coord_set( ulong idx, Evas.Coord x, Evas.Coord y, Evas.Coord z );
+        public void point_coord_get( ulong idx, out Evas.Coord x, out Evas.Coord y, out Evas.Coord z );
+        public void point_image_uv_set( ulong idx, double u, double v );
+        public void point_image_uv_get( ulong idx, out double u, out double v );
+    }
+
+    //=======================================================================
+    [Compact]
     [CCode (cheader_filename = "Evas.h", free_function="evas_object_del")]
     public abstract class Object
     {
@@ -152,6 +169,11 @@ namespace Evas
         public void data_set( string key, void* data );
         public void* data_get( string key );
         public void* data_del( string key );
+
+        public void map_enable_set( bool enabled );
+        public bool map_enable_get();
+        public void map_set( Map map );
+        public Map map_get();
 
         public void name_set( string name );
         public weak string name_get();
