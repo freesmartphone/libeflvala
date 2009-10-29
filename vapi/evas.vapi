@@ -106,15 +106,15 @@ namespace Evas
     public class Map
     {
         [CCode (cname = "evas_map_new")]
-        public Map( ulong count );
+        public Map( int count );
 
         public void util_rotate( double degrees, Evas.Coord cx, Evas.Coord cy );
         public void util_zoom( double zoomx, double zoomy, Evas.Coord cx, Evas.Coord cy );
 
-        public void point_coord_set( ulong idx, Evas.Coord x, Evas.Coord y, Evas.Coord z );
-        public void point_coord_get( ulong idx, out Evas.Coord x, out Evas.Coord y, out Evas.Coord z );
-        public void point_image_uv_set( ulong idx, double u, double v );
-        public void point_image_uv_get( ulong idx, out double u, out double v );
+        public void point_coord_set( int idx, Evas.Coord x, Evas.Coord y, Evas.Coord z );
+        public void point_coord_get( int idx, out Evas.Coord x, out Evas.Coord y, out Evas.Coord z );
+        public void point_image_uv_set( int idx, double u, double v );
+        public void point_image_uv_get( int idx, out double u, out double v );
     }
 
     //=======================================================================

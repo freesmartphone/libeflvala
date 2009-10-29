@@ -730,6 +730,9 @@ public class Slideshow : Elm.Object
 
     public SlideshowItem item_add( SlideshowItemClass itc, void* data );
     public SlideshowItem item_current_get();
+    public Eina.List<SlideshowItem> items_get();
+    public void item_del( SlideshowItem item );
+    
 
     public void goto( int pos );
     public void show();
