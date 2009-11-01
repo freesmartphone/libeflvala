@@ -111,6 +111,11 @@ namespace Evas
         public void util_rotate( double degrees, Evas.Coord cx, Evas.Coord cy );
         public void util_zoom( double zoomx, double zoomy, Evas.Coord cx, Evas.Coord cy );
 
+        public void smooth_set( bool enabled );
+        public bool smooth_get();
+        public void alpha_set( bool enabled );
+        public bool alpha_get();
+
         public void point_coord_set( int idx, Evas.Coord x, Evas.Coord y, Evas.Coord z );
         public void point_coord_get( int idx, out Evas.Coord x, out Evas.Coord y, out Evas.Coord z );
         public void point_image_uv_set( int idx, double u, double v );
