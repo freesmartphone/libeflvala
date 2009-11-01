@@ -113,6 +113,7 @@ namespace Evas
 
         public void smooth_set( bool enabled );
         public bool smooth_get();
+
         public void alpha_set( bool enabled );
         public bool alpha_get();
 
@@ -120,6 +121,8 @@ namespace Evas
         public void point_coord_get( int idx, out Evas.Coord x, out Evas.Coord y, out Evas.Coord z );
         public void point_image_uv_set( int idx, double u, double v );
         public void point_image_uv_get( int idx, out double u, out double v );
+        public void point_color_set( int idx, int r, int g, int b, int a );
+        public void point_color_get( int idx, out int r, out int g, out int b, out int a );
     }
 
     //=======================================================================
