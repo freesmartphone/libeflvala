@@ -24,10 +24,36 @@ public void shutdown();
 public void run();
 public void exit();
 
-public double scale_get();
-public void scale_set( double scale );
-public Evas.Coord finger_size_get();
-public void finger_size_set( Evas.Coord size );
+//=======================================================================
+namespace Scale
+{
+    public double get();
+    public void set( double scale );
+}
+
+//=======================================================================
+namespace Finger
+{
+    public Evas.Coord size_get();
+    public void size_set( Evas.Coord size );
+}
+
+//=======================================================================
+namespace Policy
+{
+    [CCode (cname = "ELM_POLICY_QUIT")]
+    public const uint QUIT;
+
+    [CCode (cprefix = "ELM_POLICY_QUIT_")]
+    public enum Quit
+    {
+        NONE,
+        LAST_WINDOW_CLOSED,
+    }
+
+    public bool set( uint policy, int value );
+    public int get( uint policy );
+}
 
 
 //=======================================================================
@@ -732,7 +758,7 @@ public class Slideshow : Elm.Object
     public SlideshowItem item_current_get();
     public Eina.List<SlideshowItem> items_get();
     public void item_del( SlideshowItem item );
-    
+
 
     public void goto( int pos );
     public void show();
