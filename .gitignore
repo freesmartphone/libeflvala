@@ -25,3 +25,11 @@ stamp-h1
 *.o
 *.vala.stamp
 
+examples/ecore-glib/ecore-glib
+examples/ecore-signals/ecore_signals
+examples/ecore/ecore
+examples/edje/edje
+examples/eina/eina
+examples/elementary/elementary-vapi
+examples/elementary/note.txt
+examples/library/viewstates/viewstates

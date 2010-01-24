@@ -1,3 +1,6 @@
-SUBDIRS = mainloops viewstates
+SUBDIRS = \
+  viewstates
+  
+#  mainloops is broken atm.
 
 MAINTAINERCLEANFILES = Makefile.in

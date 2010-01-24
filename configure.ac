@@ -1,4 +1,4 @@
-AC_INIT([libeflvala], [0.0.2.0], [mlauer@vanille-media.de], [libeflvala])
+AC_INIT([libeflvala], [0.1.0.0], [mlauer@vanille-media.de], [libeflvala])
 AC_CONFIG_SRCDIR([Makefile.am])
 AC_CONFIG_HEADERS(config.h)
 AM_INIT_AUTOMAKE([dist-bzip2])
@@ -16,13 +16,14 @@ AC_SUBST(CFLAGS)
 AC_SUBST(CPPFLAGS)
 AC_SUBST(LDFLAGS)
 
-VALA_REQUIRED=0.7.7
+VALA_REQUIRED=0.7.9
 EINA_REQUIRED=0.0.0
 EVAS_REQUIRED=0.0.0
 ECORE_REQUIRED=0.0.0
+EDJE_REQUIRED=0.0.0
 ELM_REQUIRED=0.0.0
 GLIB_REQUIRED=2.18.0
-DBUS_REQUIRED=1.1.1
+DBUS_REQUIRED=1.2.1
 DBUS_GLIB_REQUIRED=0.74
 
 PKG_CHECK_MODULES(VALA,
@@ -34,6 +35,7 @@ PKG_CHECK_MODULES(DEPS,
   eina-0 >= $EINA_REQUIRED
   evas >= $EVAS_REQUIRED
   ecore >= $ECORE_REQUIRED
+  edje >= $EDJE_REQUIRED
   elementary >= $ELM_REQUIRED
   glib-2.0 >= $GLIB_REQUIRED
   gobject-2.0 >= $GLIB_REQUIRED)

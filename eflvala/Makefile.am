@@ -10,12 +10,11 @@ VALAC_ARGS = \
 	--pkg eina \
 	--pkg evas \
 	--pkg ecore \
+	--pkg edje \
 	--pkg elm \
-	--pkg posix \
 	--header eflvala.h \
 	--library eflvala-1.0 \
 	--save-temps \
-	--thread \
 	--basedir $(top_srcdir)
 
 vapidir = $(datadir)/vala/vapi
@@ -43,15 +42,12 @@ lib_LTLIBRARIES = \
 
 libeflvala_la_VALASOURCES = \
 	application.vala \
-	notificationqueue.vala \
-	objects.vala \
-	thread.vala \
+	genlist.vala \
 	statemachine.vala \
 	$(NULL)
 
 libeflvala_la_SOURCES = \
 	$(libeflvala_la_VALASOURCES:.vala=.c) \
-	$(libeflvala_la_VALASOURCES:.vala=.h) \
 	\
 	$(NULL)
 
