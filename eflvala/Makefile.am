@@ -21,6 +21,7 @@ vapidir = $(datadir)/vala/vapi
 
 dist_vapi_DATA = \
 	eflvala-1.0.vapi \
+	eflvala-1.0.deps \
 	$(NULL)
 
 SUBDIRS = \
