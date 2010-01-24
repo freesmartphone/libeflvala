@@ -21,17 +21,14 @@ public class T.Genlist : T.Abstract
 {
     Elm.Genlist list;
     Elm.GenlistItemClass itc;
-    Elm.GenlistItemClassFunc itcfunc;
 
     public Genlist()
     {
-        itcfunc = Elm.GenlistItemClassFunc() { label_get = getLabel,
-                                               icon_get  = getIcon,
-                                               state_get = getState,
-                                               del       = delItem };
-
         itc.item_style = "default";
-        itc.func = itcfunc;
+        itc.func.label_get = getLabel;
+        itc.func.icon_get = getIcon;
+        itc.func.state_get = getState;
+        itc.func.del = delItem;
     }
 
     public override void run( Evas.Object obj, void* event_info )
@@ -53,13 +50,13 @@ public class T.Genlist : T.Abstract
         return "Generic List Example";
     }
 
-    public string getLabel( Elm.Object obj, string part )
+    public static string getLabel( Elm.Object obj, string part )
     {
         int number = (int)obj;
         debug( "label_get: %p", obj );
         return "This is list item #%d".printf( number );
     }
-    public Elm.Object? getIcon( Elm.Object obj, string part )
+    public static Elm.Object? getIcon( Elm.Object obj, string part )
     {
         return null;
         /* This leads to a SIGSEGV, something's still wrong wrt. those delegates */
@@ -71,13 +68,13 @@ public class T.Genlist : T.Abstract
         return icon;
         */
     }
-    public bool getState( Elm.Object obj, string part )
+    public static bool getState( Elm.Object obj, string part )
     {
         int number = (int)obj;
         debug( "state_get for item %d", number );
         return false;
     }
-    public void delItem( Elm.Object obj )
+    public static void delItem( Elm.Object obj )
     {
         int number = (int)obj;
         debug( "del for item %d", number );

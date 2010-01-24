@@ -814,24 +814,22 @@ public enum GenlistItemFlags
     SUBITEMS,
 }
 
-
-
-public delegate string GenlistItemLabelGetFunc( Elm.Object obj, string part );
-public delegate Elm.Object? GenlistItemIconGetFunc( Elm.Object obj, string part );
-public delegate bool GenlistItemStateGetFunc( Elm.Object obj, string part );
-public delegate void GenlistItemDelFunc( Elm.Object obj );
+[CCode (cname = "GenlistItemLabelGetFunc")]
+public static delegate string GenlistItemLabelGetFunc( Elm.Object obj, string part );
+[CCode (cname = "GenlistItemIconGetFunc")]
+public static delegate Elm.Object? GenlistItemIconGetFunc( Elm.Object obj, string part );
+[CCode (cname = "GenlistItemStateGetFunc")]
+public static delegate bool GenlistItemStateGetFunc( Elm.Object obj, string part );
+[CCode (cname = "GenlistItemDelFunc")]
+public static delegate void GenlistItemDelFunc( Elm.Object obj );
 
 //=======================================================================
-[CCode (cname = "Elm_Genlist_Item_Class_Func", copy_function = "", destroy_function = "")]
+[CCode (cname = "Elm_Genlist_Item_Class_Func", destroy_function = "")]
 public struct GenlistItemClassFunc
 {
-    [CCode (delegate_target = false)]
     public GenlistItemLabelGetFunc label_get;
-    [CCode (delegate_target = false)]
     public GenlistItemIconGetFunc icon_get;
-    [CCode (delegate_target = false)]
     public GenlistItemStateGetFunc state_get;
-    [CCode (delegate_target = false)]
     public GenlistItemDelFunc del;
 }
 
@@ -849,10 +847,10 @@ public class Genlist : Elm.Object
 {
     [CCode (cname = "elm_genlist_add")]
     public Genlist( Elm.Object? parent );
-    public GenlistItem item_append( GenlistItemClass itc, void *data, GenlistItem? parent, GenlistItemFlags flags, Evas.SmartCallback callback );
-    public GenlistItem item_prepend( GenlistItemClass itc, void *data, GenlistItem? parent, GenlistItemFlags flags, Evas.SmartCallback callback );
-    public GenlistItem item_insert_before( GenlistItemClass itc, void *data, GenlistItem before, GenlistItemFlags flags, Evas.SmartCallback callback );
-    public GenlistItem item_insert_after( GenlistItemClass itc, void *data, GenlistItem after, GenlistItemFlags flags, Evas.SmartCallback callback );
+    public unowned GenlistItem item_append( GenlistItemClass itc, void *data, GenlistItem? parent, GenlistItemFlags flags, Evas.SmartCallback callback );
+    public unowned GenlistItem item_prepend( GenlistItemClass itc, void *data, GenlistItem? parent, GenlistItemFlags flags, Evas.SmartCallback callback );
+    public unowned GenlistItem item_insert_before( GenlistItemClass itc, void *data, GenlistItem before, GenlistItemFlags flags, Evas.SmartCallback callback );
+    public unowned GenlistItem item_insert_after( GenlistItemClass itc, void *data, GenlistItem after, GenlistItemFlags flags, Evas.SmartCallback callback );
 
     public void clear();
     public void multi_select_set( bool multi );
@@ -860,11 +858,11 @@ public class Genlist : Elm.Object
     public void always_select_mode_set( bool always_select );
     public void no_select_mode_set( bool no_select );
 
-    public GenlistItem at_xy_item_get( Evas.Coord x, Evas.Coord y, out int posret );
-    public GenlistItem selected_item_get();
-    public Eina.List<GenlistItem> selected_items_get();
-    public GenlistItem first_item_get();
-    public GenlistItem last_item_get();
+    public unowned GenlistItem at_xy_item_get( Evas.Coord x, Evas.Coord y, out int posret );
+    public unowned GenlistItem selected_item_get();
+    public Eina.List<unowned GenlistItem> selected_items_get();
+    public unowned GenlistItem first_item_get();
+    public unowned GenlistItem last_item_get();
 }
 
 
