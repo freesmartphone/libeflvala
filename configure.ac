@@ -96,7 +96,7 @@ AC_CONFIG_FILES([
   examples/edje/Makefile
   examples/elementary/Makefile
   examples/library/Makefile
-  examples/library/mainloops/Makefile
+  examples/library/application/Makefile
   examples/library/viewstates/Makefile
   eflvala-1.0.pc])
 
