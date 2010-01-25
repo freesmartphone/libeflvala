@@ -34,7 +34,7 @@ class DemoApplication : EflVala.Application
 
     public void setup()
     {
-        win = new Elm.Win( null, "myWindow", Elm.WinType.BASIC );
+        win = new Elm.Win();
         win.title_set( "Elementary meets Vala" );
         win.autodel_set( true );
         win.resize( 320, 320 );

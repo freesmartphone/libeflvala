@@ -30,6 +30,15 @@ namespace Evas
     public int render_method_lookup( string name );
 
     //=======================================================================
+    [CCode (cprefix = "EVAS_FONT_HINTING_", cname = "Evas.h")]
+    public enum FontHintingFlags
+    {
+        NONE,       /**< No font hinting */
+        AUTO,       /**< Automatic font hinting */
+        BYTECODE    /**< Bytecode font hinting */
+    }
+
+    //=======================================================================
     [Compact]
     [CCode (cname = "Evas", free_function = "evas_free")]
     public class Canvas
@@ -67,9 +76,9 @@ namespace Evas
         public void font_path_append( string path );
         public void font_path_prepend( string path );
         public Eina.List<string> font_path_list();
-        //public void font_hinting_set( FontHintingFlags hinting );
-        //public FontHintingFlags font_hinting_get();
-        //public bool font_hinting_can_hint( FontHintingFlags hinting );
+        public void font_hinting_set( FontHintingFlags hinting );
+        public FontHintingFlags font_hinting_get();
+        public bool font_hinting_can_hint( FontHintingFlags hinting );
         public void font_cache_flush();
         public void font_cache_set( int size );
         public int font_cache_get();
@@ -98,7 +107,7 @@ namespace Evas
 
     //=======================================================================
     [CCode (cname = "Evas_Smart_Cb", instance_pos = 0)]
-    public delegate void SmartCallback( Evas.Object obj, void* event_info );
+    public delegate void Callback( Evas.Object obj, void* event_info );
 
     //=======================================================================
     [Compact]
@@ -192,7 +201,7 @@ namespace Evas
         public void focus_set( bool focus );
         public bool focus_get();
 
-        public void smart_callback_add( string event, SmartCallback func );
+        public void smart_callback_add( string event, Callback func );
     }
 
     //=======================================================================

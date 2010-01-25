@@ -37,8 +37,8 @@ public class EflVala.Application : EflVala.IApplication, GLib.Object
     public Application( string[] args )
     {
         debug( "Application()" );
-        Elm.init( args ); //FIXME: might be better done elsewhere (i.e. from within the E thread?)
-        assert ( theApp == null );
+        Elm.init( args );
+        assert ( theApp == null ); // fail, if someone tries to create two apps per process
         theApp = this;
     }
 

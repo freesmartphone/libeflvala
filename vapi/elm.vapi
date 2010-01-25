@@ -163,7 +163,7 @@ public enum WinKeyboardMode
 public class Win : Elm.Object
 {
     [CCode (cname = "elm_win_add")]
-    public Win( Elm.Object? parent, string name, WinType t );
+    public Win( Elm.Object? parent = null, string name = "Untitled", WinType t = WinType.BASIC );
 
     public void resize_object_add( Elm.Object subobj );
     public void resize_object_del( Elm.Object subobj );
@@ -666,7 +666,7 @@ public class Hoversel : Elm.Object
     public void hover_end();
     public void clear();
     public Eina.List items_get();
-    public unowned HoverselItem item_add( string label, string? icon_file, IconType icon_type, Evas.SmartCallback? func = null );
+    public unowned HoverselItem item_add( string label, string? icon_file, IconType icon_type, Evas.Callback? func = null );
     public void item_del( HoverselItem item );
     /*
     EAPI void         elm_hoversel_item_del_cb_set(Elm_Hoversel_Item *it, void (*func)(void *data, Evas_Object *obj, void *event_info));
@@ -687,7 +687,7 @@ public class Toolbar : Elm.Object
 
     public void icon_size_set( int icon_size );
     public int icon_size_get();
-    public ToolbarItem item_add( Elm.Object icon, string label, Evas.SmartCallback func );
+    public ToolbarItem item_add( Elm.Object icon, string label, Evas.Callback func );
     // Note: elm_boolbar_item_ functions living in ToolbarItem scope
     public void scrollable_set( bool scrollable );
     public void homogenous_set( bool homogenous );
@@ -743,7 +743,7 @@ public class Menu : Elm.Object
 
     public void parent_set( Elm.Object parent );
     public void move( Evas.Coord x, Evas.Coord y );
-    public MenuItem item_add( Elm.Object icon, string label, Evas.SmartCallback? func = null );
+    public MenuItem item_add( Elm.Object icon, string label, Evas.Callback? func = null );
 }
 
 
@@ -755,11 +755,11 @@ public class List : Elm.Object
     public List( Elm.Object? parent );
 
     [CCode (cname = "elm_list_item_append")]
-    public ListItem append( string label, Elm.Object? icon, Elm.Object? end, Evas.SmartCallback? func);
+    public ListItem append( string label, Elm.Object? icon, Elm.Object? end, Evas.Callback? func);
     [CCode (cname = "elm_list_item_prepend")]
-    public ListItem prepend( string label, Elm.Object? icon, Elm.Object? end, Evas.SmartCallback? func );
-    public ListItem insert_before( ListItem before, string label, Elm.Object? icon, Elm.Object? end, Evas.SmartCallback? func );
-    public ListItem insert_after( ListItem after, string label, Elm.Object? icon, Elm.Object? end, Evas.SmartCallback? func );
+    public ListItem prepend( string label, Elm.Object? icon, Elm.Object? end, Evas.Callback? func );
+    public ListItem insert_before( ListItem before, string label, Elm.Object? icon, Elm.Object? end, Evas.Callback? func );
+    public ListItem insert_after( ListItem after, string label, Elm.Object? icon, Elm.Object? end, Evas.Callback? func );
     public void go();
     public void multi_select_set( bool multi );
     public bool multi_select_get();
@@ -847,10 +847,10 @@ public class Genlist : Elm.Object
 {
     [CCode (cname = "elm_genlist_add")]
     public Genlist( Elm.Object? parent );
-    public unowned GenlistItem item_append( GenlistItemClass itc, void *data, GenlistItem? parent, GenlistItemFlags flags, Evas.SmartCallback callback );
-    public unowned GenlistItem item_prepend( GenlistItemClass itc, void *data, GenlistItem? parent, GenlistItemFlags flags, Evas.SmartCallback callback );
-    public unowned GenlistItem item_insert_before( GenlistItemClass itc, void *data, GenlistItem before, GenlistItemFlags flags, Evas.SmartCallback callback );
-    public unowned GenlistItem item_insert_after( GenlistItemClass itc, void *data, GenlistItem after, GenlistItemFlags flags, Evas.SmartCallback callback );
+    public unowned GenlistItem item_append( GenlistItemClass itc, void *data, GenlistItem? parent, GenlistItemFlags flags, Evas.Callback callback );
+    public unowned GenlistItem item_prepend( GenlistItemClass itc, void *data, GenlistItem? parent, GenlistItemFlags flags, Evas.Callback callback );
+    public unowned GenlistItem item_insert_before( GenlistItemClass itc, void *data, GenlistItem before, GenlistItemFlags flags, Evas.Callback callback );
+    public unowned GenlistItem item_insert_after( GenlistItemClass itc, void *data, GenlistItem after, GenlistItemFlags flags, Evas.Callback callback );
 
     public void clear();
     public void multi_select_set( bool multi );
@@ -1337,7 +1337,7 @@ public class ScrolledEntry : Elm.Object
     public void selection_copy();
     public void selection_paste();
     public void context_menu_clear();
-    public void context_menu_item_add( string label, string icon_file, IconType icon_type, Evas.SmartCallback callback );
+    public void context_menu_item_add( string label, string icon_file, IconType icon_type, Evas.Callback callback );
 }
 
 } /* namespace Elm */
