@@ -42,11 +42,6 @@ PKG_CHECK_MODULES(DEPS,
 AC_SUBST(DEPS_CFLAGS)
 AC_SUBST(DEPS_LIBS)
 
-PKG_CHECK_MODULES(THREAD,
-  gthread-2.0 >= $GLIB_REQUIRED)
-AC_SUBST(THREAD_CFLAGS)
-AC_SUBST(THREAD_LIBS)
-
 AC_ARG_WITH(edje-cc,
 [  --with-edje-cc=PATH	specify a specific path to edje_cc],
 [

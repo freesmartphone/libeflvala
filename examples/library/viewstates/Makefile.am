@@ -7,7 +7,6 @@ AUTOMAKE_OPTIONS = subdir-objects
 AM_CPPFLAGS = \
 	-I$(top_srcdir)/eflvala \
 	$(DEPS_CFLAGS) \
-	$(THREAD_CFLAGS) \
 	-include $(CONFIG_HEADER) \
 	$(NULL)
 
@@ -21,7 +20,6 @@ viewstates_VALASOURCES = \
 
 viewstates_SOURCES = \
 	$(viewstates_VALASOURCES:.vala=.c) \
-	\
 	$(NULL)
 
 .vala.stamp: $(viewstates_VALASOURCES)
@@ -34,13 +32,11 @@ viewstates_SOURCES = \
 	            --pkg ecore \
 	            --pkg elm \
 	            --save-temps \
-	            --thread \
 	            --basedir $(top_srcdir) $^
 	touch $@
 
 viewstates_LDADD = \
 	$(DEPS_LIBS) \
-	$(THREAD_LIBS) \
 	../../../eflvala/libeflvala.la \
 	$(NULL)
 

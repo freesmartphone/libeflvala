@@ -61,18 +61,6 @@ class DemoApplication : EflVala.Application
     public void on_button_press()
     {
         debug( "Send PING to backend!" );
-        sendCommandToBackend( new EflVala.Command( "PING" ) );
-    }
-
-    public override void handleCommandFromBackend( EflVala.Command command )
-    {
-        button.label_set( "PONG from backend! ");
-    }
-
-    public override void handleCommandFromFrontend( EflVala.Command command )
-    {
-        if ( command.command == "PING" )
-            sendCommandToFrontend( new EflVala.Command( "PONG" ) );
     }
 }
 
@@ -83,9 +71,9 @@ public static int main( string[] args )
     var app = new DemoApplication( args );
     var res = app.run();
     if ( res >= 0 )
-        debug( "app exit OK" );
+        debug( "App exit OK" );
     else
-        debug( "app exit with ERROR" );
+        debug( "App exit with ERROR" );
     return res;
 }
 
