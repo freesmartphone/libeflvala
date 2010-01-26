@@ -39,6 +39,60 @@ namespace Evas
     }
 
     //=======================================================================
+    [CCode (cprefix = "EVAS_ASPECT_CONTROL_", cname = "Evas.h")]
+    public enum AspectControl
+    {
+        NONE,
+        NEITHER,
+        HORIZONTAL,
+        VERTICAL,
+        BOTH
+    }
+
+    //=======================================================================
+    [CCode (cprefix = "EVAS_LOAD_ERROR_", cname = "Evas.h")]
+    public enum LoadError
+    {
+        NONE,
+        GENERIC,
+        DOES_NOT_EXIST,
+        PERMISSION_DENIED,
+        RESOURCE_ALLOCATION_FAILED,
+        CORRUPT_FILE,
+        UNKNOWN_FORMAT
+    }
+
+    //=======================================================================
+    [CCode (cprefix = "EVAS_TEXTURE_", cname = "Evas.h")]
+    public enum TextureMode
+    {
+        REFLECT,
+        REPEAT,
+        RESTRICT,
+        RESTRICT_REFLECT,
+        RESTRICT_REPEAT,
+        PAD
+    }
+
+    //=======================================================================
+    [CCode (cprefix = "EVAS_BORDER_FILL_", cname = "Evas.h")]
+    public enum BorderFillMode
+    {
+        NONE,
+        DEFAULT,
+        SOLID
+    }
+    
+    //=======================================================================
+    [CCode (cprefix = "EVAS_IMAGE_SCALE_HINT_", cname = "Evas.h")]
+    public enum ScaleHint
+    {
+        NONE,
+        DYNAMIC,
+        STATIC
+    }
+
+    //=======================================================================
     [Compact]
     [CCode (cname = "Evas", free_function = "evas_free")]
     public class Canvas
@@ -265,6 +319,22 @@ namespace Evas
 
         public void alpha_set( bool has_alpha );
         public bool alpha_get();
+    }
+
+    //=======================================================================
+    [CCode (cprefix = "EVAS_TEXT_STYLE_", cname = "Evas.h")]
+    public enum TextStyle
+    {
+        PLAIN,
+        SHADOW,
+        OUTLINE,
+        SOFT_OUTLINE,
+        GLOW,
+        OUTLINE_SHADOW,
+        FAR_SHADOW,
+        OUTLINE_SOFT_SHADOW,
+        SOFT_SHADOW,
+        FAR_SOFT_SHADOW
     }
 
     //=======================================================================
