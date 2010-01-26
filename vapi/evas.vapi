@@ -75,6 +75,15 @@ namespace Evas
     }
 
     //=======================================================================
+    namespace Hint
+    {
+        [CCode (cname = "EVAS_HINT_EXPAND")]
+        public const double EXPAND;
+        [CCode (cname = "EVAS_HINT_FILL")]
+        public const double FILL;
+    }
+
+    //=======================================================================
     [CCode (cprefix = "EVAS_BORDER_FILL_", cname = "Evas.h")]
     public enum BorderFillMode
     {
@@ -85,7 +94,7 @@ namespace Evas
     
     //=======================================================================
     [CCode (cprefix = "EVAS_IMAGE_SCALE_HINT_", cname = "Evas.h")]
-    public enum ScaleHint
+    public enum ImageScaleHint
     {
         NONE,
         DYNAMIC,
