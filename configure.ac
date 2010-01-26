@@ -92,6 +92,7 @@ AC_CONFIG_FILES([
   examples/elementary/Makefile
   examples/library/Makefile
   examples/library/application/Makefile
+  examples/library/dialer/Makefile
   examples/library/viewstates/Makefile
   eflvala-1.0.pc])
 
