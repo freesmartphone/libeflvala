@@ -8,7 +8,7 @@ function _require_setup
         msys2) return 0 ;;
         debian | ubuntu)
             sudo apt-get update
-            sudo apt-get install -y "${PKGS[@]}" valac libefl-all-dev
+            sudo apt-get install -y "${PKGS[@]}" valac libefl-all-dev libdbus-glib-1-dev
             ;;
         fedora | alma) sudo dnf install -y "${PKGS[@]}" vala efl-devel ;;
     esac 1>/dev/null
