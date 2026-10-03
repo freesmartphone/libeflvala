@@ -1,18 +1,23 @@
 #!/usr/bin/env bash
 
+function _require_setup
+{
+    source '/etc/os-release'
+    declare -ar PKGS=(shellcheck shfmt meson ninja-build, pkg-config)
+    case ${ID:?} in
+        msys2) return 0 ;;
+        debian | ubuntu)
+            sudo apt-get update
+            sudo apt-get install -y "${PKGS[@]}" valac libefl-all-dev
+            ;;
+        fedora | alma) sudo dnf install -y "${PKGS[@]}" vala efl-devel ;;
+    esac 1>/dev/null
+    shellcheck --external-sources "${0}"
+    shfmt -ci -fn -i 4 -d "${0}"
+}
+
 set -euo pipefail
-
-source '/etc/os-release'
-case ${ID:?} in
-    debian | ubuntu) sudo bash -c '
-        apt-get update
-        apt-get install -y meson ninja-build valac pkg-config \
-            libglib2.0-dev libdbus-glib-1-dev libefl-all-dev
-    ' ;;
-    fedora | alma) sudo dnf install -y meson ninja-build vala pkgconf-pkg-config \
-        glib2-devel dbus-glib-devel efl-devel ;;
-esac 1>/dev/null
-
+_require_setup
 meson setup build
 meson compile -C build
 meson test -C build --print-errorlogs

@@ -10,7 +10,6 @@ on:
   push:
     branches:
       - master
-  workflow_dispatch:
 
 jobs:
   make:
@@ -20,15 +19,36 @@ jobs:
       matrix:
         os:
           - ubuntu-latest
-        arch:
-          - x86_64
+          - windows-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+        with:
+          submodules: recursive
+
+      - name: Setup on Windows
+        if: runner.os == 'Windows'
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: clang64
+          update: true
+          pacboy: |
+            efl:p
+            vala:p
+            clang:p
+            ninja:p
+            meson:p
+            pkg-config:p
 
       - name: Build on Unix
         if: runner.os != 'Windows'
         shell: bash
+        run: |
+          bash '.github/workflows/make.sh'
+
+      - name: Build on Windows
+        if: runner.os == 'Windows'
+        shell: msys2 {0}
         run: |
           bash '.github/workflows/make.sh'
