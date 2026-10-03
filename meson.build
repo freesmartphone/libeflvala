@@ -42,7 +42,6 @@ endif
 glib_dep = dependency('glib-2.0', version: '>=2.18')
 gobject_dep = dependency('gobject-2.0', version: '>=2.18')
 dbus_dep = dependency('dbus-1', version: '>=1.2.1')
-dbus_glib_dep = dependency('dbus-glib-1', version: '>=0.74')
 evas_dep = dependency('evas')
 ecore_dep = dependency('ecore')
 edje_dep = dependency('edje')
@@ -53,7 +52,6 @@ elementary_dep = dependency('elementary')
 efl_pc_deps = [
     glib_dep,
     gobject_dep,
-    dbus_glib_dep,
     evas_dep,
     ecore_dep,
     edje_dep,
