@@ -1,0 +1,54 @@
+---
+name: Make
+
+on:
+  schedule:
+    - cron: '0 0 1 * *'
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+
+jobs:
+  make:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          # - windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          submodules: recursive
+
+      - name: Setup on Windows
+        if: runner.os == 'Windows'
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: clang64
+          update: true
+          pacboy: |
+            efl:p
+            vala:p
+            clang:p
+            ninja:p
+            meson:p
+            pkg-config:p
+
+      - name: Build on Unix
+        if: runner.os != 'Windows'
+        shell: bash
+        run: |
+          bash '.github/workflows/make.sh'
+
+      - name: Build on Windows
+        if: runner.os == 'Windows'
+        shell: msys2 {0}
+        run: |
+          bash '.github/workflows/make.sh'

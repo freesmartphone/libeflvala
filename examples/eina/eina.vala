@@ -22,7 +22,7 @@
  */
 using Eina;
 
-public static int main( string[] args )
+public static int main( string[] _args )
 {
     Eina.init();
     eina_list_example();
@@ -56,7 +56,7 @@ public static void eina_list_example()
     b.iterator_new().foreach( print_str, null);
 }
 
-public static bool print_str( void* container, void* data, void* fdata )
+public static bool print_str( void* _container, void* data, void* _fdata )
 {
     string s = ( string )data;
     debug( "\tdata: %s", s  );
@@ -76,7 +76,7 @@ public static void eina_file_example()
     stdout.printf("Dir \tName\n");
     File.dir_list( path, true, dir_print, null );
 }
-public void dir_print( string? name, string? path, void* data )
+public void dir_print( string? name, string? path, void* _data )
 {
     string p = "%s/%s".printf( path, name );
     var v = FileUtils.test( p, GLib.FileTest.IS_DIR ).to_string();
@@ -89,5 +89,7 @@ public static void eina_error_example()
     var e2 = Eina.Error( "Moep Meop" );
     var e3 = Eina.Error( "Chooo Choo" );
     e1.set();
+    e2.set();
+    e3.set();
 
 }

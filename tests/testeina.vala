@@ -23,7 +23,6 @@ using Eina;
 public void test_eina_list()
 {
     int[] data = { 6, 9, 42, 1, 7, 9, 81, 1664, 1337 };
-    int[] res = { 81, 9, 9, 7, 1 };
 
     Eina.init();
     Eina.List<int> l = null;

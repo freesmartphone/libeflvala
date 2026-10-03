@@ -16,7 +16,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  *
  **/
-public static int main( string[] args)
+public static int main( string[] _args)
 {
     /* init */
     EcoreEvas.init();
@@ -57,7 +57,7 @@ public static int main( string[] args)
     return 0;
 }
 
-public static void on_suspend( Edje.Object obj, string emission, string source )
+public static void on_suspend( Edje.Object _obj, string _emission, string _source )
 {
     Ecore.MainLoop.quit();
 }

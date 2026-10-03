@@ -23,7 +23,7 @@ public bool onTimeout()
     return true;
 }
 
-public static int main( string[] args)
+public static int main( string[] _args)
 {
     /* init */
     EcoreEvas.init();
@@ -43,6 +43,8 @@ public static int main( string[] args)
 
     /* create a glib mainloop */
     GLib.MainLoop gmain = new GLib.MainLoop( null, false );
+    if ( gmain.is_running() )
+        warning( "glib mainloop already running" );
 
     /* create a glib timer */
     Timeout.add_seconds( 1, onTimeout );

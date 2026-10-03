@@ -82,7 +82,8 @@ namespace Coords
 //=======================================================================
 namespace Quicklaunch
 {
-    public static delegate void Postfork_Func ( void* data );
+    [CCode (has_target = false)]
+    public delegate void Postfork_Func ( void* data );
     public void init( [CCode(array_length_pos = 0.9)] string[] args );
     public void sub_init( [CCode (array_length_pos = 0.9)] string[] args );
     public void sub_shutdown();
@@ -273,6 +274,7 @@ public class Box : Elm.Object
     public Box( Elm.Object? parent );
 
     public void horizontal_set( bool horizontal );
+    [CCode (cname = "elm_box_homogeneous_set")]
     public void homogenous_set( bool homogenous );
     public void pack_start( Elm.Object subobj );
     public void pack_end( Elm.Object subobj );
@@ -291,7 +293,9 @@ public class Button : Elm.Object
     [CCode (cname = "elm_button_add")]
     public Button( Elm.Object? parent );
 
+    [CCode (cname = "elm_object_text_set")]
     public void label_set( string label );
+    [CCode (cname = "elm_object_text_get")]
     public unowned string label_get();
     public void icon_set( Elm.Object icon );
     public Elm.Object icon_get();
@@ -339,7 +343,9 @@ public class Label : Elm.Object
     [CCode (cname = "elm_label_add")]
     public Label( Elm.Object? parent );
 
+    [CCode (cname = "elm_object_text_set")]
     public void label_set( string label );
+    [CCode (cname = "elm_object_text_get")]
     public unowned string label_get();
     public void line_wrap_set( bool wrap );
 }
@@ -352,7 +358,9 @@ public class Toggle : Elm.Object
     [CCode (cname = "elm_toggle_add")]
     public Toggle( Elm.Object? parent );
 
+    [CCode (cname = "elm_object_text_set")]
     public void label_set( string label );
+    [CCode (cname = "elm_object_text_get")]
     public unowned string label_get();
     public void icon_set( Elm.Object icon );
     public Elm.Object icon_get();
@@ -370,7 +378,9 @@ public class Frame : Elm.Object
     [CCode (cname = "elm_frame_add")]
     public Frame( Elm.Object? parent );
 
+    [CCode (cname = "elm_object_text_set")]
     public void label_set( string label );
+    [CCode (cname = "elm_object_text_get")]
     public unowned string label_get();
     public void content_set( Elm.Object content );
 }
@@ -383,6 +393,7 @@ public class Table : Elm.Object
     [CCode (cname = "elm_table_add")]
     public Table( Elm.Object? parent );
 
+    [CCode (cname = "elm_table_homogeneous_set")]
     public void homogenous_set( bool homogenous );
     public void pack( Elm.Object subobj, int x, int y, int w, int h );
     public void padding_set( Evas.Coord horizontal, Evas.Coord vertical );
@@ -414,7 +425,7 @@ public class Layout : Elm.Object
     public void file_set( string file, string group );
     public void theme_set( string clas, string group, string style );
     public void content_set( string swallow, Elm.Object content );
-    public weak Elm.Object edje_get();
+    public unowned Elm.Object edje_get();
     public void sizing_eval();
 }
 
@@ -628,6 +639,7 @@ public class Bubble : Elm.Object
     [CCode (cname = "elm_bubble_add")]
     public Bubble( Elm.Object? parent );
 
+    [CCode (cname = "elm_object_text_set")]
     public void label_set( string label );
     public void info_set( string info );
     public void content_set( Elm.Object content );
@@ -658,7 +670,9 @@ public class Hoversel : Elm.Object
 
     public void horizontal_set( bool horizontal );
     public void hover_parent_set( Elm.Object parent );
+    [CCode (cname = "elm_object_text_set")]
     public void label_set( string label );
+    [CCode (cname = "elm_object_text_get")]
     public unowned string label_get();
     public void icon_set( Elm.Object icon );
     public Elm.Object icon_get();
@@ -690,6 +704,7 @@ public class Toolbar : Elm.Object
     public ToolbarItem item_add( Elm.Object icon, string label, Evas.Callback func );
     // Note: elm_boolbar_item_ functions living in ToolbarItem scope
     public void scrollable_set( bool scrollable );
+    [CCode (cname = "elm_toolbar_homogeneous_set")]
     public void homogenous_set( bool homogenous );
     public void menu_parent_set( Elm.Object parent );
     [CCode (cname = "elm_toolbar_item_unselect_all")]
@@ -704,7 +719,9 @@ public class Toolbar : Elm.Object
 public class ToolbarItem
 {
     public Elm.Object icon_get();
+    [CCode (cname = "elm_object_item_text_get")]
     public unowned string label_get();
+    [CCode (cname = "elm_object_item_text_set")]
     public void label_set( string label );
     //public void del_cb_set( ... );
     public void select();
@@ -724,8 +741,10 @@ public class MenuItem
 {
     [CCode (cname = "elm_menu_object_get")]
     public Elm.Object object_get();
+    [CCode (cname = "elm_object_item_text_set")]
     public void label_set( string label );
     //public void del_cb_set( ... );
+    [CCode (cname = "elm_object_item_text_get")]
     public unowned string label_get();
     public void icon_set( Elm.Object icon );
     public void disabled_set( bool disabled );
@@ -766,9 +785,9 @@ public class List : Elm.Object
     public void horizontal_mode_set( ListMode mode );
     public ListMode horizontal_mode_get();
     public void always_select_mode_set( bool always_select );
-    public weak Eina.List<ListItem> items_get();
-    public weak ListItem selected_item_get();
-    public weak Eina.List<ListItem> selected_items_get();
+    public unowned Eina.List<ListItem> items_get();
+    public unowned ListItem selected_item_get();
+    public unowned Eina.List<ListItem> selected_items_get();
 }
 
 
@@ -785,12 +804,15 @@ public class Carousel : Elm.Object
 [CCode (cname = "Evas_Object", free_function = "evas_object_del")]
 public class Slider : Elm.Object
 {
-    public static delegate string IndicatorFormatFunc( double val );
+    [CCode (has_target = false)]
+    public delegate string IndicatorFormatFunc( double val );
 
     [CCode (cname = "elm_slider_add")]
     public Slider( Elm.Object? parent );
 
+    [CCode (cname = "elm_object_text_set")]
     public void label_set( string label );
+    [CCode (cname = "elm_object_text_get")]
     public unowned string label_get();
     public void icon_set( Elm.Object icon );
     public Elm.Object icon_get();
@@ -814,20 +836,22 @@ public enum GenlistItemFlags
     SUBITEMS,
 }
 
-[CCode (cname = "GenlistItemLabelGetFunc")]
-public static delegate string GenlistItemLabelGetFunc( Elm.Object obj, string part );
-[CCode (cname = "GenlistItemIconGetFunc")]
-public static delegate Elm.Object? GenlistItemIconGetFunc( Elm.Object obj, string part );
-[CCode (cname = "GenlistItemStateGetFunc")]
-public static delegate bool GenlistItemStateGetFunc( Elm.Object obj, string part );
-[CCode (cname = "GenlistItemDelFunc")]
-public static delegate void GenlistItemDelFunc( Elm.Object obj );
+[CCode (cname = "GenlistItemLabelGetFunc", has_target = false)]
+public delegate string GenlistItemLabelGetFunc( Elm.Object obj, string part );
+[CCode (cname = "GenlistItemIconGetFunc", has_target = false)]
+public delegate Elm.Object? GenlistItemIconGetFunc( Elm.Object obj, string part );
+[CCode (cname = "GenlistItemStateGetFunc", has_target = false)]
+public delegate bool GenlistItemStateGetFunc( Elm.Object obj, string part );
+[CCode (cname = "GenlistItemDelFunc", has_target = false)]
+public delegate void GenlistItemDelFunc( Elm.Object obj );
 
 //=======================================================================
-[CCode (cname = "Elm_Genlist_Item_Class_Func", destroy_function = "")]
+[CCode (cname = "Elm_Gen_Item_Class_Functions", destroy_function = "")]
 public struct GenlistItemClassFunc
 {
+    [CCode (cname = "text_get")]
     public GenlistItemLabelGetFunc label_get;
+    [CCode (cname = "content_get")]
     public GenlistItemIconGetFunc icon_get;
     public GenlistItemStateGetFunc state_get;
     public GenlistItemDelFunc del;
@@ -907,7 +931,9 @@ public class Check : Elm.Object
     [CCode (cname = "elm_check_add")]
     public Check( Elm.Object? parent );
 
+    [CCode (cname = "elm_object_text_set")]
     public void label_set( string label );
+    [CCode (cname = "elm_object_text_get")]
     public unowned string label_get();
     public void icon_set( Elm.Object icon );
     public Elm.Object icon_get();
@@ -924,7 +950,9 @@ public class Radio : Elm.Object
     [CCode (cname = "elm_radio_add")]
     public Radio( Elm.Object? parent );
 
+    [CCode (cname = "elm_object_text_set")]
     public void label_set( string label );
+    [CCode (cname = "elm_object_text_get")]
     public unowned string label_get();
     public void icon_set( Elm.Object icon );
     public Elm.Object icon_get();
@@ -1037,6 +1065,7 @@ public class ProgressBar : Elm.Object
     public bool pulse_get();
     public void value_set( double val );
     public double value_get();
+    [CCode (cname = "elm_object_text_set")]
     public void label_set( string label );
     public void icon_set( Elm.Object icon );
     public void span_size_set( Evas.Coord size );
@@ -1137,7 +1166,9 @@ public class ListItem
     public void selected_set( bool selected );
     public void show();
     public void* data_get();
+    [CCode (cname = "elm_object_item_text_get")]
     public unowned string label_get();
+    [CCode (cname = "elm_object_item_text_set")]
     public void label_set( string label );
     public Elm.Object icon_get();
     public void icon_set( Elm.Object icon );

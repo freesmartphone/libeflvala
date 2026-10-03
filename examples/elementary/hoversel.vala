@@ -23,7 +23,7 @@ public class T.Hoversel : T.Abstract
     Elm.Box box;
     Elm.Hoversel hoversel;
 
-    public override void run( Evas.Object obj, void* event_info )
+    public override void run( Evas.Object _obj, void* _event_info )
     {
         open();
 

@@ -53,45 +53,43 @@ public class Delegates : GLib.Object
     {
         assert( magic == 42 );
         Ecore.MainLoop.quit();
-        return false;
+        // Keep the timer alive until the Vala compact dtor runs ecore_timer_del.
+        // Returning false lets Ecore free it first, then the dtor double-frees (SIGSEGV on EFL 1.27).
+        return true;
     }
 
 }
 
 public void test_mainloop_idler()
 {
-    init();
     var delegates = new Delegates();
-    var i = new Idler( delegates.idle_callback );
+    var idler = new Idler( delegates.idle_callback );
     Ecore.MainLoop.begin();
-    shutdown();
+    assert( idler != null );
 }
 
 public void test_mainloop_idle_enterer()
 {
-    init();
     var delegates = new Delegates();
-    var i = new IdleEnterer( delegates.idle_enterer );
+    var enterer = new IdleEnterer( delegates.idle_enterer );
     Ecore.MainLoop.begin();
-    shutdown();
+    assert( enterer != null );
 }
 
 public void test_mainloop_idle_exiter()
 {
-    init();
     var delegates = new Delegates();
-    var i = new IdleExiter( delegates.idle_exiter );
+    var exiter = new IdleExiter( delegates.idle_exiter );
     Ecore.MainLoop.begin();
-    shutdown();
+    assert( exiter != null );
 }
 
 public void test_mainloop_timer_timeout()
 {
-    init();
     var delegates = new Delegates();
-    var i = new Ecore.Timer( 1.0, delegates.timeout );
+    var timer = new Ecore.Timer( 1.0, delegates.timeout );
     Ecore.MainLoop.begin();
-    shutdown();
+    assert( timer != null );
 }
 
 
@@ -99,6 +97,7 @@ public void test_mainloop_timer_timeout()
 void main (string[] args)
 {
     Test.init(ref args);
+    init();
 
     Test.add_func("/MainLoop/Idler", test_mainloop_idler);
     Test.add_func("/MainLoop/IdleEnterer", test_mainloop_idle_enterer);
@@ -106,4 +105,5 @@ void main (string[] args)
     Test.add_func("/MainLoop/Timer/Timeout", test_mainloop_timer_timeout);
 
     Test.run ();
+    shutdown();
 }

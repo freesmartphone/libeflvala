@@ -9,6 +9,28 @@ libeflvala contains additional convenience
 objects for applications written in vala
 using the efl.
 
+Building
+========
+
+Meson:
+
+    meson setup build
+    meson compile -C build
+    meson test -C build
+    meson install -C build
+
+Optional Meson flags: `-Dlibrary=false`, `-Dexamples=false`, `-Dtests=false`.
+
+Autotools (legacy):
+
+    ./autogen.sh
+    make
+    make install
+
+Dependencies: valac, pkg-config, GLib, dbus-glib, EFL (eina, evas, ecore,
+edje, elementary). On Debian/Ubuntu: `meson ninja-build valac
+libglib2.0-dev libdbus-glib-1-dev libefl-all-dev`.
+
 Roadmap
 =======
 
@@ -16,4 +38,3 @@ Full Elementary support is going to be done first,
 adding dependencies (evas) as we go. Later on,
 adding edje and ecore for applications that do not
 want to use elementary.
-

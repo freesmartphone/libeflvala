@@ -21,7 +21,7 @@ public class T.Background : T.Abstract
 {
     Elm.Bg bg;
 
-    public override void run( Evas.Object obj, void* event_info )
+    public override void run( Evas.Object _obj, void* _event_info )
     {
         open();
         bg = new Elm.Bg( win );

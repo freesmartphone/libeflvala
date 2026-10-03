@@ -19,18 +19,18 @@
 
 class Delegates : GLib.Object
 {
-    public static void onDeleteStatic( Evas.Object o, void* event_info )
+    public static void onDeleteStatic( Evas.Object o, void* _event_info )
     {
-        debug( "static callback" );
+        debug( "static callback on %p", o );
     }
 
-    public void onDeleteMember( Evas.Object o, void* event_info )
+    public void onDeleteMember( Evas.Object o, void* _event_info )
     {
-        debug( "member callback" );
+        debug( "member callback on %p", o );
         Elm.exit();
     }
 
-    public void onButtonClicked( Evas.Object b, void* event_info )
+    public void onButtonClicked( Evas.Object b, void* _event_info )
     {
         debug( "on button clicked" );
         b.hide();
@@ -40,8 +40,17 @@ class Delegates : GLib.Object
 public void test_objects()
 {
     Elm.init( new string[] { "elementary_test" } );
+    var delegates = new Delegates();
     var win = new Elm.Win( null, "window", Elm.WinType.BASIC );
     var bg = new Elm.Bg( win );
+    bg.size_hint_weight_set( 1.0, 1.0 );
+    win.resize_object_add( bg );
+    bg.show();
+    win.smart_callback_add( "delete-request", Delegates.onDeleteStatic );
+    win.smart_callback_add( "delete-request", delegates.onDeleteMember );
+    var button = new Elm.Button( win );
+    button.label_set( "Click" );
+    button.smart_callback_add( "clicked", delegates.onButtonClicked );
     Elm.shutdown();
 }
 

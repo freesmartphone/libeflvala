@@ -1,19 +1,19 @@
 using Ecore;
 
 
-bool sig_user(int type, void *event)
+bool sig_user(int _type, void *event)
 {
     stdout.printf("USR%d\n", ((EventSignalUser *) event)->number);
     return false;
 }
 
-bool sig_realtime(int type, void *event)
+bool sig_realtime(int _type, void *event)
 {
     stdout.printf("num: %d\n", ((EventSignalRealtime *) event)->num);
     return true;
 }
 
-bool sig_exit(int type, void *event)
+bool sig_exit(int _type, void *event)
 {
     var ev = (EventSignalExit *) event;
     stdout.printf("[i: %u, q: %u, t: %u]\n",

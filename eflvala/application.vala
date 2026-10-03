@@ -34,6 +34,8 @@ public class EflVala.Application : EflVala.IApplication, GLib.Object
     //
     // public API
     //
+    GLib.MainLoop? gmain;
+
     public Application( string[] args )
     {
         debug( "Application()" );
@@ -44,7 +46,8 @@ public class EflVala.Application : EflVala.IApplication, GLib.Object
 
     public int run()
     {
-        GLib.MainLoop gmain = new GLib.MainLoop( null, false );
+        gmain = new GLib.MainLoop( null, false );
+        assert( gmain != null );
         if ( Ecore.MainLoop.glib_integrate() )
         {
             debug( "GLib mainloop integration successfully completed" );

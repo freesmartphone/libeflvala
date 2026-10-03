@@ -1,0 +1,20 @@
+option(
+    'library',
+    type: 'boolean',
+    value: true,
+    description: 'Build the eflvala convenience library',
+)
+
+option(
+    'examples',
+    type: 'boolean',
+    value: true,
+    description: 'Build example applications',
+)
+
+option(
+    'tests',
+    type: 'boolean',
+    value: true,
+    description: 'Build and run test programs',
+)

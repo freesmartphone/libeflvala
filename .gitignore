@@ -21,6 +21,7 @@ stamp-h1
 .libs
 *.pc
 *.c
+!eflvala/pager_compat.c
 *.h
 *.o
 *.vala.stamp
@@ -33,3 +34,10 @@ examples/eina/eina
 examples/elementary/elementary-vapi
 examples/elementary/note.txt
 examples/library/viewstates/viewstates
+
+# Meson
+/build/
+/builddir/
+/.meson*
+compile_commands.json
+*.edj

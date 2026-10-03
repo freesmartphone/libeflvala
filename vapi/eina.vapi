@@ -22,14 +22,14 @@ namespace Eina
     public int init();
     public int shutdown();
 
-    [CCode (cname = "Eina_Compare_Cb")]
-    public static delegate int CompareCb(void* data1, void* data2);
+    [CCode (cname = "Eina_Compare_Cb", has_target = false)]
+    public delegate int CompareCb(void* data1, void* data2);
 
-    [CCode (cname = "Eina_Free_Cb", instance_pos = 0)]
-    public static delegate void FreeCb(void* data);
+    [CCode (cname = "Eina_Free_Cb", instance_pos = 0, has_target = false)]
+    public delegate void FreeCb(void* data);
 
-    [CCode (instance_pos = 0)]
-    public static delegate bool Each(void* container, void* data, void* fdata );
+    [CCode (instance_pos = 0, has_target = false)]
+    public delegate bool Each(void* container, void* data, void* fdata );
 
     [CCode (cprefix = "EINA_SORT_")]
     public enum Sort
@@ -58,11 +58,11 @@ namespace Eina
 
         public uint count();
 
-        public weak G data_find(owned G data);
+        public unowned G data_find(owned G data);
         // ???
         public List<G> data_find_list(owned G data);
 
-        public weak G nth(uint n);
+        public unowned G nth(uint n);
         public List<G> nth_list(int n);
 
         [ReturnsModifiedPointer ()]
@@ -167,7 +167,7 @@ namespace Eina
         public delegate void FreeCallback();
 
         public void foreach(Each callback, void* fdata);
-        public weak G container_get();
+        public unowned G container_get();
         public bool next(ref G next);
     }
 
@@ -218,7 +218,8 @@ namespace Eina
     [CCode (free_function = "eina_benchmark_free")]
     public class Benchmark
     {
-        public static delegate void Specimens (int request);
+        [CCode (has_target = false)]
+        public delegate void Specimens (int request);
         public Benchmark(string name, string run);
         public bool register(string name, Specimens bench_cb, int count_start, int count_end, int count_set);
         public Eina.Array<string> run();
@@ -230,7 +231,7 @@ namespace Eina
         [CCode (cname = "EINA_ERROR_CONVERT_P_NOT_FOUND")]
         public static Eina.Error P_NOT_FOUND;
         [CCode (cname = "EINA_ERROR_CONVERT_0X_NOT_FOUND")]
-        public static Eina.Error 0X_NOT_FOUND;
+        public static Eina.Error HEX_NOT_FOUND;
         [CCode (cname = "EINA_ERROR_CONVERT_OUTRUN_STRING_LENGTH")]
         public static Eina.Error OUTRUN_STRING_LENGTH;
 
@@ -316,8 +317,8 @@ namespace Eina
     //=======================================================================
     namespace File
     {
-        [CCode (cname = "Eina_File_Dir_List_Cb")]
-        public static delegate void DirListCb(string name, string path, void* data);
+        [CCode (cname = "Eina_File_Dir_List_Cb", has_target = false)]
+        public delegate void DirListCb(string name, string path, void* data);
         public static bool dir_list(string dir, bool recursive, DirListCb cb, void* data);
         public static Eina.Array split(string path);
     }
@@ -334,13 +335,14 @@ namespace Eina
         [CCode (cname = "eina_hash_int64")]
         public static int int_64(ulong* key, int len);
 
-        [CCode (cname = "Eina_KeyLength")]
-        public static delegate uint KeyLength(K data) ;
-        [CCode (cname = "Eina_KeyCmp")]
-        public static delegate int KeyCmp(K key1, int key1_length, K key2, int key2_length);
-        [CCode (cname = "Eina_Hash_KeyHash")]
-        public static delegate int KeyHash(K key, int key_length);
-        public static delegate bool Foreach(Hash hash, K key, V data, void* fdata);
+        [CCode (cname = "Eina_KeyLength", has_target = false)]
+        public delegate uint KeyLength(K data) ;
+        [CCode (cname = "Eina_KeyCmp", has_target = false)]
+        public delegate int KeyCmp(K key1, int key1_length, K key2, int key2_length);
+        [CCode (cname = "Eina_Hash_KeyHash", has_target = false)]
+        public delegate int KeyHash(K key, int key_length);
+        [CCode (has_target = false)]
+        public delegate bool Foreach(Hash hash, K key, V data, void* fdata);
 
         public Hash(KeyLength key_length_cb, KeyCmp key_cmp_cb, KeyHash key_hash_cb, FreeCb free_cb, int buckets_pwer_size);
         public Hash.string_dj2b(FreeCb data_free_cb);
@@ -394,8 +396,10 @@ namespace Eina
     [CCode (free_function = "eina_lalloc_free")]
     public class Lalloc
     {
-        public static delegate bool Alloc(void* user_data, int num);
-        public static delegate void Free (void* user_data);
+        [CCode (has_target = false)]
+        public delegate bool Alloc(void* user_data, int num);
+        [CCode (has_target = false)]
+        public delegate void Free (void* user_data);
         public Lalloc(void* data, Alloc alloc_cb, Free free_cb, int num_init);
         public bool elements_add(int num);
         public bool element_add();
@@ -408,7 +412,7 @@ namespace Eina
         public string? string_get();
         public void string_set(string magic_name);
         [CCode (cname = "eina_magic_fail")]
-        private static void fail_impl(void* data, Magic m, Magic req_m, string file, string func,int line );
+        private static void fail_impl(void* data, Magic m, Magic req_m, string file, string function,int line );
         public static void fail(void* data, Magic m, Magic req_m)
         {
             fail_impl(data,m,req_m, GLib.Log.FILE, GLib.Log.METHOD, GLib.Log.LINE);
@@ -432,13 +436,20 @@ namespace Eina
         public void statistics();
         public class Backend
         {
-            public static delegate void* BackendInit(string context,string options, void* var_args);
-            public static delegate void BackendFree(void* data, void* element);
-            public static delegate void* BackendAlloc(void* data, uint size);
-            public static delegate void* BackendRealloc(void* data, void* element, uint size);
-            public static delegate void BackendGc(void* data);
-            public static delegate void BackendStats(void* data);
-            public static delegate void BackendShutdown(void* data);
+            [CCode (has_target = false)]
+            public delegate void* BackendInit(string context,string options, void* var_args);
+            [CCode (has_target = false)]
+            public delegate void BackendFree(void* data, void* element);
+            [CCode (has_target = false)]
+            public delegate void* BackendAlloc(void* data, uint size);
+            [CCode (has_target = false)]
+            public delegate void* BackendRealloc(void* data, void* element, uint size);
+            [CCode (has_target = false)]
+            public delegate void BackendGc(void* data);
+            [CCode (has_target = false)]
+            public delegate void BackendStats(void* data);
+            [CCode (has_target = false)]
+            public delegate void BackendShutdown(void* data);
             public string name;
             public BackendInit init;
             public BackendFree free;
@@ -455,7 +466,8 @@ namespace Eina
     [CCode (free_function = "eina_module_free")]
     public class Module
     {
-        public static delegate bool Cb (Module m, void* data);
+        [CCode (has_target = false)]
+        public delegate bool Cb (Module m, void* data);
         [CCode (cname = "EINA_ERROR_WRONG_MODULE")]
         public static Eina.Error WRONG_MODULE;
         [CCode (cname = "EINA_ERROR_MODULE_INIT_FAILED")]
@@ -495,12 +507,12 @@ namespace Eina
     {
         public Rbtree[] son;
         public RbtreeColor color;
-        [CCode (cname = "Eina_Rbtree_Cmp_Node_Cb")]
-        public static delegate RbtreeDirection CmpNodeCb(Rbtree left, Rbtree right, void* data);
-        [CCode (cname = "Eina_Rbtree_Cmp_Key_Cb")]
-        public static delegate int CmpKeyCb(Rbtree node, string key, int length, void* data);
-        [CCode (cname = "Eina_Rbtree_Free_Cb")]
-        public static delegate void FreeCb(Rbtree node, void data);
+        [CCode (cname = "Eina_Rbtree_Cmp_Node_Cb", has_target = false)]
+        public delegate RbtreeDirection CmpNodeCb(Rbtree left, Rbtree right, void* data);
+        [CCode (cname = "Eina_Rbtree_Cmp_Key_Cb", has_target = false)]
+        public delegate int CmpKeyCb(Rbtree node, string key, int length, void* data);
+        [CCode (cname = "Eina_Rbtree_Free_Cb", has_target = false)]
+        public delegate void FreeCb(Rbtree node, void* data);
         [ReturnsModifiedPointer ()]
         public void inline_insert(Rbtree node, CmpNodeCb cb, void * data);
         [ReturnsModifiedPointer ()]
