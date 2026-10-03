@@ -3,7 +3,7 @@
 function _require_setup
 {
     source '/etc/os-release'
-    declare -ar PKGS=(shellcheck shfmt meson ninja-build, pkg-config)
+    declare -ar PKGS=(shellcheck shfmt meson ninja-build pkg-config)
     case ${ID:?} in
         msys2) return 0 ;;
         debian | ubuntu)
