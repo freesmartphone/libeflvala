@@ -1,0 +1,25 @@
+repos:
+  - repo: https://github.com/koalaman/shellcheck-precommit
+    rev: v0.10.0
+    hooks:
+      - id: shellcheck
+        args: [--external-sources]
+        exclude: ^build/
+
+  - repo: local
+    hooks:
+      - id: shfmt
+        name: shfmt
+        entry: shfmt -ci -fn -i 4 -d
+        language: system
+        types: [shell]
+        exclude: ^build/
+
+  - repo: local
+    hooks:
+      - id: meson-lint
+        name: meson-lint
+        entry: meson lint
+        language: system
+        files: meson\.build$
+        pass_filenames: false

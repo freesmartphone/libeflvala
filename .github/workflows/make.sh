@@ -18,6 +18,23 @@ function _require_setup
 
 set -euo pipefail
 _require_setup
+
+declare -ar VAR=(
+    --verbose
+    --fatal-warnings
+    --Xcc=-O3
+    --cc=clang
+    --vapidir=vapi
+    --enable-{checking,mem-profiler,gobject-tracing}
+    --pkg=elm
+)
+
+vala "${VAR[@]}" 'tests/testecore.vala'
+vala "${VAR[@]}" 'tests/testeina.vala'
+vala "${VAR[@]}" 'tests/testevas.vala'
+
+valac "${VAR[@]}" 'examples/eina/eina.vala'
+
 meson setup build
 meson compile -C build
 meson test -C build --print-errorlogs

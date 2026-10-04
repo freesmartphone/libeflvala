@@ -25,7 +25,6 @@ viewstates_SOURCES = \
 .vala.stamp: $(viewstates_VALASOURCES)
 	$(VALAC) -C --vapidir $(top_srcdir)/vapi \
 	            --vapidir ../../../eflvala \
-	            --pkg dbus-glib-1 \
 	            --pkg eflvala-1.0 \
 	            --pkg eina \
 	            --pkg evas \

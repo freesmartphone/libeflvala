@@ -41,7 +41,7 @@ endif
 
 glib_dep = dependency('glib-2.0', version: '>=2.18')
 gobject_dep = dependency('gobject-2.0', version: '>=2.18')
-dbus_dep = dependency('dbus-1', version: '>=1.2.1')
+
 evas_dep = dependency('evas')
 ecore_dep = dependency('ecore')
 edje_dep = dependency('edje')
@@ -60,8 +60,8 @@ efl_pc_deps = [
 # When the pkg-config name does not match a VAPI name, do not pass the
 # PkgConfigDependency to Vala targets — Meson would emit `--pkg <pc name>`
 # and valac would look for a matching .vapi. Feed CFLAGS/LIBS only instead.
-# dbus-1 has no VAPI (dbus-glib-1 does). elementary's VAPI is named elm.
-pkg_c_only_names = ['dbus-1', 'elementary']
+# elementary's VAPI is named elm.
+pkg_c_only_names = ['elementary']
 vala_extra = [valac.find_library('elm', dirs: vapi_dir)]
 
 if eina_pc_name == 'eina'
