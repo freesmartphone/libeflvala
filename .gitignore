@@ -1,43 +1,55 @@
-Makefile
-Makefile.in
+# Build directories
+build/
+builddir/
+
+# Meson
+build/
+meson-logs/
+meson-private/
+
+# Autotools
 aclocal.m4
 autom4te.cache/
-compile
 config.guess
-config.h
-config.h.in
 config.log
 config.status
 config.sub
 configure
-depcomp
-install-sh
 libtool
 ltmain.sh
-missing
+Makefile.in
 stamp-h1
 
-.deps
-.libs
-*.pc
+# Generated files
 *.c
-!eflvala/pager_compat.c
 *.h
 *.o
-*.vala.stamp
+*.lo
+*.la
+*.a
+*.so
+*.pc
+.vala.stamp
 
-examples/ecore-glib/ecore-glib
-examples/ecore-signals/ecore_signals
-examples/ecore/ecore
-examples/edje/edje
-examples/eina/eina
-examples/elementary/elementary-vapi
-examples/elementary/note.txt
-examples/library/viewstates/viewstates
+# Vala generated
+*.vapi
+*.deps
 
-# Meson
-/build/
-/builddir/
-/.meson*
-compile_commands.json
-*.edj
+# IDE
+.idea/
+.vscode/
+*~ 
+
+# Editor
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test output
+*.log
+
+# Install destination
+destdir/

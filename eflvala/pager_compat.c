@@ -4,20 +4,21 @@
  * against current EFL.
  */
 #include <Elementary.h>
+#include "pager_compat.h"
 
-Evas_Object *
+EAPI Evas_Object *
 elm_pager_add(Evas_Object *parent)
 {
     return elm_naviframe_add(parent);
 }
 
-void
+EAPI void
 elm_pager_content_push(Evas_Object *obj, Evas_Object *content)
 {
     elm_naviframe_item_push(obj, NULL, NULL, NULL, content, NULL);
 }
 
-void
+EAPI void
 elm_pager_content_pop(Evas_Object *obj)
 {
     elm_naviframe_item_pop(obj);
@@ -37,7 +38,7 @@ pager_item_for_content(const Evas_Object *obj, const Evas_Object *content)
     return NULL;
 }
 
-void
+EAPI void
 elm_pager_content_promote(Evas_Object *obj, Evas_Object *content)
 {
     Elm_Object_Item *it = pager_item_for_content(obj, content);
@@ -45,14 +46,14 @@ elm_pager_content_promote(Evas_Object *obj, Evas_Object *content)
         elm_naviframe_item_promote(it);
 }
 
-Evas_Object *
+EAPI Evas_Object *
 elm_pager_content_bottom_get(const Evas_Object *obj)
 {
     Elm_Object_Item *it = elm_naviframe_bottom_item_get(obj);
     return it ? elm_object_item_content_get(it) : NULL;
 }
 
-Evas_Object *
+EAPI Evas_Object *
 elm_pager_content_top_get(const Evas_Object *obj)
 {
     Elm_Object_Item *it = elm_naviframe_top_item_get(obj);

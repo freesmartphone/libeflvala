@@ -6,7 +6,6 @@ AUTOMAKE_OPTIONS = subdir-objects
 
 VALAC_ARGS = \
 	--vapidir $(top_srcdir)/vapi \
-	--pkg dbus-glib-1 \
 	--pkg eina \
 	--pkg evas \
 	--pkg ecore \
@@ -49,6 +48,7 @@ libeflvala_la_VALASOURCES = \
 
 libeflvala_la_SOURCES = \
 	$(libeflvala_la_VALASOURCES:.vala=.c) \
+	pager_compat.c \
 	\
 	$(NULL)
 

@@ -965,16 +965,21 @@ public class Radio : Elm.Object
 
 
 //=======================================================================
-[CCode (cname = "Evas_Object", free_function = "evas_object_del")]
+[CCode (cname = "Evas_Object", free_function = "evas_object_del", cheader_filename = "pager_compat.h")]
 public class Pager : Elm.Object
 {
     [CCode (cname = "elm_pager_add")]
     public Pager( Elm.Object? parent );
 
+    [CCode (cname = "elm_pager_content_push", cheader_filename = "pager_compat.h")]
     public void content_push( Elm.Object content );
+    [CCode (cname = "elm_pager_content_pop", cheader_filename = "pager_compat.h")]
     public void content_pop();
+    [CCode (cname = "elm_pager_content_promote", cheader_filename = "pager_compat.h")]
     public void content_promote( Elm.Object content );
+    [CCode (cname = "elm_pager_content_bottom_get", cheader_filename = "pager_compat.h")]
     public Elm.Object content_bottom_get();
+    [CCode (cname = "elm_pager_content_top_get", cheader_filename = "pager_compat.h")]
     public Elm.Object content_top_get();
 
     public void style_set( string style );

@@ -25,7 +25,6 @@ application_SOURCES = \
 .vala.stamp: $(application_VALASOURCES)
 	$(VALAC) -C --vapidir $(top_srcdir)/vapi \
 	            --vapidir ../../../eflvala \
-	            --pkg dbus-glib-1 \
 	            --pkg eflvala-1.0 \
 	            --save-temps \
 	            --basedir $(top_srcdir) $^
