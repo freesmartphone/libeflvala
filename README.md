@@ -129,7 +129,6 @@ eflvala_dep = dependency('eflvala-1.0')
 - [EFL Documentation](https://docs.enlightenment.org)
 - [Vala Documentation](https://vala.dev/docs)
 - [Contribution Guidelines](CONTRIBUTING.md)
-- [Code of Conduct](CODE_OF_CONDUCT.md)
 
 ## Roadmap
 
