@@ -36,6 +36,9 @@ add_project_arguments(
     language: 'vala',
 )
 
+# Vala-only arguments (Meson 1.1+): `--pkg` must reach valac but never cc.
+add_project_arguments('--pkg', 'gee-0.8', language: 'vala')
+
 # pkg-config name for Eina: modern EFL ships eina.pc, older trees used eina-0.
 eina_pc = dependency('eina', required: false)
 if eina_pc.found()
@@ -65,9 +68,11 @@ if not gee_vapi.found()
     # valac resolves `--pkg gee-0.8` from its own VAPI search path.
     gee_vapi = 'gee-0.8'
 endif
+# `--pkg gee-0.8` is injected project-wide via add_project_arguments(...,
+# language: 'vala') above so it reaches valac but never cc; here we only
+# need the pkg-config dependency for includes/links (and the VAPI lookup).
 gee_dep = declare_dependency(
     dependencies: [gee_pc],
-    compile_args: ['--pkg', gee_vapi],
 )
 
 # Bindings target EFL 1.28: require at least that version of each library.

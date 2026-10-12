@@ -102,6 +102,6 @@ public void test_gee_hashmap()
     assert ( !map.has_key( "nonexistent" ) );
     assert ( map["nonexistent"] == 0 ); // missing keys yield the default value
 
-    map.remove( "to_main" );
+    map.unset( "to_main" );
     assert ( map.size == 1 );
 }

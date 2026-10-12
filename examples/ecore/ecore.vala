@@ -25,7 +25,7 @@ public static int main( string[] _args)
      * Since EFL >= 1.25 `ecore_evas_engines_get()` returns an Eina_Iterator directly. */
 
     var engines = new Gee.ArrayList<string>();
-    owned Eina.Iterator<string> it = EcoreEvas.engines_get();
+    Eina.Iterator<string> it = EcoreEvas.engines_get();
     string? engine_name = null;
     while ( it.next( ref engine_name ) )
     {

@@ -179,6 +179,7 @@ namespace EcoreEvas
     public void init();
     public void shutdown();
     public bool engine_type_supported_get( EngineType engine );
+    [CCode (cname = "ecore_evas_engines_get", type_signature = "owned Eina.Iterator<string>")]
     public Eina.Iterator<string> engines_get();
 
     //=======================================================================
