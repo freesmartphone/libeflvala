@@ -24,7 +24,7 @@ public static int main( string[] _args)
     /* check available engines: convert the Eina.List into a Gee.ArrayList (gee-0.8) */
 
     var engines = new Gee.ArrayList<string>();
-    unowned Eina.List<string> elist = EcoreEvas.engines_get();
+    Eina.List<string> elist = EcoreEvas.engines_get();
     for ( int i = 0; i < (int) elist.count(); ++i )
     {
         engines.add( elist.nth( (uint) i ) );

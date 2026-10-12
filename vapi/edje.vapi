@@ -93,13 +93,22 @@ namespace Edje
         ITEM
     }
 
-    [CCode (cname = "Edje_Signal_Cb", instance_pos = 0)]
+    //=======================================================================
+    // Stock EFL headers declare the Edje callback C functions with anonymous
+    // function-pointer prototypes; there are no public Edje_Signal_Cb,
+    // Edje_Text_Change_Cb or Edje_Message_Handler_Cb typedefs to bind
+    // against. These delegates are defined within this binding, so Vala
+    // generates self-contained trampoline function pointers in the emitted
+    // C code -- no extra C code and no out-of-tree patching of EFL is
+    // required (see NEWS).
+
+    [CCode (instance_pos = 1.9)]
     public delegate void SignalCallback( Object obj, string emission, string source );
 
-    [CCode (cname = "Edje_Text_Change_Cb", instance_pos = 0)]
+    [CCode (instance_pos = 1.9)]
     public delegate void TextChangedCallback( Object obj, string part );
 
-    [CCode (cname = "Edje_Message_Handler_Cb", instance_pos = 0)]
+    [CCode (instance_pos = 1.9)]
     public delegate void MessageHandlerCallback( Object obj, MessageType type, int id, void* msg );
 
     //=======================================================================

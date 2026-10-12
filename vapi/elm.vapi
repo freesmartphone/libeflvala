@@ -836,13 +836,13 @@ public enum GenlistItemFlags
     SUBITEMS,
 }
 
-[CCode (cname = "GenlistItemLabelGetFunc", has_target = false)]
+[CCode (has_target = false)]
 public delegate string GenlistItemLabelGetFunc( Elm.Object obj, string part );
-[CCode (cname = "GenlistItemIconGetFunc", has_target = false)]
+[CCode (has_target = false)]
 public delegate Elm.Object? GenlistItemIconGetFunc( Elm.Object obj, string part );
-[CCode (cname = "GenlistItemStateGetFunc", has_target = false)]
+[CCode (has_target = false)]
 public delegate bool GenlistItemStateGetFunc( Elm.Object obj, string part );
-[CCode (cname = "GenlistItemDelFunc", has_target = false)]
+[CCode (has_target = false)]
 public delegate void GenlistItemDelFunc( Elm.Object obj );
 
 //=======================================================================
@@ -1009,7 +1009,9 @@ public class SlideshowItem
     public Slideshow object_get();
 }
 
+[CCode (cname = "Elm_Slideshow_Item_Get_Cb", has_target = false)]
 public delegate Evas.Object? SlideshowItemGetFunc( Elm.Object obj );
+[CCode (cname = "Elm_Slideshow_Item_Del_Cb", has_target = false)]
 public delegate void SlideshowItemDelFunc( Elm.Object obj );
 
 
