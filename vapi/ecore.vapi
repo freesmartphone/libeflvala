@@ -166,13 +166,8 @@ namespace Ecore
 }
 
 //=======================================================================
-// Ecore_Evas bindings.  In EFL >= 1.25 the Ecore_Evas library was merged
-// into `libecore` and its headers into `Ecore.h`, so this namespace does
-// not use a separate `Ecore_Evas.h` header or an extra `-lecore_evas`
-// link flag any more -- everything below resolves through Ecore.h, which
-// is already included by the Ecore namespace at the top of this file.
-// The C names themselves are unchanged in 1.28.
-[CCode (cprefix = "Ecore_Evas_", lower_case_cprefix = "ecore_evas_")]
+// Ecore_Evas is provided by its own pkg-config module and header.
+[CCode (cprefix = "Ecore_Evas_", lower_case_cprefix = "ecore_evas_", cheader_filename = "Ecore_Evas.h")]
 namespace EcoreEvas
 {
 
@@ -229,7 +224,7 @@ namespace EcoreEvas
 
     //=======================================================================
     [Compact]
-    [CCode (cname = "Ecore_Evas", cprefix = "ecore_evas_", free_function = "ecore_evas_free")]
+    [CCode (cname = "Ecore_Evas", cprefix = "ecore_evas_", cheader_filename = "Ecore_Evas.h", free_function = "ecore_evas_free")]
     public class Window
     {
         [CCode (cname = "ecore_evas_new")]

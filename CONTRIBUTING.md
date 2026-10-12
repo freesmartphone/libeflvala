@@ -11,7 +11,7 @@ Thank you for your interest in contributing to libeflvala! This document outline
 - Ninja
 - Vala compiler (valac)
 - pkg-config
-- EFL development libraries (eina, evas, ecore, edje, elementary), version >= 1.28
+- EFL development libraries (eina, evas, ecore, edje, elementary), version >= 1.27
 - libgee development files (gee-0.8)
 
 #### Debian/Ubuntu

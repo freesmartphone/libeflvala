@@ -18,11 +18,10 @@ project(
 # pass -O3 as a C flag instead.
 add_project_arguments('-D_GNU_SOURCE', '-O3', language: 'c')
 
-# This project targets EFL 1.28 (the last release of the classic,
-# pre-ESS EFL series; elementary still ships its 1.x pkg-config files
-# and `elm_*` C API there). The version is enforced below once the
+# This project targets the classic EFL 1.27 API; elementary still ships
+# its 1.x pkg-config files and `elm_*` C API. The version is enforced below once the
 # individual EFL libraries have been resolved.
-efl_target_version = '1.28'
+efl_target_version = '1.27'
 
 valac = meson.get_compiler('vala')
 pkgc = find_program('pkg-config')
@@ -82,9 +81,10 @@ endif
 # project-wide one -- harmless, since valac loads each package once.
 gee_dep = gee_pc
 
-# Bindings target EFL 1.28: require at least that version of each library.
+# Bindings target EFL 1.27: require at least that version of each library.
 evas_dep = dependency('evas', version: '>=' + efl_target_version)
 ecore_dep = dependency('ecore', version: '>=' + efl_target_version)
+ecore_evas_dep = dependency('ecore-evas', version: '>=' + efl_target_version)
 edje_dep = dependency('edje', version: '>=' + efl_target_version)
 elementary_dep = dependency('elementary', version: '>=' + efl_target_version)
 
@@ -103,12 +103,13 @@ efl_pc_deps = [
 # When the pkg-config name does not match a VAPI name, do not pass the
 # PkgConfigDependency to Vala targets — Meson would emit `--pkg <pc name>`
 # and valac would look for a matching .vapi. Feed CFLAGS/LIBS only instead.
-# elementary's VAPI is named elm.
-pkg_c_only_names = ['elementary']
+# elementary's VAPI is named elm. Ecore_Evas declarations are part of
+# ecore.vapi, so its pkg-config dependency contributes only C flags/link flags.
+pkg_c_only_names = ['elementary', 'ecore-evas']
 vala_extra = [valac.find_library('elm', dirs: vapi_dir)]
 
 if eina_pc_name == 'eina'
-    # Re-resolve with the EFL 1.28 lower bound now that we know the name.
+    # Re-resolve with the EFL 1.27 lower bound now that we know the name.
     eina_pc = dependency('eina', version: '>=' + efl_target_version)
     efl_pc_deps += eina_pc
 else

@@ -9,7 +9,7 @@ Prerequisites:
   - valac (Vala compiler)
   - pkg-config
   - EFL development libraries (eina, evas, ecore, edje, elementary),
-    version >= 1.28 (the bindings are written against the EFL 1.28 API)
+    version >= 1.27 (the bindings target the EFL 1.27 API)
   - libgee development files (gee-0.8)
   - glib-2.0 / gobject-2.0 development files (>= 2.18)
 

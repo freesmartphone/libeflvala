@@ -971,7 +971,7 @@ public class Radio : Elm.Object
 
 //=======================================================================
 // NOTE: Elm.Pager was removed from Elementary in EFL 1.22; Naviframe is
-// the official replacement, bound here directly against real EFL 1.28
+// the official replacement, bound here directly against real EFL 1.27
 // symbols (no C shim).
 [CCode (cname = "Evas_Object", cheader_filename = "Elementary.h", free_function = "evas_object_del")]
 [Compact]
@@ -999,7 +999,7 @@ public class Naviframe : Elm.Object
 [Compact]
 public class ObjectItem
 {
-    [CCode (cname = "elm_object_item_promote")]
+    [CCode (cname = "elm_naviframe_item_promote")]
     public void promote();
     [CCode (cname = "elm_object_item_content_get")]
     public unowned Evas.Object? content_get();

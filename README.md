@@ -4,7 +4,7 @@ efl.vapi & libeflvala
 [![GitHub Actions](https://github.com/theavege/libeflvala/actions/workflows/make.yml/badge.svg)](https://github.com/theavege/libeflvala/actions/workflows/make.yml)
 [![License: LGPL-2.1-or-later](https://img.shields.io/badge/License-LGPL--2.1--or--later-blue.svg)](COPYING)
 [![Vala](https://img.shields.io/badge/Vala-0.56+-009639.svg)](https://vala.dev)
-[![EFL](https://img.shields.io/badge/EFL-1.28+-4A90D9.svg)](https://www.enlightenment.org)
+[![EFL](https://img.shields.io/badge/EFL-1.27+-4A90D9.svg)](https://www.enlightenment.org)
 
 **efl.vapi** contains Vala bindings for the Enlightenment Foundation Libraries (EFL).
 It is usable with or without **libeflvala**.
@@ -13,7 +13,7 @@ It is usable with or without **libeflvala**.
 
 ## Features
 
-- Vala bindings for EFL core libraries: eina, evas, ecore, edje, elementary (targeting EFL 1.28)
+- Vala bindings for EFL core libraries: eina, evas, ecore, edje, elementary (targeting EFL 1.27)
 - Convenience objects and utilities for EFL development in Vala
 - Generic collections via Gee (`gee-0.8`): `Gee.HashMap`, `Gee.ArrayList`, ...
   Lists returned by the EFL C APIs are converted with the pure-Vala helpers
