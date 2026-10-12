@@ -14,6 +14,17 @@
 	  it is wired into the Meson build, the eflvala-1.0 pkg-config
 	  file and the eflvala-1.0.deps VAPI dependency list.
 
+	* Patches: the out-of-tree EFL header patches in patches/
+	  (callback-typedefs-for-edje.patch and
+	  callback-typedefs-for-evas.patch) have been removed. They added
+	  Edje_Signal_Cb / Edje_Text_Change_Cb / Edje_Message_Handler_Cb
+	  and Evas_Smart_Cb typedefs for EFL revisions from 2009; those
+	  typedefs are part of the public EFL headers since long before
+	  1.28, which this binding now requires, so applying them to an
+	  EFL installation is no longer necessary. The vapi delegates
+	  keep referencing the upstream typedefs via their cname
+	  attributes.
+
 	* Build system consolidation: Meson is now the canonical (and only)
 	  build system. The Autotools infrastructure (configure.ac,
 	  Makefile.am, autogen.sh, Makefile.decl and the generated
