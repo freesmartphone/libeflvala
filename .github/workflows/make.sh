@@ -30,7 +30,10 @@ declare -ar VAR=(
 )
 
 vala "${VAR[@]}" --pkg gee-0.8 'tests/testecore.vala'
-vala "${VAR[@]}" --pkg gee-0.8 'tests/testeina.vala'
+eina_test_dir="$(mktemp -d)"
+trap 'rm -rf "$eina_test_dir"' EXIT
+valac "${VAR[@]}" --pkg gee-0.8 --directory "$eina_test_dir" eflvala/collections.vala 'tests/testeina.vala' -o "$eina_test_dir/testeina.exe"
+"$eina_test_dir/testeina.exe"
 vala "${VAR[@]}" --pkg gee-0.8 'tests/testevas.vala'
 
 valac "${VAR[@]}" --pkg gee-0.8 'examples/eina/eina.vala'
