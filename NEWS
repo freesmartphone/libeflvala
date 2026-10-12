@@ -1,5 +1,12 @@
 2026-10-12      The libeflvala contributors
 
+        * Collections: the Gee collections from gee-0.8 are now used
+          throughout the Vala sources (Gee.HashMap for the
+          EflVala.ViewState transition map, Gee.ArrayList in the examples
+          and tests). libgee (gee-0.8) is a new build/runtime dependency;
+          it is wired into the Meson build, the eflvala-1.0 pkg-config
+          file and the eflvala-1.0.deps VAPI dependency list.
+
         * Build system consolidation: Meson is now the canonical (and only)
           build system. The Autotools infrastructure (configure.ac,
           Makefile.am, autogen.sh, Makefile.decl and the generated

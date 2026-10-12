@@ -42,6 +42,22 @@ endif
 glib_dep = dependency('glib-2.0', version: '>=2.18')
 gobject_dep = dependency('gobject-2.0', version: '>=2.18')
 
+# GObject-based collections (Gee.List, Gee.HashMap, ...) come from libgee.
+# The pkg-config name is versioned: modern libgee ships gee-0.8.pc, older
+# trees used a plain gee.pc. The VAPI is always named `gee-0.8`.
+gee_pc = dependency('gee-0.8', required: false)
+if gee_pc.found()
+    gee_pc_name = 'gee-0.8'
+else
+    gee_pc = dependency('gee')
+    gee_pc_name = 'gee'
+endif
+gee_vapi = valac.find_library('gee-0.8', dirs: vapi_dir)
+gee_dep = declare_dependency(
+    dependencies: [gee_pc],
+    compile_args: ['--pkg', gee_vapi],
+)
+
 evas_dep = dependency('evas')
 ecore_dep = dependency('ecore')
 edje_dep = dependency('edje')
@@ -79,7 +95,7 @@ foreach name : pkg_c_only_names
     )
 endforeach
 
-efl_deps = efl_pc_deps + pkg_c_only + vala_extra
+efl_deps = efl_pc_deps + pkg_c_only + vala_extra + [gee_dep]
 
 subdir('vapi')
 
@@ -103,6 +119,7 @@ summary(
         'examples': get_option('examples'),
         'tests': get_option('tests'),
         'eina': eina_pc.version(),
+        'gee': gee_pc.version(),
         'evas': evas_dep.version(),
         'ecore': ecore_dep.version(),
         'edje': edje_dep.version(),
