@@ -965,24 +965,39 @@ public class Radio : Elm.Object
 
 
 //=======================================================================
-[CCode (cname = "Evas_Object", free_function = "evas_object_del", cheader_filename = "pager_compat.h")]
-public class Pager : Elm.Object
+// NOTE: Elm.Pager was removed from Elementary in EFL 1.22; Naviframe is
+// the official replacement, bound here directly against real EFL 1.28
+// symbols (no C shim).
+[CCode (cname = "Evas_Object", cheader_filename = "Elementary.h", free_function = "evas_object_del")]
+[Compact]
+public class Naviframe : Elm.Object
 {
-    [CCode (cname = "elm_pager_add")]
-    public Pager( Elm.Object? parent );
+    [CCode (cname = "elm_naviframe_add")]
+    public Naviframe( Elm.Object? parent );
 
-    [CCode (cname = "elm_pager_content_push", cheader_filename = "pager_compat.h")]
-    public void content_push( Elm.Object content );
-    [CCode (cname = "elm_pager_content_pop", cheader_filename = "pager_compat.h")]
-    public void content_pop();
-    [CCode (cname = "elm_pager_content_promote", cheader_filename = "pager_compat.h")]
-    public void content_promote( Elm.Object content );
-    [CCode (cname = "elm_pager_content_bottom_get", cheader_filename = "pager_compat.h")]
-    public Elm.Object content_bottom_get();
-    [CCode (cname = "elm_pager_content_top_get", cheader_filename = "pager_compat.h")]
-    public Elm.Object content_top_get();
+    [CCode (cname = "elm_naviframe_item_simple_push")]
+    public unowned Elm.ObjectItem? item_simple_push( Elm.Object obj );
+    [CCode (cname = "elm_naviframe_item_pop")]
+    public void item_pop();
+    [CCode (cname = "elm_naviframe_items_get")]
+    public unowned GLib.List<weak Elm.ObjectItem> items_get();
+    [CCode (cname = "elm_naviframe_top_item_get")]
+    public unowned Elm.ObjectItem? top_item_get();
+    [CCode (cname = "elm_naviframe_bottom_item_get")]
+    public unowned Elm.ObjectItem? bottom_item_get();
 
     public void style_set( string style );
+}
+
+//=======================================================================
+[CCode (cname = "Elm_Object_Item", cheader_filename = "Elementary.h", free_function = "elm_object_item_del")]
+[Compact]
+public class ObjectItem
+{
+    [CCode (cname = "elm_object_item_promote")]
+    public void promote();
+    [CCode (cname = "elm_object_item_content_get")]
+    public unowned Evas.Object? content_get();
 }
 
 

@@ -2,8 +2,6 @@ eflvala_sources = files(
     'application.vala',
     'genlist.vala',
     'statemachine.vala',
-    'pager_compat.c',
-    'pager_compat.h',
 )
 
 eflvala_lib = shared_library(
@@ -40,6 +38,5 @@ pkg.generate(
 
 eflvala_dep = declare_dependency(
     link_with: eflvala_lib,
-    include_directories: include_directories('.'),
     dependencies: efl_deps,
 )
