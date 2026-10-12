@@ -29,6 +29,9 @@
 	  removed or corrected:
 	  - eflvala/collections.c (a committed valac-generated artifact)
 	    was deleted; the library is built from .vala sources only.
+	    The project keeps no extra C code: no hand-written .c/.h files
+	    exist anywhere, and valac's generated C output is now
+	    git-ignored so it can never be re-committed by accident.
 	  - The vapi comments still advertised a nonexistent
 	    `.to_gee_list()` extension method; they now name the actual
 	    helpers (Eflvala.gee_list / peek_gee_list /

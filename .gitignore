@@ -16,6 +16,10 @@ meson-private/
 .vala.stamp
 .deps/
 .libs/
+# valac C codegen output (never committed; the build is pure Vala)
+*.vala.c
+*.vala.h
+eflvala/collections.c
 
 # IDE
 .idea/

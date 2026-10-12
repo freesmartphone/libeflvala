@@ -21,6 +21,9 @@ It is usable with or without **libeflvala**.
   `Eflvala.peek_gee_list<G>()` (snapshots a borrowed one) and
   `Eflvala.iterate_to_gee_list<G>()` (drains an owned `Eina.Iterator`)
 - Meson build system (warnings fatal via `--fatal-warnings`)
+- Pure Vala sources: no hand-written or committed C code; the only `.c`
+  files are valac's own codegen output, generated at build time and
+  never tracked in git
 - Comprehensive examples and tests
 
 ## Quick Start
