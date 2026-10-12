@@ -48,12 +48,14 @@ public void test_eina_list()
     assert ( l != null );
     assert ( l.count() == 2 );
 
-    var l2 = l.data_find_list( data[2] );
+    /* eina_list_data_find_list() returns the sublist starting at the
+     * first node holding the data, so for a 2-element list { 9, 42 }
+     * searching for 42 yields exactly one remaining element.  The result
+     * borrows from `l' and must not be owned/freed separately. */
+    unowned Eina.List<int> l2 = l.data_find_list( data[2] );
     assert ( l2 != null );
-/*
-    debug( "l2 size = %u", l2.count() );
     assert ( l2.count() == 1 );
-*/
+
     var item = l.data_find( data[2] );
     assert ( item == data[2] );
 

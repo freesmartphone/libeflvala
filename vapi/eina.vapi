@@ -59,11 +59,14 @@ namespace Eina
         public uint count();
 
         public unowned G data_find(owned G data);
-        // ???
-        public List<G> data_find_list(owned G data);
+        /* eina_list_data_find_list() returns a borrowed pointer into this
+         * very list (the sublist starting at the found node), not a new
+         * list -- it must not be freed separately. */
+        public unowned List<G> data_find_list(owned G data);
 
         public unowned G nth(uint n);
-        public List<G> nth_list(int n);
+        /* likewise borrowed: the sublist starting at index n */
+        public unowned List<G> nth_list(int n);
 
         [ReturnsModifiedPointer ()]
         public void prepend(owned G data);
