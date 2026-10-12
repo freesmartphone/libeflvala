@@ -28,12 +28,18 @@ public static int main( string[] _args)
     /* init */
     EcoreEvas.init();
 
-    /* check available engines */
+    /* check available engines: convert the Eina.List into a Gee.ArrayList (gee-0.8) */
 
-    Eina.List<string> engines = EcoreEvas.engines_get();
-    for ( int i = 0; i < engines.count(); ++i )
+    var engines = new Gee.ArrayList<string>();
+    unowned Eina.List<string> elist = EcoreEvas.engines_get();
+    for ( int i = 0; i < (int) elist.count(); ++i )
     {
-        message( "ecore.evas got engine '%s'", engines.nth( i ) );
+        engines.add( elist.nth( (uint) i ) );
+    }
+    EcoreEvas.engines_free( elist );
+    foreach ( string engine in engines )
+    {
+        message( "ecore.evas got engine '%s'", engine );
     }
 
     /* create a window */

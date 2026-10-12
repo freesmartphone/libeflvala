@@ -18,6 +18,7 @@
  */
 
 using Eina;
+using Gee;
 
 //===========================================================================
 public void test_eina_list()
@@ -56,6 +57,16 @@ public void test_eina_list()
     var item = l.data_find( data[2] );
     assert ( item == data[2] );
 
+    /* convert the remaining Eina.List contents into a Gee.ArrayList */
+    var gee = new Gee.ArrayList<int>();
+    for ( int i = 0; i < (int) l.count(); ++i )
+    {
+        gee.add( l.nth( (uint) i ) );
+    }
+    assert ( gee.size == (int) l.count() );
+    assert ( gee.contains( data[1] ) );
+    assert ( gee.contains( data[2] ) );
+
     l = null;
 
     /*
@@ -70,6 +81,27 @@ void main( string[] args )
     Test.init( ref args );
 
     Test.add_func( "/Eina/List", test_eina_list );
+    Test.add_func( "/Gee/HashMap", test_gee_hashmap );
 
     Test.run();
+}
+
+//===========================================================================
+// The view state transition maps use Gee.HashMap (gee-0.8); verify the
+// collection semantics the library relies on.
+public void test_gee_hashmap()
+{
+    var map = new HashMap<string, int>();
+    assert ( map.size == 0 );
+
+    map["to_configuration"] = 1;
+    map["to_main"] = 2;
+    assert ( map.size == 2 );
+    assert ( map["to_configuration"] == 1 );
+    assert ( map.has_key( "to_main" ) );
+    assert ( !map.has_key( "nonexistent" ) );
+    assert ( map["nonexistent"] == 0 ); // missing keys yield the default value
+
+    map.remove( "to_main" );
+    assert ( map.size == 1 );
 }

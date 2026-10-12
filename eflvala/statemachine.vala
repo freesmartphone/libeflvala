@@ -2,23 +2,23 @@ using GLib;
 
 public class EflVala.ViewState
 {
-    protected ViewStateMachine state_machine; 
-    protected Eina.Hash<string, ViewState> transition_map = null;
+    protected ViewStateMachine state_machine;
+    protected Gee.HashMap<string, ViewState> transition_map = null;
 
     public ViewState(ViewStateMachine sm)
     {
-        transition_map = Eina.Hash.string_superfast(null);
+        transition_map = new Gee.HashMap<string, ViewState>();
         this.state_machine = sm;
     }
 
     public void transition_add(string transition, ViewState next)
     {
-        transition_map.add(transition, next);
+        transition_map[transition] = next;
     }
 
     public ViewState? transition_handle(string condition)
     {
-        return transition_map.find(condition);
+        return transition_map[condition];
     }
 
     public virtual void activated()

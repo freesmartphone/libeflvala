@@ -13,8 +13,9 @@ It is usable with or without **libeflvala**.
 
 ## Features
 
-- Vala bindings for EFL core libraries: eina, evas, ecore, edje, elementary
+- Vala bindings for EFL core libraries: eina, evas, ecore, edje, elementary (targeting EFL 1.28)
 - Convenience objects and utilities for EFL development in Vala
+- Generic collections via Gee (`gee-0.8`): `Gee.HashMap`, `Gee.ArrayList`, ...
 - Meson build system
 - Comprehensive examples and tests
 
@@ -26,13 +27,13 @@ It is usable with or without **libeflvala**.
 
 ```bash
 sudo apt-get update
-sudo apt-get install -y meson ninja-build valac pkg-config libefl-all-dev
+sudo apt-get install -y meson ninja-build valac pkg-config libefl-all-dev libgee-0.8-dev
 ```
 
 #### MSYS2 (Windows)
 
 ```bash
-pacman -S --needed base-devel git meson ninja vala mingw-w64-x86_64-efl
+pacman -S --needed base-devel git meson ninja vala mingw-w64-x86_64-efl mingw-w64-x86_64-libgee
 ```
 
 ### Building

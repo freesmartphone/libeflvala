@@ -8,9 +8,9 @@ function _require_setup
         msys2) return 0 ;;
         debian | ubuntu)
             sudo apt-get update
-            sudo apt-get install -y "${PKGS[@]}" valac libefl-all-dev
+            sudo apt-get install -y "${PKGS[@]}" valac libefl-all-dev libgee-0.8-dev
             ;;
-        fedora | alma) sudo dnf install -y "${PKGS[@]}" vala efl-devel ;;
+        fedora | alma) sudo dnf install -y "${PKGS[@]}" vala efl-devel libgee-devel ;;
     esac 1>/dev/null
     shellcheck --external-sources "${0}"
     shfmt -ci -fn -i 4 -d "${0}"
@@ -29,11 +29,11 @@ declare -ar VAR=(
     --pkg=elm
 )
 
-vala "${VAR[@]}" 'tests/testecore.vala'
-vala "${VAR[@]}" 'tests/testeina.vala'
-vala "${VAR[@]}" 'tests/testevas.vala'
+vala "${VAR[@]}" --pkg gee-0.8 'tests/testecore.vala'
+vala "${VAR[@]}" --pkg gee-0.8 'tests/testeina.vala'
+vala "${VAR[@]}" --pkg gee-0.8 'tests/testevas.vala'
 
-valac "${VAR[@]}" 'examples/eina/eina.vala'
+valac "${VAR[@]}" --pkg gee-0.8 'examples/eina/eina.vala'
 
 meson setup build
 meson compile -C build

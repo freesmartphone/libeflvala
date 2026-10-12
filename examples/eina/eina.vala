@@ -21,52 +21,61 @@
  *
  */
 using Eina;
+using Gee;
 
 public static int main( string[] _args )
 {
     Eina.init();
-    eina_list_example();
+    gee_list_example();
     eina_file_example();
     eina_error_example();
+    // the engine list returned by the EFL is converted into a Gee.ArrayList
+    var engines = gee_list_from_eina_iterator( EcoreEvas.engines_get().iterator_new() );
+    debug( "gee: %u evas engines", engines.size );
     Eina.shutdown();
     return 0;
 }
 
 //=================================================================
-public static void eina_list_example()
+// Demonstration of the generic list implementation: lists returned by
+// the EFL are Eina.List/Eina.Iterator based, which get converted into
+// Gee.ArrayList (from gee-0.8) for idiomatic Vala iteration.
+public static void gee_list_example()
 {
-    Eina.List<string> a = null;
-    Eina.List<string> b = null;
-    a.prepend( "Alfred" );
-    a.prepend( "Anton" );
-    b.prepend( "Batman" );
-    b.prepend( "Bar" );
-    b.prepend( "aaaa" );
+    var a = new ArrayList<string>();
+    var b = new ArrayList<string>();
+    a.add( "Alfred" );
+    a.add( "Anton" );
+    b.add( "Batman" );
+    b.add( "Bar" );
+    b.add( "aaaa" );
     debug( "list a:" );
-    a.iterator_new(  ).foreach( print_str,null);
+    foreach ( string s in a ) { debug( "\tdata: %s", s ); }
     debug( "list b:" );
-    b.iterator_new(  ).foreach( print_str, null);
-    a.reverse();
-    b.merge( a );
+    foreach ( string s in b ) { debug( "\tdata: %s", s ); }
+    // prepend semantics of the old Eina.List example: a reversed, then merged into b
+    var index = 0;
+    foreach ( string s in a )
+    {
+        b.insert( index++, s );
+    }
     debug( "list merged:" );
-    b.iterator_new(  ).foreach( print_str, null);
-    uint c = b.count();
-    b.sort( c ,sort_str );
+    foreach ( string s in b ) { debug( "\tdata: %s", s ); }
+    b.sort( ( x, y ) => GLib.strcmp( x, y ) );
     debug( "list sorted:" );
-    b.iterator_new().foreach( print_str, null);
+    foreach ( string s in b ) { debug( "\tdata: %s", s ); }
 }
 
-public static bool print_str( void* _container, void* data, void* _fdata )
+// Convert an Eina.Iterator over strings into a Gee.ArrayList<string>.
+public static ArrayList<string> gee_list_from_eina_iterator( owned Eina.Iterator<string> it )
 {
-    string s = ( string )data;
-    debug( "\tdata: %s", s  );
-    return true;
-}
-public static int sort_str( void* a, void* b )
-{
-    string s1=( string )a;
-    string s2=( string )b;
-    return GLib.strcmp( s1,s2 );
+    var list = new ArrayList<string>();
+    string? data = null;
+    while ( it.next( ref data ) )
+    {
+        if ( data != null ) { list.add( data ); }
+    }
+    return list;
 }
 //=================================================================
 public static void eina_file_example()

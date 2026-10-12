@@ -34,7 +34,7 @@ pkg.generate(
     filebase: 'eflvala-1.0',
     description: 'EFL Vala Convenience Objects',
     version: meson.project_version(),
-    requires: [eina_pc_name, 'evas', 'ecore', 'edje', 'elementary'],
+    requires: [eina_pc_name, gee_pc_name, 'evas', 'ecore', 'edje', 'elementary'],
     subdirs: 'eflvala-1.0',
 )
 

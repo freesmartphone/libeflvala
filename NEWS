@@ -1,10 +1,24 @@
 2026-10-12      The libeflvala contributors
 
-        * Build system consolidation: Meson is now the canonical (and only)
-          build system. The Autotools infrastructure (configure.ac,
-          Makefile.am, autogen.sh, Makefile.decl and the generated
-          eflvala-1.0.pc template) has been removed. Use `meson setup build`,
-          `meson compile -C build`, `meson test -C build` and
-          `meson install -C build`. See INSTALL for details.
+	* Bindings: the EFL bindings are now updated for / pinned to
+	  EFL 1.28, the last release of the classic (pre-ESS) EFL series.
+	  The Meson build enforces a >= 1.28 lower bound on eina, evas,
+	  ecore, edje and elementary via pkg-config, and reports the
+	  target version in the configure summary. INSTALL, README.md and
+	  CONTRIBUTING.md document the EFL >= 1.28 requirement.
+
+	* Collections: the Gee collections from gee-0.8 are now used
+	  throughout the Vala sources (Gee.HashMap for the
+	  EflVala.ViewState transition map, Gee.ArrayList in the examples
+	  and tests). libgee (gee-0.8) is a new build/runtime dependency;
+	  it is wired into the Meson build, the eflvala-1.0 pkg-config
+	  file and the eflvala-1.0.deps VAPI dependency list.
+
+	* Build system consolidation: Meson is now the canonical (and only)
+	  build system. The Autotools infrastructure (configure.ac,
+	  Makefile.am, autogen.sh, Makefile.decl and the generated
+	  eflvala-1.0.pc template) has been removed. Use `meson setup build`,
+	  `meson compile -C build`, `meson test -C build` and
+	  `meson install -C build`. See INSTALL for details.
 
 See git log for small-scale changes.

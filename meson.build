@@ -18,6 +18,12 @@ project(
 # pass -O3 as a C flag instead.
 add_project_arguments('-D_GNU_SOURCE', '-O3', language: 'c')
 
+# This project targets EFL 1.28 (the last release of the classic,
+# pre-ESS EFL series; elementary still ships its 1.x pkg-config files
+# and `elm_*` C API there). The version is enforced below once the
+# individual EFL libraries have been resolved.
+efl_target_version = '1.28'
+
 valac = meson.get_compiler('vala')
 pkgc = find_program('pkg-config')
 edje_cc = find_program('edje_cc')
@@ -42,10 +48,33 @@ endif
 glib_dep = dependency('glib-2.0', version: '>=2.18')
 gobject_dep = dependency('gobject-2.0', version: '>=2.18')
 
-evas_dep = dependency('evas')
-ecore_dep = dependency('ecore')
-edje_dep = dependency('edje')
-elementary_dep = dependency('elementary')
+# GObject-based collections (Gee.List, Gee.HashMap, ...) come from libgee.
+# The pkg-config name is versioned: modern libgee ships gee-0.8.pc, older
+# trees used a plain gee.pc. The VAPI is always named `gee-0.8`; it is
+# normally provided by libgee itself (system-wide), only fall back to an
+# in-tree copy if one ever exists under vapi/.
+gee_pc = dependency('gee-0.8', required: false)
+if gee_pc.found()
+    gee_pc_name = 'gee-0.8'
+else
+    gee_pc = dependency('gee')
+    gee_pc_name = 'gee'
+endif
+gee_vapi = valac.find_library('gee-0.8', dirs: vapi_dir, required: false)
+if not gee_vapi.found()
+    # valac resolves `--pkg gee-0.8` from its own VAPI search path.
+    gee_vapi = 'gee-0.8'
+endif
+gee_dep = declare_dependency(
+    dependencies: [gee_pc],
+    compile_args: ['--pkg', gee_vapi],
+)
+
+# Bindings target EFL 1.28: require at least that version of each library.
+evas_dep = dependency('evas', version: '>=' + efl_target_version)
+ecore_dep = dependency('ecore', version: '>=' + efl_target_version)
+edje_dep = dependency('edje', version: '>=' + efl_target_version)
+elementary_dep = dependency('elementary', version: '>=' + efl_target_version)
 
 # PkgConfigDependency objects whose names match in-tree or Vala VAPI files.
 # Meson emits `--pkg <name>` for these; `--vapidir` makes valac pick our copies.
@@ -65,8 +94,11 @@ pkg_c_only_names = ['elementary']
 vala_extra = [valac.find_library('elm', dirs: vapi_dir)]
 
 if eina_pc_name == 'eina'
+    # Re-resolve with the EFL 1.28 lower bound now that we know the name.
+    eina_pc = dependency('eina', version: '>=' + efl_target_version)
     efl_pc_deps += eina_pc
 else
+    eina_pc = dependency('eina-0', version: '>=' + efl_target_version)
     pkg_c_only_names += eina_pc_name
     vala_extra += valac.find_library('eina', dirs: vapi_dir)
 endif
@@ -79,7 +111,7 @@ foreach name : pkg_c_only_names
     )
 endforeach
 
-efl_deps = efl_pc_deps + pkg_c_only + vala_extra
+efl_deps = efl_pc_deps + pkg_c_only + vala_extra + [gee_dep]
 
 subdir('vapi')
 
@@ -102,7 +134,9 @@ summary(
         'library': get_option('library'),
         'examples': get_option('examples'),
         'tests': get_option('tests'),
+        'EFL target': efl_target_version,
         'eina': eina_pc.version(),
+        'gee': gee_pc.version(),
         'evas': evas_dep.version(),
         'ecore': ecore_dep.version(),
         'edje': edje_dep.version(),
