@@ -166,37 +166,55 @@ namespace Ecore
 }
 
 //=======================================================================
-[CCode (cprefix = "Ecore_Evas_", lower_case_cprefix = "ecore_evas_", cheader_filename = "Ecore_Evas.h")]
+// Ecore_Evas bindings.  In EFL >= 1.25 the Ecore_Evas library was merged
+// into `libecore` and its headers into `Ecore.h`, so this namespace does
+// not use a separate `Ecore_Evas.h` header or an extra `-lecore_evas`
+// link flag any more -- everything below resolves through Ecore.h, which
+// is already included by the Ecore namespace at the top of this file.
+// The C names themselves are unchanged in 1.28.
+[CCode (cprefix = "Ecore_Evas_", lower_case_cprefix = "ecore_evas_")]
 namespace EcoreEvas
 {
 
     public void init();
     public void shutdown();
     public bool engine_type_supported_get( EngineType engine );
-    public Eina.List<string> engines_get();
-    public void engines_free( Eina.List<string> engines );
+    public Eina.Iterator<string> engines_get();
 
     //=======================================================================
     [CCode (cprefix = "ECORE_EVAS_ENGINE_")]
     public enum EngineType
     {
+        UNKNOWN,
         SOFTWARE_BUFFER,
         SOFTWARE_X11,
         XRENDER_X11,
         OPENGL_X11,
+        EVGLE_X11,
         SOFTWARE_XCB,
         XRENDER_XCB,
+        OPENGL_XCB,
+        EVGLE_XCB,
+        SOFTWARE_WAYLAND_SHARED,
+        SOFTWARE_WAYLAND_EGL,
+        XGL,
         SOFTWARE_GDI,
         SOFTWARE_DDRAW,
         DIRECT3D,
         OPENGL_GLEW,
         QUARTZ,
+        COCOA,
         SOFTWARE_SDL,
         DIRECTFB,
         SOFTWARE_FB,
         SOFTWARE_16_X11,
         SOFTWARE_16_DDRAW,
-        SOFTWARE_16_WINCE
+        SOFTWARE_16_WINCE,
+        EGL_SW,
+        GL_SVX,
+        VULKAN,
+        DRM,
+        WEBGL
     }
 
     //=======================================================================

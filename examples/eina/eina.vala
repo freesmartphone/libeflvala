@@ -29,8 +29,9 @@ public static int main( string[] _args )
     gee_list_example();
     eina_file_example();
     eina_error_example();
-    // the engine list returned by the EFL is converted into a Gee.ArrayList
-    var engines = gee_list_from_eina_iterator( EcoreEvas.engines_get().iterator_new() );
+    // the engine list is converted into a Gee.ArrayList (from gee-0.8)
+    /* since EFL >= 1.25 ecore_evas_engines_get() returns an Eina_Iterator directly */
+    var engines = gee_list_from_eina_iterator( EcoreEvas.engines_get() );
     debug( "gee: %u evas engines", engines.size );
     Eina.shutdown();
     return 0;

@@ -28,15 +28,16 @@ public static int main( string[] _args)
     /* init */
     EcoreEvas.init();
 
-    /* check available engines: convert the Eina.List into a Gee.ArrayList (gee-0.8) */
+    /* check available engines: convert the Eina.Iterator into a Gee.ArrayList (gee-0.8).
+     * Since EFL >= 1.25 `ecore_evas_engines_get()` returns an Eina_Iterator directly. */
 
     var engines = new Gee.ArrayList<string>();
-    unowned Eina.List<string> elist = EcoreEvas.engines_get();
-    for ( int i = 0; i < (int) elist.count(); ++i )
+    owned Eina.Iterator<string> it = EcoreEvas.engines_get();
+    string? engine_name = null;
+    while ( it.next( ref engine_name ) )
     {
-        engines.add( elist.nth( (uint) i ) );
+        if ( engine_name != null ) { engines.add( engine_name ); }
     }
-    EcoreEvas.engines_free( elist );
     foreach ( string engine in engines )
     {
         message( "ecore.evas got engine '%s'", engine );
