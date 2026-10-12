@@ -29,9 +29,20 @@ pkgc = find_program('pkg-config')
 edje_cc = find_program('edje_cc')
 
 vapi_dir = meson.current_source_dir() / 'vapi'
+
+# Warnings are fatal for our own Vala sources so regressions (deprecated
+# Gee/Eina API use, redundant modifiers, ownership mismatches, ...) break
+# the build automatically instead of scrolling by in `meson compile`
+# output. valac has supported --fatal-warnings since 0.36; guard with a
+# version check (Meson's Vala compiler class has no has_argument()) so
+# ancient toolchains can still configure. Meson runs valac with -C
+# (codegen only), so this affects the Vala front end exclusively, never cc.
+if valac.version().version_compare('>=0.36')
+    add_project_arguments('--fatal-warnings', language: 'vala')
+endif
+
 add_project_arguments(
     '--vapidir', vapi_dir,
-    '--fatal-warnings',
     '--enable-checking',
     language: 'vala',
 )
@@ -53,9 +64,7 @@ gobject_dep = dependency('gobject-2.0', version: '>=2.18')
 
 # GObject-based collections (Gee.List, Gee.HashMap, ...) come from libgee.
 # The pkg-config name is versioned: modern libgee ships gee-0.8.pc, older
-# trees used a plain gee.pc. The VAPI is always named `gee-0.8`; it is
-# normally provided by libgee itself (system-wide), only fall back to an
-# in-tree copy if one ever exists under vapi/.
+# trees used a plain gee.pc. The VAPI is always named `gee-0.8`.
 gee_pc = dependency('gee-0.8', required: false)
 if gee_pc.found()
     gee_pc_name = 'gee-0.8'
@@ -63,16 +72,23 @@ else
     gee_pc = dependency('gee')
     gee_pc_name = 'gee'
 endif
+# Resolve the VAPI explicitly and hand Meson a `declare_dependency()` with
+# a *static* `vala_args: ['--pkg', 'gee-0.8']`. We must NOT pass the
+# PkgConfigDependency object itself to Vala targets: when its pkg-config
+# name matches a VAPI file (true for gee-0.8.pc + the system gee-0.8.vapi),
+# Meson emits `--pkg <name>` on top of the project-wide argument injected
+# above — harmless, but duplicated compiler flags defeat warning-based
+# regression checks. A static vala_args keeps exactly one `--pkg gee-0.8`
+# per target regardless of which .pc file was found (`gee` would otherwise
+# make valac look for a nonexistent `gee.vapi`).
 gee_vapi = valac.find_library('gee-0.8', dirs: vapi_dir, required: false)
 if not gee_vapi.found()
     # valac resolves `--pkg gee-0.8` from its own VAPI search path.
     gee_vapi = 'gee-0.8'
 endif
-# `--pkg gee-0.8` is injected project-wide via add_project_arguments(...,
-# language: 'vala') above so it reaches valac but never cc; here we only
-# need the pkg-config dependency for includes/links (and the VAPI lookup).
 gee_dep = declare_dependency(
     dependencies: [gee_pc],
+    vala_dependencies: [declare_dependency(vala_args: ['--pkg', 'gee-0.8'])],
 )
 
 # Bindings target EFL 1.28: require at least that version of each library.
@@ -83,6 +99,8 @@ elementary_dep = dependency('elementary', version: '>=' + efl_target_version)
 
 # PkgConfigDependency objects whose names match in-tree or Vala VAPI files.
 # Meson emits `--pkg <name>` for these; `--vapidir` makes valac pick our copies.
+# gee is handled separately via gee_dep (see above) to avoid a duplicate
+# `--pkg gee-0.8`.
 efl_pc_deps = [
     glib_dep,
     gobject_dep,
