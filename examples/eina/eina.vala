@@ -31,7 +31,7 @@ public static int main( string[] _args )
     eina_error_example();
     // the engine list is converted into a Gee.ArrayList (from gee-0.8)
     /* since EFL >= 1.25 ecore_evas_engines_get() returns an Eina_Iterator directly */
-    var engines = gee_list_from_eina_iterator( EcoreEvas.engines_get() );
+    var engines = Eflvala.iterate_to_gee_list( EcoreEvas.engines_get() );
     debug( "gee: %u evas engines", engines.size );
     Eina.shutdown();
     return 0;
@@ -67,17 +67,7 @@ public static void gee_list_example()
     foreach ( string s in b ) { debug( "\tdata: %s", s ); }
 }
 
-// Convert an Eina.Iterator over strings into a Gee.ArrayList<string>.
-public static ArrayList<string> gee_list_from_eina_iterator( owned Eina.Iterator<string> it )
-{
-    var list = new ArrayList<string>();
-    string? data = null;
-    while ( it.next( ref data ) )
-    {
-        if ( data != null ) { list.add( data ); }
-    }
-    return list;
-}
+// Conversion now lives in libeflvala: Eflvala.iterate_to_gee_list()
 //=================================================================
 public static void eina_file_example()
 {

@@ -32,8 +32,10 @@ namespace Edje
     public void scale_set( double scale );
     public double scale_get();
 
-    public Eina.List<string> file_collection_list( string file );
-    public void file_collection_list_free( Eina.List<string> list );
+    /* returns a newly allocated list owned by the caller; converted to Gee
+     * via `Edje.file_collection_list(f).to_gee_list()` (the original Eina
+     * list is freed when the temporary goes out of scope) */
+    public owned Eina.List<string> file_collection_list( string file );
     public int file_group_exists( string file, string glob );
     public string file_data_get( string file, string key );
     public void file_cache_set( int count );
@@ -47,11 +49,13 @@ namespace Edje
     public void color_class_set( string color_class, int r, int g, int b, int a, int r2, int g2, int b2, int a2, int r3, int g3, int b3, int a3 );
     public bool color_class_get( string color_class, out int r, out int g, out int b, out int a, out int r2, out int g2, out int b2, out int a2, out int r3, out int g3, out int b3, out int a3 );
     public void color_class_del( string color_class );
-    public Eina.List<string> color_class_list();
+    /* caller-owned list; convert with `.to_gee_list()` */
+    public owned Eina.List<string> color_class_list();
 
     public void text_class_set( string text_class, string font, Evas.FontSize size );
     public void text_class_del( string text_class);
-    public Eina.List<string> text_class_list();
+    /* caller-owned list; convert with `.to_gee_list()` */
+    public owned Eina.List<string> text_class_list();
 
     public void message_signal_process();
 
@@ -169,7 +173,8 @@ namespace Edje
         public void part_text_select_all( string part );
 
         public void part_text_insert( string part, string text );
-        public Eina.List<string> part_text_anchor_list_get( string part );
+        /* caller-owned list; convert with `.to_gee_list()` */
+        public owned Eina.List<string> part_text_anchor_list_get( string part );
         public Eina.List<string> part_text_anchor_geometry_get( string part, string anchor );
         public void part_text_cursor_geometry_get( string part, out Evas.Coord x, out Evas.Coord y, out Evas.Coord w, out Evas.Coord h );
         public void part_text_select_allow_set( string part, bool allow );

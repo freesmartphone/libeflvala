@@ -19,6 +19,8 @@
 [CCode (cprefix = "Eina_", lower_case_cprefix = "eina_", cheader_filename = "Eina.h")]
 namespace Eina
 {
+    /* Gee migration: the inline Eina.List/Iterator.to_gee_list() helpers use
+     * Gee.ArrayList, so this binding requires gee-0.8 (see vapi/eina.deps). */
     public int init();
     public int shutdown();
 
@@ -108,6 +110,12 @@ namespace Eina
         public Eina.Iterator iterator_new();
         public Eina.Accessor accessor_new();
 
+        /* NB: Eina lists are converted to Gee collections via the pure-Vala
+         * extension methods in libeflvala (`eflvala/collections.vala`:
+         * Eina.List.to_gee_list() / Eina.Iterator.to_gee_list()). Inline
+         * implementations are impossible here: Vala does not allow
+         * instantiating generic types from a class type parameter inside a
+         * vapi, and generic compact classes cannot be subclassed. */
     }
 
     //=======================================================================
@@ -172,6 +180,7 @@ namespace Eina
         public void foreach(Each callback, void* fdata);
         public unowned G container_get();
         public bool next(ref G next);
+
     }
 
     //=======================================================================

@@ -59,12 +59,11 @@ public void test_eina_list()
     var item = l.data_find( data[2] );
     assert ( item == data[2] );
 
-    /* convert the remaining Eina.List contents into a Gee.ArrayList */
-    var gee = new Gee.ArrayList<int>();
-    for ( int i = 0; i < (int) l.count(); ++i )
-    {
-        gee.add( l.nth( (uint) i ) );
-    }
+    /* convert the remaining Eina.List contents into a Gee.ArrayList:
+     * peek_gee_list() copies without touching the original list, so `l`
+     * stays valid and is freed below when the owned reference is dropped.
+     * (The consuming variant is Eflvala.gee_list<int>( (owned) l ).) */
+    var gee = Eflvala.peek_gee_list<int>( l );
     assert ( gee.size == (int) l.count() );
     assert ( gee.contains( data[1] ) );
     assert ( gee.contains( data[2] ) );

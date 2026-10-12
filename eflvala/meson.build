@@ -1,5 +1,6 @@
 eflvala_sources = files(
     'application.vala',
+    'collections.vala',
     'genlist.vala',
     'statemachine.vala',
 )

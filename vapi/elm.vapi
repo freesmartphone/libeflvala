@@ -679,7 +679,8 @@ public class Hoversel : Elm.Object
     public void hover_begin();
     public void hover_end();
     public void clear();
-    public Eina.List items_get();
+    /* caller-owned list of item objects; convert with `.to_gee_list()` */
+    public owned Eina.List<Elm.Object> items_get();
     public unowned HoverselItem item_add( string label, string? icon_file, IconType icon_type, Evas.Callback? func = null );
     public void item_del( HoverselItem item );
     /*
@@ -750,7 +751,8 @@ public class MenuItem
     public void disabled_set( bool disabled );
     public void* item_data_get();
     public void data_set( void* data );
-    public Eina.List item_subitems_get();
+    /* caller-owned list; convert with `.to_gee_list()` */
+    public owned Eina.List<MenuItem> item_subitems_get();
 }
 
 //=======================================================================
@@ -785,8 +787,10 @@ public class List : Elm.Object
     public void horizontal_mode_set( ListMode mode );
     public ListMode horizontal_mode_get();
     public void always_select_mode_set( bool always_select );
+    /* borrowed from the widget -- snapshot with `.to_gee_list()` if needed */
     public unowned Eina.List<ListItem> items_get();
     public unowned ListItem selected_item_get();
+    /* borrowed from the widget -- snapshot with `.to_gee_list()` if needed */
     public unowned Eina.List<ListItem> selected_items_get();
 }
 
@@ -884,7 +888,8 @@ public class Genlist : Elm.Object
 
     public unowned GenlistItem at_xy_item_get( Evas.Coord x, Evas.Coord y, out int posret );
     public unowned GenlistItem selected_item_get();
-    public Eina.List<unowned GenlistItem> selected_items_get();
+    /* caller-owned list of borrowed items; convert with `.to_gee_list()` */
+    public owned Eina.List<unowned GenlistItem> selected_items_get();
     public unowned GenlistItem first_item_get();
     public unowned GenlistItem last_item_get();
 }
@@ -1045,13 +1050,15 @@ public class Slideshow : Elm.Object
     public static void show( SlideshowItem item );
     public void next();
     public void previous();
-    public Eina.List<string> transitions_get();
+    /* caller-owned list; convert with `.to_gee_list()` */
+    public owned Eina.List<string> transitions_get();
     public void transition_set( string transition );
     public void timeout_set( int timeout );
     public int timeout_get();
     public void loop_set( int loop );
     public void clear();
-    public Eina.List<SlideshowItem> items_get();
+    /* caller-owned list; convert with `.to_gee_list()` */
+    public owned Eina.List<SlideshowItem> items_get();
     public SlideshowItem item_current_get();
 }
 

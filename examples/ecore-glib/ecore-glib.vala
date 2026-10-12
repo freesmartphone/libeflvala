@@ -31,13 +31,7 @@ public static int main( string[] _args)
     /* check available engines: convert the Eina.Iterator into a Gee.ArrayList (gee-0.8).
      * Since EFL >= 1.25 `ecore_evas_engines_get()` returns an Eina_Iterator directly. */
 
-    var engines = new Gee.ArrayList<string>();
-    Eina.Iterator<string> it = EcoreEvas.engines_get();
-    string? engine_name = null;
-    while ( it.next( ref engine_name ) )
-    {
-        if ( engine_name != null ) { engines.add( engine_name ); }
-    }
+    var engines = Eflvala.iterate_to_gee_list( EcoreEvas.engines_get() );
     foreach ( string engine in engines )
     {
         message( "ecore.evas got engine '%s'", engine );
