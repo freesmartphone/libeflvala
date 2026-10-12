@@ -16,7 +16,11 @@ It is usable with or without **libeflvala**.
 - Vala bindings for EFL core libraries: eina, evas, ecore, edje, elementary (targeting EFL 1.28)
 - Convenience objects and utilities for EFL development in Vala
 - Generic collections via Gee (`gee-0.8`): `Gee.HashMap`, `Gee.ArrayList`, ...
-- Meson build system
+  Lists returned by the EFL C APIs are converted with the pure-Vala helpers
+  in libeflvala: `Eflvala.gee_list<G>()` (consumes an owned `Eina.List`),
+  `Eflvala.peek_gee_list<G>()` (snapshots a borrowed one) and
+  `Eflvala.iterate_to_gee_list<G>()` (drains an owned `Eina.Iterator`)
+- Meson build system (warnings fatal via `--fatal-warnings`)
 - Comprehensive examples and tests
 
 ## Quick Start
@@ -80,6 +84,7 @@ libeflvala/
 │   └── elm.vapi            # Elementary bindings
 ├── eflvala/                # libeflvala library source
 │   ├── application.vala    # Application convenience class
+│   ├── collections.vala    # Eina.List/Eina.Iterator -> Gee.ArrayList helpers
 │   ├── genlist.vala        # Genlist utilities
 │   └── statemachine.vala   # State machine implementation
 ├── examples/               # Example applications

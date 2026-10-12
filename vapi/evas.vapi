@@ -138,8 +138,8 @@ namespace Evas
         public void font_path_clear();
         public void font_path_append( string path );
         public void font_path_prepend( string path );
-        /* caller-owned copy of the font path; convert with `.to_gee_list()` */
-        public owned Eina.List<string> font_path_list();
+        /* caller-owned copy of the font path; pass to `Eflvala.gee_list<G>()` */
+        public Eina.List<string> font_path_list();
         public void font_hinting_set( FontHintingFlags hinting );
         public FontHintingFlags font_hinting_get();
         public bool font_hinting_can_hint( FontHintingFlags hinting );
@@ -147,8 +147,8 @@ namespace Evas
         public void font_cache_set( int size );
         public int font_cache_get();
         /* caller-owned list (freed via eina_list_data_destroy on drop);
-         * convert with `.to_gee_list()` */
-        public owned Eina.List<string> font_available_list();
+         * pass to `Eflvala.gee_list<G>()` */
+        public Eina.List<string> font_available_list();
 
         public Object? bottom_get();
         public Object? top_get();
@@ -261,8 +261,8 @@ namespace Evas
         public Object clip_get();
         public void clip_unset( Object clip );
         /* returns a newly allocated list owned by the caller;
-         * convert with `.to_gee_list()` */
-        public owned Eina.List<Object> clipees_get();
+         * pass to `Eflvala.gee_list<G>()` */
+        public Eina.List<Object> clipees_get();
 
         public void data_set( string key, void* data );
         public void* data_get( string key );

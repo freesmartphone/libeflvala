@@ -7,10 +7,15 @@ headless_tests = [
 ]
 
 foreach t : headless_tests
+    test_deps = efl_deps
+    if get_option('library')
+        # testeina uses the Eflvala Gee conversion helpers from libeflvala
+        test_deps += [eflvala_dep]
+    endif
     exe = executable(
         t[0],
         t[1],
-        dependencies: efl_deps,
+        dependencies: test_deps,
         install: false,
     )
     test(

@@ -2,12 +2,12 @@ examples = [
     {
         'name': 'eina',
         'sources': files('eina/eina.vala'),
-        'needs_library': false,
+        'needs_library': true,
     },
     {
         'name': 'ecore',
         'sources': files('ecore/ecore.vala'),
-        'needs_library': false,
+        'needs_library': true,
     },
     {
         'name': 'ecore_signals',
@@ -17,7 +17,7 @@ examples = [
     {
         'name': 'ecore-glib',
         'sources': files('ecore-glib/ecore-glib.vala'),
-        'needs_library': false,
+        'needs_library': true,
     },
     {
         'name': 'edje',

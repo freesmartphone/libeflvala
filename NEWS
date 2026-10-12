@@ -25,6 +25,26 @@
 	  keep referencing the upstream typedefs via their cname
 	  attributes.
 
+	* Cleanup: stale bits left over from the recent overhaul were
+	  removed or corrected:
+	  - eflvala/collections.c (a committed valac-generated artifact)
+	    was deleted; the library is built from .vala sources only.
+	  - The vapi comments still advertised a nonexistent
+	    `.to_gee_list()` extension method; they now name the actual
+	    helpers (Eflvala.gee_list / peek_gee_list /
+	    iterate_to_gee_list), and borrowed lists are documented as
+	    snapshotting with peek_gee_list.
+	  - Eina.List/Eina.InList search bindings were broken leftovers:
+	    `seach_sorted_near_list` (typo) bound to a nonexistent C
+	    symbol, and search_sorted/search_unsorted used
+	    [ReturnsModifiedPointer] on void methods that actually
+	    return borrowed sublist pointers. They are now correctly
+	    bound (unowned return values, instance_pos = 1.9, real C
+	    names eina_list_search_sorted /
+	    eina_list_search_unsorted_list / eina_inlist_search).
+	  - README.md documents the collections.vala helpers in the
+	    feature list and project structure.
+
 	* Build system consolidation: Meson is now the canonical (and only)
 	  build system. The Autotools infrastructure (configure.ac,
 	  Makefile.am, autogen.sh, Makefile.decl and the generated

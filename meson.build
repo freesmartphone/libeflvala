@@ -72,24 +72,15 @@ else
     gee_pc = dependency('gee')
     gee_pc_name = 'gee'
 endif
-# Resolve the VAPI explicitly and hand Meson a `declare_dependency()` with
-# a *static* `vala_args: ['--pkg', 'gee-0.8']`. We must NOT pass the
-# PkgConfigDependency object itself to Vala targets: when its pkg-config
-# name matches a VAPI file (true for gee-0.8.pc + the system gee-0.8.vapi),
-# Meson emits `--pkg <name>` on top of the project-wide argument injected
-# above — harmless, but duplicated compiler flags defeat warning-based
-# regression checks. A static vala_args keeps exactly one `--pkg gee-0.8`
-# per target regardless of which .pc file was found (`gee` would otherwise
-# make valac look for a nonexistent `gee.vapi`).
-gee_vapi = valac.find_library('gee-0.8', dirs: vapi_dir, required: false)
-if not gee_vapi.found()
-    # valac resolves `--pkg gee-0.8` from its own VAPI search path.
-    gee_vapi = 'gee-0.8'
-endif
-gee_dep = declare_dependency(
-    dependencies: [gee_pc],
-    vala_dependencies: [declare_dependency(vala_args: ['--pkg', 'gee-0.8'])],
-)
+# Pass the PkgConfigDependency to Vala targets for its include paths and
+# linker flags only; Meson additionally emits `--pkg <pc name>` for it, so
+# valac resolves the matching system VAPI (gee-0.8.pc -> gee-0.8.vapi).
+# This deliberately avoids declare_dependency(vala_args: ...): that keyword
+# does not exist in Meson (it was added as compiler-specific args only in
+# later versions), and passing the .pc object keeps configure working on
+# any Meson >= 0.61. A duplicate `--pkg gee-0.8` may appear next to the
+# project-wide one -- harmless, since valac loads each package once.
+gee_dep = gee_pc
 
 # Bindings target EFL 1.28: require at least that version of each library.
 evas_dep = dependency('evas', version: '>=' + efl_target_version)
