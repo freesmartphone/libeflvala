@@ -39,7 +39,7 @@ public class EflVala.ViewStateMachine
 {
     // Elm.Pager was removed from Elementary (EFL 1.22); Naviframe is the
     // replacement, so this uses the native binding directly.
-    private Elm.Naviframe naviframe;
+    private Elm.Naviframe? naviframe;
     private Gee.ArrayList<weak Elm.ObjectItem> items = new Gee.ArrayList<weak Elm.ObjectItem>();
     private Gee.HashMap<weak Elm.Object, weak Elm.ObjectItem> item_map =
         new Gee.HashMap<weak Elm.Object, weak Elm.ObjectItem>();
@@ -54,10 +54,18 @@ public class EflVala.ViewStateMachine
         naviframe.show();
     }
 
+    public ViewStateMachine.headless()
+    {
+        current_state = null;
+    }
+
     public new void state_register(ViewState? state)
     {
+        if(state == null)
+            return;
+
         unowned Elm.Object? content = state.object_get();
-        if(content == null)
+        if(content == null || naviframe == null)
             return;
 
         // naviframe only reveals its top item, so hide the content here
@@ -96,7 +104,7 @@ public class EflVala.ViewStateMachine
         // promote the current state's view to the top of the stack,
         // replacing the old elm_pager_content_promote compat shim.
         unowned Elm.Object? content = ((ViewState)current_state).object_get();
-        if(content != null && item_map.has_key(content))
+        if(content != null && naviframe != null && item_map.has_key(content))
             item_map[content].promote();
     }
 }

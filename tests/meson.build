@@ -32,3 +32,18 @@ executable(
     dependencies: efl_deps,
     install: false,
 )
+
+if get_option('library')
+    state_machine_test = executable(
+        'teststatemachine',
+        'teststatemachine.vala',
+        dependencies: [eflvala_dep],
+        install: false,
+    )
+    test(
+        'teststatemachine',
+        state_machine_test,
+        timeout: 30,
+        suite: 'eflvala',
+    )
+endif
