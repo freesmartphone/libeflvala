@@ -66,11 +66,15 @@ namespace Eina
 
         public uint count();
 
-        public unowned G data_find(owned G data);
+        /* eina_list_data_find() returns a borrowed pointer to the payload
+         * stored in the list; the `owned G' parameter would make Vala free
+         * the int/string copy after the call -- harmless for primitives,
+         * wrong for heap types.  unowned matches the C semantics. */
+        public unowned G data_find(G data);
         /* eina_list_data_find_list() returns a borrowed pointer into this
          * very list (the sublist starting at the found node), not a new
          * list -- it must not be freed separately. */
-        public unowned List<G> data_find_list(owned G data);
+        public unowned List<G> data_find_list(G data);
 
         public unowned G nth(uint n);
         /* likewise borrowed: the sublist starting at index n */
@@ -83,8 +87,10 @@ namespace Eina
         [ReturnsModifiedPointer ()]
         public void prepend_relative_list(G data, List<G> relative);
 
+        /* eina_list_remove() compares by value and unlinks the first
+         * matching node; it does not take ownership of `data'. */
         [ReturnsModifiedPointer ()]
-        public void remove(owned G data);
+        public void remove(G data);
         [ReturnsModifiedPointer ()]
         public void remove_list(List<G> data);
 

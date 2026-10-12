@@ -40,11 +40,14 @@ public void test_eina_list()
     assert ( l != null );
     assert ( l.count() == 3 );
 
+    /* eina_list_remove() removes the *first* occurrence of the value.
+     * The list is { 9, 6, 42 } here, so removing 6 drops one node. */
     l.remove( data[0] );
     assert ( l != null );
     assert ( l.count() == 2 );
 
-    l.remove( data[0] );
+    /* 1337 is not in the list: remove() returns NULL and leaves it alone. */
+    l.remove( data[8] );
     assert ( l != null );
     assert ( l.count() == 2 );
 

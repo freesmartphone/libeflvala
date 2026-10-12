@@ -37,7 +37,18 @@ pkg.generate(
     subdirs: 'eflvala-1.0',
 )
 
+# Consumers (tests, examples) include the generated `eflvala.h` header, which
+# valac emits in eflvala/'s *build* directory. Meson resolves an
+# include_directories('.') object relative to each consumer's own subdir, so
+# re-declare it from the root meson.build where '.' == <root>/eflvala: the
+# resulting -I flags point at both <root>/eflvala (source tree) and
+# <builddir>/eflvala (where eflvala.h lives), independent of the caller.
+# See https://mesonbuild.com/Include-directories.html
+subdir_files = files('meson.build')
+eflvala_inc = include_directories('.', is_system: false)
+
 eflvala_dep = declare_dependency(
     link_with: eflvala_lib,
     dependencies: efl_deps,
+    include_directories: eflvala_inc,
 )

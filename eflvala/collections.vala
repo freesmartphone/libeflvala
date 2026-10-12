@@ -44,7 +44,7 @@ namespace Eflvala
     {
         var result = new Gee.ArrayList<G>();
         for (unowned Eina.List<G> i = list; i != null; i = i.next) {
-            result.insert(0, i.data);
+            result.add(i.data);
         }
         return result;
     }
@@ -60,7 +60,7 @@ namespace Eflvala
     {
         var result = new Gee.ArrayList<G>();
         for (unowned Eina.List<G> i = list; i != null; i = i.next) {
-            result.insert(0, i.data);
+            result.add(i.data);
         }
         return result;
     }
