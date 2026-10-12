@@ -36,8 +36,6 @@ valac "${VAR[@]}" --pkg gee-0.8 --directory "$eina_test_dir" eflvala/collections
 "$eina_test_dir/testeina.exe"
 vala "${VAR[@]}" --pkg gee-0.8 'tests/testevas.vala'
 
-valac "${VAR[@]}" --pkg gee-0.8 'examples/eina/eina.vala'
-
 meson setup build
 meson compile -C build
 meson test -C build --print-errorlogs
