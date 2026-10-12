@@ -15,7 +15,7 @@ It is usable with or without **libeflvala**.
 
 - Vala bindings for EFL core libraries: eina, evas, ecore, edje, elementary
 - Convenience objects and utilities for EFL development in Vala
-- Meson and Autotools build systems
+- Meson build system
 - Comprehensive examples and tests
 
 ## Quick Start
@@ -36,8 +36,6 @@ pacman -S --needed base-devel git meson ninja vala mingw-w64-x86_64-efl
 ```
 
 ### Building
-
-#### Meson (Recommended)
 
 ```bash
 # Clone the repository

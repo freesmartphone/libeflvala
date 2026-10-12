@@ -34,8 +34,6 @@ pacman -S --needed base-devel git meson ninja vala mingw-w64-x86_64-efl
 
 ## Building
 
-### Meson (Recommended)
-
 ```bash
 # Clone the repository
 git clone https://github.com/theavege/libeflvala.git
@@ -50,14 +48,6 @@ meson test -C build --print-errorlogs
 
 # Install
 meson install -C build
-```
-
-### Autotools (Legacy)
-
-```bash
-./autogen.sh
-make
-make install
 ```
 
 ### Build Options

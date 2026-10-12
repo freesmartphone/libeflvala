@@ -7,33 +7,15 @@ build/
 meson-logs/
 meson-private/
 
-# Autotools
-aclocal.m4
-autom4te.cache/
-config.guess
-config.log
-config.status
-config.sub
-configure
-libtool
-ltmain.sh
-Makefile.in
-stamp-h1
-
 # Generated files
-*.c
-*.h
 *.o
-*.lo
-*.la
-*.a
 *.so
-*.pc
-.vala.stamp
+.pc/
 
 # Vala generated
-*.vapi
-*.deps
+.vala.stamp
+.deps/
+.libs/
 
 # IDE
 .idea/

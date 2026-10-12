@@ -1,3 +1,10 @@
-2009-03-13	Michael 'Mickey' Lauer	<mlauer@vanille-media.de>
+2026-10-12      The libeflvala contributors
 
-	* Initial commit of my vacation work :)
+        * Build system consolidation: Meson is now the canonical (and only)
+          build system. The Autotools infrastructure (configure.ac,
+          Makefile.am, autogen.sh, Makefile.decl and the generated
+          eflvala-1.0.pc template) has been removed. Use `meson setup build`,
+          `meson compile -C build`, `meson test -C build` and
+          `meson install -C build`. See INSTALL for details.
+
+See git log for small-scale changes.
