@@ -16,7 +16,7 @@ function _require_setup
     shfmt -ci -fn -i 4 -d "${0}"
 }
 
-set -euo pipefail
+set -xeuo pipefail
 _require_setup
 
 declare -ar VAR=(
