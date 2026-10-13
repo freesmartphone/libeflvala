@@ -4,7 +4,7 @@ efl.vapi & libeflvala
 [![GitHub Actions](https://github.com/theavege/libeflvala/actions/workflows/make.yml/badge.svg)](https://github.com/theavege/libeflvala/actions/workflows/make.yml)
 [![License: LGPL-2.1-or-later](https://img.shields.io/badge/License-LGPL--2.1--or--later-blue.svg)](COPYING)
 [![Vala](https://img.shields.io/badge/Vala-0.56+-009639.svg)](https://vala.dev)
-[![EFL](https://img.shields.io/badge/EFL-1.28+-4A90D9.svg)](https://www.enlightenment.org)
+[![EFL](https://img.shields.io/badge/EFL-1.27+-4A90D9.svg)](https://www.enlightenment.org)
 
 **efl.vapi** contains Vala bindings for the Enlightenment Foundation Libraries (EFL).
 It is usable with or without **libeflvala**.
@@ -13,9 +13,17 @@ It is usable with or without **libeflvala**.
 
 ## Features
 
-- Vala bindings for EFL core libraries: eina, evas, ecore, edje, elementary
+- Vala bindings for EFL core libraries: eina, evas, ecore, edje, elementary (targeting EFL 1.27)
 - Convenience objects and utilities for EFL development in Vala
-- Meson and Autotools build systems
+- Generic collections via Gee (`gee-0.8`): `Gee.HashMap`, `Gee.ArrayList`, ...
+  Lists returned by the EFL C APIs are converted with the pure-Vala helpers
+  in libeflvala: `Eflvala.gee_list<G>()` (consumes an owned `Eina.List`),
+  `Eflvala.peek_gee_list<G>()` (snapshots a borrowed one) and
+  `Eflvala.iterate_to_gee_list<G>()` (drains an owned `Eina.Iterator`)
+- Meson build system (warnings fatal via `--fatal-warnings`)
+- Pure Vala sources: no hand-written or committed C code; the only `.c`
+  files are valac's own codegen output, generated at build time and
+  never tracked in git
 - Comprehensive examples and tests
 
 ## Quick Start
@@ -26,18 +34,16 @@ It is usable with or without **libeflvala**.
 
 ```bash
 sudo apt-get update
-sudo apt-get install -y meson ninja-build valac pkg-config libefl-all-dev
+sudo apt-get install -y meson ninja-build valac pkg-config libefl-all-dev libgee-0.8-dev
 ```
 
 #### MSYS2 (Windows)
 
 ```bash
-pacman -S --needed base-devel git meson ninja vala mingw-w64-x86_64-efl
+pacman -S --needed base-devel git meson ninja vala mingw-w64-x86_64-efl mingw-w64-x86_64-libgee
 ```
 
 ### Building
-
-#### Meson (Recommended)
 
 ```bash
 # Clone the repository
@@ -81,6 +87,7 @@ libeflvala/
 │   └── elm.vapi            # Elementary bindings
 ├── eflvala/                # libeflvala library source
 │   ├── application.vala    # Application convenience class
+│   ├── collections.vala    # Eina.List/Eina.Iterator -> Gee.ArrayList helpers
 │   ├── genlist.vala        # Genlist utilities
 │   └── statemachine.vala   # State machine implementation
 ├── examples/               # Example applications

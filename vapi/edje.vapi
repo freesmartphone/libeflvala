@@ -32,8 +32,10 @@ namespace Edje
     public void scale_set( double scale );
     public double scale_get();
 
+    /* returns a newly allocated list owned by the caller; converted to Gee
+     * via `Eflvala.gee_list<string>(Edje.file_collection_list(f))` (the original Eina
+     * list is freed when the temporary goes out of scope) */
     public Eina.List<string> file_collection_list( string file );
-    public void file_collection_list_free( Eina.List<string> list );
     public int file_group_exists( string file, string glob );
     public string file_data_get( string file, string key );
     public void file_cache_set( int count );
@@ -47,10 +49,12 @@ namespace Edje
     public void color_class_set( string color_class, int r, int g, int b, int a, int r2, int g2, int b2, int a2, int r3, int g3, int b3, int a3 );
     public bool color_class_get( string color_class, out int r, out int g, out int b, out int a, out int r2, out int g2, out int b2, out int a2, out int r3, out int g3, out int b3, out int a3 );
     public void color_class_del( string color_class );
+    /* caller-owned list; pass to `Eflvala.gee_list<G>()` */
     public Eina.List<string> color_class_list();
 
     public void text_class_set( string text_class, string font, Evas.FontSize size );
     public void text_class_del( string text_class);
+    /* caller-owned list; pass to `Eflvala.gee_list<G>()` */
     public Eina.List<string> text_class_list();
 
     public void message_signal_process();
@@ -93,13 +97,22 @@ namespace Edje
         ITEM
     }
 
-    [CCode (cname = "Edje_Signal_Cb", instance_pos = 0)]
+    //=======================================================================
+    // Stock EFL headers declare the Edje callback C functions with anonymous
+    // function-pointer prototypes; there are no public Edje_Signal_Cb,
+    // Edje_Text_Change_Cb or Edje_Message_Handler_Cb typedefs to bind
+    // against. These delegates are defined within this binding, so Vala
+    // generates self-contained trampoline function pointers in the emitted
+    // C code -- no extra C code and no out-of-tree patching of EFL is
+    // required (see NEWS).
+
+    [CCode (instance_pos = 1.9)]
     public delegate void SignalCallback( Object obj, string emission, string source );
 
-    [CCode (cname = "Edje_Text_Change_Cb", instance_pos = 0)]
+    [CCode (instance_pos = 1.9)]
     public delegate void TextChangedCallback( Object obj, string part );
 
-    [CCode (cname = "Edje_Message_Handler_Cb", instance_pos = 0)]
+    [CCode (instance_pos = 1.9)]
     public delegate void MessageHandlerCallback( Object obj, MessageType type, int id, void* msg );
 
     //=======================================================================
@@ -160,6 +173,7 @@ namespace Edje
         public void part_text_select_all( string part );
 
         public void part_text_insert( string part, string text );
+        /* caller-owned list; pass to `Eflvala.gee_list<G>()` */
         public Eina.List<string> part_text_anchor_list_get( string part );
         public Eina.List<string> part_text_anchor_geometry_get( string part, string anchor );
         public void part_text_cursor_geometry_get( string part, out Evas.Coord x, out Evas.Coord y, out Evas.Coord w, out Evas.Coord h );

@@ -21,12 +21,13 @@ public static int main( string[] _args)
     /* init */
     EcoreEvas.init();
 
-    /* check available engines */
+    /* check available engines: convert the Eina.Iterator into a Gee.ArrayList (gee-0.8).
+     * Since EFL >= 1.25 `ecore_evas_engines_get()` returns an Eina_Iterator directly. */
 
-    Eina.List<string> engines = EcoreEvas.engines_get();
-    for ( int i = 0; i < engines.count(); ++i )
+    var engines = Eflvala.iterate_to_gee_list( EcoreEvas.engines_get() );
+    foreach ( string engine in engines )
     {
-        message( "ecore.evas got engine '%s'", engines.nth( i ) );
+        message( "ecore.evas got engine '%s'", engine );
     }
 
     /* create a window */

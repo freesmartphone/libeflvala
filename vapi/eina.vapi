@@ -19,6 +19,14 @@
 [CCode (cprefix = "Eina_", lower_case_cprefix = "eina_", cheader_filename = "Eina.h")]
 namespace Eina
 {
+    /* Gee migration: Eina lists are converted to Gee collections via the
+     * pure-Vala helpers in libeflvala (eflvala/collections.vala), e.g.
+     * Eflvala.peek_gee_list<int>(l) / Eflvala.iterate_to_gee_list(it).
+     * The conversion cannot live inside this .vapi -- Vala forbids
+     * instantiating generic types from a class type parameter inside a
+     * .vapi, and generic compact classes cannot be subclassed -- so the
+     * only thing this binding needs from gee-0.8 is its include path for
+     * C code generation (see vapi/eina.deps). */
     public int init();
     public int shutdown();
 
@@ -58,12 +66,19 @@ namespace Eina
 
         public uint count();
 
-        public unowned G data_find(owned G data);
-        // ???
-        public List<G> data_find_list(owned G data);
+        /* eina_list_data_find() returns a borrowed pointer to the payload
+         * stored in the list; the `owned G' parameter would make Vala free
+         * the int/string copy after the call -- harmless for primitives,
+         * wrong for heap types.  unowned matches the C semantics. */
+        public unowned G data_find(G data);
+        /* eina_list_data_find_list() returns a borrowed pointer into this
+         * very list (the sublist starting at the found node), not a new
+         * list -- it must not be freed separately. */
+        public unowned List<G> data_find_list(G data);
 
         public unowned G nth(uint n);
-        public List<G> nth_list(int n);
+        /* likewise borrowed: the sublist starting at index n */
+        public unowned List<G> nth_list(int n);
 
         [ReturnsModifiedPointer ()]
         public void prepend(owned G data);
@@ -72,8 +87,10 @@ namespace Eina
         [ReturnsModifiedPointer ()]
         public void prepend_relative_list(G data, List<G> relative);
 
+        /* eina_list_remove() compares by value and unlinks the first
+         * matching node; it does not take ownership of `data'. */
         [ReturnsModifiedPointer ()]
-        public void remove(owned G data);
+        public void remove(G data);
         [ReturnsModifiedPointer ()]
         public void remove_list(List<G> data);
 
@@ -92,12 +109,20 @@ namespace Eina
         [ReturnsModifiedPointer ()]
         public void sorted_merge(List<G> right, CompareCb func);
 
-        [ReturnsModifiedPointer ()]
-        public void search_sorted(CompareCb cb, G data);
-        [ReturnsModifiedPointer ()]
-        public void seach_sorted_near_list(CompareCb func, G data);
-        [ReturnsModifiedPointer ()]
-        public void search_unsorted(CompareCb cb, G data);
+        /* C signatures (Eina.h):
+         *   Eina_List *eina_list_search_sorted(const Eina_List *list,
+         *                                      Eina_Compare_Cb compare_func,
+         *                                      const void *data);
+         *   Eina_List *eina_list_search_unsorted_list(const Eina_List *list,
+         *                                             Eina_Compare_Cb compare_func,
+         *                                             const void *data);
+         * Both return a borrowed sublist pointer into `this' list and take no
+         * extra callback user-data argument -- hence instance_pos = 1.9 and
+         * has_target = false on CompareCb above. */
+        [CCode (instance_pos = 1.9)]
+        public unowned List<G>? search_sorted(CompareCb cb, owned G data);
+        [CCode (cname = "eina_list_search_unsorted_list", instance_pos = 1.9)]
+        public unowned List<G>? search_unsorted(CompareCb cb, owned G data);
 
         public Eina.List<G> clone();
         public Eina.List<G> reverse_clone();
@@ -105,6 +130,13 @@ namespace Eina
         public Eina.Iterator iterator_new();
         public Eina.Accessor accessor_new();
 
+        /* NB: Eina lists are converted to Gee collections via the pure-Vala
+         * helpers in libeflvala (`eflvala/collections.vala`:
+         * Eflvala.gee_list<G>() consumes an owned list,
+         * Eflvala.peek_gee_list<G>() snapshots a borrowed one). Methods with
+         * bodies are impossible here: Vala does not allow instantiating
+         * generic types from a class type parameter inside a vapi, and
+         * generic compact classes cannot be subclassed. */
     }
 
     //=======================================================================
@@ -137,12 +169,12 @@ namespace Eina
         [ReturnsModifiedPointer ()]
         public void sorted_merge(List<G> right, CompareCb func);
 
-        [ReturnsModifiedPointer ()]
-        public void search_sorted(CompareCb cb, G data);
-        [ReturnsModifiedPointer ()]
-        public void seach_sorted_near_list(CompareCb func, G data);
-        [ReturnsModifiedPointer ()]
-        public void search_unsorted(CompareCb cb, G data);
+        /* see Eina.List for the C prototypes; these lookups also just return
+         * borrowed pointers into the list */
+        [CCode (instance_pos = 1.9)]
+        public unowned List<G>? search_sorted(CompareCb cb, G data);
+        [CCode (cname = "eina_inlist_search", instance_pos = 1.9)]
+        public unowned InList<G>? search_unsorted(CompareCb cb, G data);
 
         public Eina.List<G> clone();
         public Eina.List<G> reverse_clone();
@@ -169,6 +201,7 @@ namespace Eina
         public void foreach(Each callback, void* fdata);
         public unowned G container_get();
         public bool next(ref G next);
+
     }
 
     //=======================================================================

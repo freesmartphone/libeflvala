@@ -138,6 +138,7 @@ namespace Evas
         public void font_path_clear();
         public void font_path_append( string path );
         public void font_path_prepend( string path );
+        /* caller-owned copy of the font path; pass to `Eflvala.gee_list<G>()` */
         public Eina.List<string> font_path_list();
         public void font_hinting_set( FontHintingFlags hinting );
         public FontHintingFlags font_hinting_get();
@@ -145,8 +146,9 @@ namespace Evas
         public void font_cache_flush();
         public void font_cache_set( int size );
         public int font_cache_get();
+        /* caller-owned list (freed via eina_list_data_destroy on drop);
+         * pass to `Eflvala.gee_list<G>()` */
         public Eina.List<string> font_available_list();
-        public void font_available_list_free( Eina.List<string> available );
 
         public Object? bottom_get();
         public Object? top_get();
@@ -169,8 +171,22 @@ namespace Evas
     public struct FontSize {}
 
     //=======================================================================
-    [CCode (cname = "Evas_Smart_Cb", instance_pos = 0)]
-    public delegate void Callback( Evas.Object obj, void* event_info );
+    // Stock EFL headers declare the smart callback C functions with
+    // anonymous function-pointer prototypes; there is no public
+    // Evas_Smart_Cb typedef to bind against. The callback type is defined
+    // within this binding, so Vala generates a self-contained trampoline
+    // function pointer in the emitted C -- no extra C code and no
+    // out-of-tree patching of EFL required (see NEWS).
+
+    /**
+     * Smart callback for Evas/Elementary objects. Vala passes the delegate
+     * target (instance or closure) as the C user-data pointer and emits a
+     * self-contained trampoline matching the raw prototype
+     * @c void (*)(void *data, Evas_Object *obj, void *event_info), so no
+     * external typedef is needed in the C headers.
+     */
+    [CCode (instance_pos = 1.9)]
+    public delegate void Callback( Object obj, void* event_info );
 
     //=======================================================================
     [Compact]
@@ -244,7 +260,9 @@ namespace Evas
         public void clip_set( Object clip );
         public Object clip_get();
         public void clip_unset( Object clip );
-        public unowned Eina.List<Object> clipees_get();
+        /* returns a newly allocated list owned by the caller;
+         * pass to `Eflvala.gee_list<G>()` */
+        public Eina.List<Object> clipees_get();
 
         public void data_set( string key, void* data );
         public void* data_get( string key );
@@ -264,7 +282,11 @@ namespace Evas
         public void focus_set( bool focus );
         public bool focus_get();
 
+        [CCode (cname = "evas_object_smart_callback_add")]
         public void smart_callback_add( string event, Callback func );
+
+        [CCode (cname = "evas_object_smart_callback_del")]
+        public void* smart_callback_del( string event, Callback func );
     }
 
     //=======================================================================
