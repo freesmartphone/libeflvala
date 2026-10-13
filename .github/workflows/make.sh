@@ -8,15 +8,15 @@ function _require_setup
         msys2) return 0 ;;
         debian | ubuntu)
             sudo apt-get update
-            sudo apt-get install -y "${PKGS[@]}" valac libefl-all-dev
+            sudo apt-get install -y "${PKGS[@]}" valac libefl-all-dev libgee-0.8-dev
             ;;
-        fedora | alma) sudo dnf install -y "${PKGS[@]}" vala efl-devel ;;
+        fedora | alma) sudo dnf install -y "${PKGS[@]}" vala efl-devel libgee-devel ;;
     esac 1>/dev/null
     shellcheck --external-sources "${0}"
     shfmt -ci -fn -i 4 -d "${0}"
 }
 
-set -euo pipefail
+set -xeuo pipefail
 _require_setup
 
 declare -ar VAR=(
@@ -29,11 +29,12 @@ declare -ar VAR=(
     --pkg=elm
 )
 
-vala "${VAR[@]}" 'tests/testecore.vala'
-vala "${VAR[@]}" 'tests/testeina.vala'
-vala "${VAR[@]}" 'tests/testevas.vala'
-
-valac "${VAR[@]}" 'examples/eina/eina.vala'
+vala "${VAR[@]}" --pkg gee-0.8 'tests/testecore.vala'
+eina_test_dir="$(mktemp -d)"
+trap 'rm -rf "$eina_test_dir"' EXIT
+valac "${VAR[@]}" --pkg gee-0.8 --directory "$eina_test_dir" eflvala/collections.vala 'tests/testeina.vala' -o "$eina_test_dir/testeina.exe"
+"$eina_test_dir/testeina.exe"
+vala "${VAR[@]}" --pkg gee-0.8 'tests/testevas.vala'
 
 meson setup build
 meson compile -C build

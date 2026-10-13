@@ -36,6 +36,7 @@ jobs:
           pacboy: |
             efl:p
             vala:p
+            libgee:p
             clang:p
             ninja:p
             meson:p

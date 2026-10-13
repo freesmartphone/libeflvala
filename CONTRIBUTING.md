@@ -11,7 +11,8 @@ Thank you for your interest in contributing to libeflvala! This document outline
 - Ninja
 - Vala compiler (valac)
 - pkg-config
-- EFL development libraries (eina, evas, ecore, edje, elementary)
+- EFL development libraries (eina, evas, ecore, edje, elementary), version >= 1.27
+- libgee development files (gee-0.8)
 
 #### Debian/Ubuntu
 
@@ -34,8 +35,6 @@ pacman -S --needed base-devel git meson ninja vala mingw-w64-x86_64-efl
 
 ## Building
 
-### Meson (Recommended)
-
 ```bash
 # Clone the repository
 git clone https://github.com/theavege/libeflvala.git
@@ -50,14 +49,6 @@ meson test -C build --print-errorlogs
 
 # Install
 meson install -C build
-```
-
-### Autotools (Legacy)
-
-```bash
-./autogen.sh
-make
-make install
 ```
 
 ### Build Options
